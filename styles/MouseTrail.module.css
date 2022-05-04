@@ -1,0 +1,9 @@
+.mouseTrail {
+    pointer-events: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+    top: 0;
+    left: 0;
+}

@@ -1,0 +1,146 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    align-items: center;
+}
+
+.content {
+    display: grid;
+    grid-template-rows: 1fr 3em 1fr;
+    margin: 0 0 0 4rem;
+    height: 100%;
+    position: relative;
+}
+
+.titleContainer {
+    display: flex;
+    align-items: baseline;
+    gap: 1em;
+    align-self: end;
+}
+
+.title {
+    font-family: 'Comfortaa', cursive;
+    text-transform: lowercase;
+    letter-spacing: 0.175em;
+}
+
+.descriptionContainer {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 2em 2em 0 2em;
+    margin: 0 -2em 3em -2em;
+    transition: .5s ease-out;
+    transition-property: background-color, padding-top;
+    animation: description-fade-in .5s ease-out;
+    animation-delay: .5s;
+    animation-fill-mode: forwards;
+}
+
+.description {
+    line-height: 1.8em;
+    transition: .5s ease-out;
+    transition-property: line-height, color;
+    animation: line-height .5s ease-out;
+    animation-delay: .3s;
+    animation-fill-mode: forwards;
+}
+
+.descriptionLine {
+    border: 1px solid white;
+}
+
+.logo {
+    --size: 3em;
+    width: var(--size);
+    height: var(--size);
+}
+
+.discoverMore {
+    display: flex;
+    gap: 1em;
+    bottom: 1em;
+    left: 4em;
+    right: 0;
+    position: absolute;
+    cursor: pointer;
+    align-items: baseline;
+}
+
+.discoverArrow {
+    transition: transform .2s ease, opacity .1s ease;
+}
+
+.discoverArrowWrapper {
+    padding-top: 2em;
+}
+
+.discoverMore:hover .discoverArrow {
+    transform: rotateZ(90deg);
+}
+
+.discoverLine {
+    border: 1px solid black;
+    flex: 1 1 auto;
+    height: 1px;
+    width: 100%;
+    transform: scaleX(0);
+    transition: transform 0.8s ease;
+    transform-origin: left;
+}
+
+.discoverMore:hover > .discoverLine {
+    transform: scaleX(1);
+    transition-duration: 2s;
+}
+
+.content > .discoverLine {
+    animation: line-scale-in-out 1s ease;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes line-scale-in-out {
+    0% {
+        transform-origin: right;
+        transform: scaleX(0);
+    }
+    49% {
+        transform-origin: right;
+        transform: scaleX(1);
+    }
+    51% {
+        transform-origin: left;
+        transform: scaleX(1);
+    }
+    100% {
+        transform-origin: left;
+        transform: scaleX(0);
+    }
+}
+
+@keyframes description-fade-in {
+    0% {
+        background: none;
+        color: black;
+    }
+    100% {
+        background: black;
+        color: white;
+    }
+}
+
+@keyframes line-height {
+    100% {
+        line-height: 2.2em;
+    }
+}
