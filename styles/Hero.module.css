@@ -14,7 +14,7 @@
 
 .content {
     display: grid;
-    grid-template-rows: 1fr 3em 1fr;
+    grid-template-rows: .5fr 3em 1fr;
     margin: 0 0 0 4rem;
     height: 100%;
     position: relative;
@@ -142,5 +142,11 @@
 @keyframes line-height {
     100% {
         line-height: 2.2em;
+    }
+}
+
+@media (min-height: 700px) {
+    .content {
+        grid-template-rows: 1fr 3em 1fr;
     }
 }
