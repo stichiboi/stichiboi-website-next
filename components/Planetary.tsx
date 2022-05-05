@@ -50,7 +50,7 @@ function Orbit({index, onTransitionEnd}: { index: number, onTransitionEnd?: () =
 
 export default function Planetary(): JSX.Element {
 
-    const [orbitData, setOrbitData] = useState<string[]>(['def_first', 'def_second', 'def_third']);
+    const [orbitData, setOrbitData] = useState<string[]>(['def_first', 'def_second', 'def_third', 'def_fourth']);
     const [toDelete, setToDelete] = useState<string[]>([]);
     const orbits = useMemo<JSX.Element[]>(() => {
         const stable = orbitData.map((k, i) => (
