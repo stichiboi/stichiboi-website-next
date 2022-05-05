@@ -10,7 +10,7 @@
 .sun {
     outline: none;
     border: none;
-    background: red;
+    background: #FFAD05;
     position: absolute;
 }
 
@@ -23,10 +23,12 @@
 
 .orbit {
     --revolution: 10s;
-
+    --color: black;
+    --offset: 0s;
     position: absolute;
-    border: 1px solid white;
+    border: 1px solid #E0E0E0;
     animation: spin var(--revolution) linear infinite;
+    animation-delay: var(--offset);
 }
 
 .orbit:first-child {
@@ -34,8 +36,21 @@
     opacity: 0;
 }
 
+.orbit.fadeOut {
+    opacity: 0;
+    visibility: hidden;
+}
+
 .planet {
-    text-align: center;
+    position: absolute;
+    /*-1px is required to compensate for the border width*/
+    --half-size: calc(var(--size) / -2 - 1px);
+    top: calc(50% + var(--half-size));
+    left: var(--half-size);
+
+    width: var(--size);
+    height: var(--size);
+    background: var(--color);
 }
 
 .sizable {
@@ -44,7 +59,7 @@
     height: var(--size);
     border-radius: calc(var(--size) / 2);
     transition: .5s ease-out;
-    transition-property: width, height, animation-duration, opacity;
+    transition-property: width, height, animation-duration, opacity, visibility;
 }
 
 @keyframes spin {

@@ -66,7 +66,7 @@ export default function MouseTrail(): JSX.Element {
                 makePath(point, prevPoint, STROKE_COLOR, lineWeight);
             }
         });
-    }, [points, makePath]);
+    }, [points, makePath, STROKE_COLOR]);
 
     const draw = useCallback(() => {
         const mouse = mouseLocation.current;
@@ -102,7 +102,7 @@ export default function MouseTrail(): JSX.Element {
 
         document.addEventListener('readystatechange', init);
         return () => document.removeEventListener('readystatechange', init)
-    }, []);
+    }, [draw, resizeCanvas]);
 
     return (
         <canvas ref={canvas} className={styles.mouseTrail}/>

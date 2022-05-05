@@ -3,9 +3,22 @@ import styles from "../styles/Planetary.module.css";
 
 const MAX_ORBITS = 5;
 
-function Orbit({index}: { index: number }): JSX.Element {
+function generateColor() {
+    return `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
+}
+
+function generateGradient() {
+    const angle = Math.random() * 360;
+    const col1 = generateColor(), col2 = generateColor();
+    return `linear-gradient(${angle}deg, ${col1}, ${col2})`;
+}
+
+function Orbit({index, onTransitionEnd}: { index: number, onTransitionEnd?: () => unknown }): JSX.Element {
     const color = useMemo(() => {
-        return `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
+        if (Math.random() > 0.5) {
+            return generateColor();
+        }
+        return generateGradient();
     }, []);
     const speed = useMemo(() => {
         return `${Math.random() * 30 + 10}s`;
@@ -13,36 +26,56 @@ function Orbit({index}: { index: number }): JSX.Element {
     const size = useMemo(() => {
         return `${Math.random() * 20 + 10}px`;
     }, []);
+    const offset = useMemo(() => {
+        return `-${Math.random() * 20 + 10}s`;
+    }, []);
     return (
-        <div className={`${styles.orbit} ${styles.sizable}`} style={{
-            "--size": `${index * 120 + 40}px`
-        } as unknown as CSSProperties}>
-            <div className={styles.planet} style={{
-                "--color": color,
-                "--size": size,
-                "--revolution": speed
+        <div
+            onTransitionEnd={onTransitionEnd}
+            className={`${styles.orbit} ${styles.sizable} ${onTransitionEnd ? styles.fadeOut : ''}`}
+            style={{
+                "--size": `${index * 120 + 40}px`,
+                "--offset": offset
             } as unknown as CSSProperties}>
-                ORBIT
-            </div>
+            <div
+                className={`${styles.planet} ${styles.sizable}`}
+                style={{
+                    "--color": color,
+                    "--size": size,
+                    "--revolution": speed
+                } as unknown as CSSProperties}/>
         </div>
     )
 }
 
 export default function Planetary(): JSX.Element {
 
-    const [orbitData, setOrbitData] = useState<string[]>([]);
+    const [orbitData, setOrbitData] = useState<string[]>(['def_first', 'def_second', 'def_third']);
+    const [toDelete, setToDelete] = useState<string[]>([]);
     const orbits = useMemo<JSX.Element[]>(() => {
-        return orbitData.map((k, i) => <Orbit key={k} index={i}/>)
-    }, [orbitData]);
+        const stable = orbitData.map((k, i) => (
+            <Orbit key={k} index={i}/>
+        ));
+        const fading = toDelete.map((k, i) =>
+            <Orbit
+                key={k}
+                index={i + stable.length}
+                onTransitionEnd={() => {
+                    setToDelete(prev => prev.filter(id => id !== k))
+                }}
+            />);
+        return [...stable, ...fading];
+    }, [orbitData, toDelete]);
 
     const addOrbit = useCallback(() => {
         setOrbitData(prev => {
             const randID = Math.random().toString().slice(2);
             const nextData = [randID, ...prev];
-            while (nextData.length > MAX_ORBITS) nextData.pop();
+            const toDelete = nextData.splice(MAX_ORBITS);
+            setToDelete(toDelete);
             return nextData;
-        })
-    }, [setOrbitData]);
+        });
+    }, [setOrbitData, setToDelete]);
 
     return (
         <div className={styles.planetary}>
