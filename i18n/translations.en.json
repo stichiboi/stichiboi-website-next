@@ -1,4 +1,8 @@
 {
+  "loading": {
+    "first": "Getting things ready",
+    "loaded": "Enjoy!"
+  },
   "hero": {
     "title": "Stichiboi",
     "description": "I'm Daniele, a Physics Engineering graduate from Italy.",

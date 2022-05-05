@@ -1,0 +1,89 @@
+.container {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    z-index: 1;
+    transition: .5s ease-in;
+    transition-property: visibility, bottom;
+}
+
+.container.toggled {
+    bottom: 100%;
+    visibility: hidden;
+    transition-delay: 1s;
+}
+
+.text {
+    color: var(--color-quiet);
+    position: absolute;
+    transition: .5s ease;
+    transition-property: visibility, opacity;
+}
+
+.text.toggled {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.dotsContainer {
+    display: flex;
+}
+
+.dotContainer {
+    --delay: 0s;
+    --duration: 1.4s;
+    display: flex;
+    transition: transform 1s ease-in;
+}
+
+.dotContainer.toggled {
+    animation: shoot-up 1s;
+    animation-delay: var(--delay);
+    animation-fill-mode: forwards;
+}
+
+.dot {
+    --size: 6px;
+    border-radius: var(--size);
+    width: var(--size);
+    height: var(--size);
+    background: black;
+    animation: wave var(--duration) infinite var(--delay);
+}
+
+.dotContainer:not(:first-child) {
+    margin-left: 12px;
+}
+
+@keyframes wave {
+    0% {
+        transform: translateY(0);
+        animation-timing-function: ease-out;
+    }
+    25% {
+        transform: translateY(-24px);
+        animation-timing-function: ease-in;
+    }
+    50% {
+        transform: translateY(0px);
+        animation-timing-function: ease-out;
+    }
+    75% {
+        transform: translateY(24px);
+        animation-timing-function: ease-in;
+    }
+    100% {
+        transform: translateY(0);
+        animation-timing-function: ease-out;
+    }
+}
+
+@keyframes shoot-up {
+    100% {
+        transform: translateY(-100vh);
+    }
+}
