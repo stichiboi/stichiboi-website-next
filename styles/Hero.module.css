@@ -69,8 +69,10 @@
     display: flex;
     gap: 1em;
     bottom: 1em;
-    left: 4em;
-    right: 0;
+    width: 100%;
+    padding-left: 4em;
+    padding-right: 0;
+
     position: absolute;
     cursor: pointer;
     align-items: baseline;

@@ -28,13 +28,13 @@ export default function Hero(): JSX.Element {
                 </div>
                 <Planetary/>
             </main>
-            <div className={styles.discoverMore}>
+            <button className={styles.discoverMore}>
                 <div className={styles.discoverArrowWrapper}>
                     <div className={styles.discoverArrow}>{"→"}</div>
                 </div>
                 <p>{t('hero.discover')}</p>
                 <hr className={styles.discoverLine}/>
-            </div>
+            </button>
         </div>
     );
 }
