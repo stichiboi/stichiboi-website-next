@@ -1,0 +1,20 @@
+.mountains {
+    position: relative;
+    height: 120vh;
+}
+
+.children {
+    padding: 10em;
+    background: var(--color-dark);
+}
+
+.mountains > * {
+    position: absolute;
+    bottom: 0;
+}
+
+.sunset {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(180deg, rgba(255, 125, 97, 0) 0%, #FFEFC8 64.06%);
+}

@@ -28,6 +28,13 @@ export default function MouseTrail(): JSX.Element {
         }
     }, [context]);
 
+    const updateMouse = useCallback((event: MouseEvent) => {
+        mouseLocation.current = {
+            x: event.clientX,
+            y: event.clientY
+        };
+    }, [mouseLocation]);
+
     const makePath = useCallback((start: Point, end: Point, color: string, lineWeight: number) => {
         const ctx = context.current;
         if (!ctx) return;
@@ -80,29 +87,21 @@ export default function MouseTrail(): JSX.Element {
     }, [mouseLocation, animatePoints]);
 
     useEffect(() => {
-        function init() {
-            const tempContext = canvas.current.getContext('2d');
-            if (!tempContext) throw Error("Cannot create canvas context");
-            tempContext.lineJoin = "round";
-            context.current = tempContext;
+        const tempContext = canvas.current.getContext('2d');
+        if (!tempContext) throw Error("Cannot create canvas context");
+        tempContext.lineJoin = "round";
+        context.current = tempContext;
 
-            window.addEventListener('resize', () => {
-                resizeCanvas();
-            });
+        window.addEventListener('resize', resizeCanvas);
 
-            document.body.addEventListener('mousemove', e => {
-                mouseLocation.current = {
-                    x: e.clientX,
-                    y: e.clientY
-                };
-            });
-            draw();
-            resizeCanvas();
+        document.body.addEventListener('mousemove', updateMouse);
+        draw();
+        resizeCanvas();
+        return () => {
+            window.removeEventListener('resize', resizeCanvas);
+            window.removeEventListener('mousemove', updateMouse);
         }
-
-        document.addEventListener('readystatechange', init);
-        return () => document.removeEventListener('readystatechange', init)
-    }, [draw, resizeCanvas]);
+    }, [draw, resizeCanvas, mouseLocation]);
 
     return (
         <canvas ref={canvas} className={styles.mouseTrail}/>

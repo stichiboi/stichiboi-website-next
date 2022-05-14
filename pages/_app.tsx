@@ -3,6 +3,7 @@ import type {AppProps} from 'next/app'
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import LoadingScreen from "../components/LoadingScreen";
+import MouseTrail from "../components/MouseTrail";
 
 function MyApp({Component, pageProps}: AppProps) {
     const [isLoading, setIsLoading] = useState(true);
@@ -10,7 +11,7 @@ function MyApp({Component, pageProps}: AppProps) {
 
     useEffect(() => {
         setTimeout(() => setIsLoading(false), 1300 + Math.random() * 1000);
-    });
+    }, []);
 
     useEffect(() => {
         const handleStart = () => {
@@ -35,6 +36,7 @@ function MyApp({Component, pageProps}: AppProps) {
         <>
             <LoadingScreen isLoading={isLoading}/>
             <Component {...pageProps} />
+            <MouseTrail/>
         </>
     )
 }

@@ -4,7 +4,9 @@ body {
     margin: 0;
     font-family: "Lato", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-
+    
+    --color-dark: #0D1524;
+    --color-light: #FFFFFF;
     --color-quiet: #E0E0E0;
 }
 
@@ -15,6 +17,11 @@ a {
 
 h1, p, hr {
     margin: 0;
+}
+
+button {
+    background: none;
+    border: none;
 }
 
 * {
