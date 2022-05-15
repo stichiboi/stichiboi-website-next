@@ -1,11 +1,19 @@
+.container {
+    margin: 32em 0;
+}
+
 .mountains {
     position: relative;
-    height: 120vh;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
 }
 
 .children {
     padding: 10em;
     background: var(--color-dark);
+    z-index: 1;
+    position: relative;
 }
 
 .mountains > * {
@@ -13,8 +21,13 @@
     bottom: 0;
 }
 
+.mountains > *:last-child {
+    /*Make sure it connects with the children background*/
+    bottom: -5px;
+}
+
 .sunset {
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
     background: linear-gradient(180deg, rgba(255, 125, 97, 0) 0%, #FFEFC8 64.06%);
 }

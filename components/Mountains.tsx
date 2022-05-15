@@ -5,7 +5,8 @@ import M4 from "../public/mountains/mountain-4.svg";
 import M5 from "../public/mountains/mountain-5.svg";
 import M6 from "../public/mountains/mountain-6.svg";
 import styles from "../styles/Mountains.module.css";
-import {CSSProperties, MutableRefObject, useCallback, useEffect, useRef} from "react";
+import {MutableRefObject, useCallback, useEffect, useRef} from "react";
+import {Parallax, ParallaxProvider} from "react-scroll-parallax";
 
 export default function Mountains({
                                       children
@@ -28,30 +29,38 @@ export default function Mountains({
             }
         }
 
-        window.addEventListener("scroll", () => changeColor());
+
+        window.addEventListener("scroll", changeColor);
 
         return window.removeEventListener("scroll", changeColor);
-    }, []);
+    }, [mountainsRef]);
 
-    const buildMountains = useCallback((style?: CSSProperties) => (
-        <div className={styles.mountains} style={style}>
-            <div className={styles.sunset}/>
-            <M1/>
-            <M2/>
-            <M3/>
-            <M4/>
-            <M5/>
-            <M6/>
-        </div>
+    const buildMountains = useCallback((flip = 1) => (
+        <ParallaxProvider>
+            <div className={styles.mountains}
+                 style={flip === -1 ? {
+                     transform: "rotateZ(180deg)",
+                 } : {}}>
+                <Parallax speed={-30 * flip}>
+                    <div className={styles.sunset}/>
+                </Parallax>
+                <Parallax speed={-25 * flip}><M1/></Parallax>
+                <Parallax speed={-20 * flip}><M2/></Parallax>
+                <Parallax speed={-15 * flip}><M3/></Parallax>
+                <Parallax speed={-10 * flip}><M4/></Parallax>
+                <Parallax speed={-5 * flip}><M5/></Parallax>
+                <M6/>
+            </div>
+        </ParallaxProvider>
     ), []);
 
     return (
-        <div ref={mountainsRef}>
+        <div ref={mountainsRef} className={styles.container}>
             {buildMountains()}
             <div className={styles.children}>
                 {children}
             </div>
-            {buildMountains({transform: "rotateZ(180deg)"})}
+            {buildMountains(-1)}
         </div>
     )
 }
