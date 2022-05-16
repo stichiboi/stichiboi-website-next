@@ -2,11 +2,39 @@
     margin: 32em 0;
 }
 
-.mountains {
+.graphics {
     position: relative;
     height: 100vh;
+}
+
+.mountains {
     display: flex;
     justify-content: center;
+}
+
+.clouds {
+    position: relative;
+    height: 100%;
+    z-index: 2;
+}
+
+.clouds > * {
+    position: absolute;
+}
+
+.clouds > *:nth-child(1) {
+    left: 1200px;
+    top: -100px;
+}
+
+.clouds > *:nth-child(2) {
+    top: 50px;
+    left: 150px;
+}
+
+.clouds > *:nth-child(3) {
+    left: 800px;
+    top: 300px;
 }
 
 .children {

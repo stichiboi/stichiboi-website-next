@@ -4,6 +4,9 @@ import M3 from "../public/mountains/mountain-3.svg";
 import M4 from "../public/mountains/mountain-4.svg";
 import M5 from "../public/mountains/mountain-5.svg";
 import M6 from "../public/mountains/mountain-6.svg";
+import C1 from "../public/mountains/clouds/cloud-1.svg";
+import C2 from "../public/mountains/clouds/cloud-2.svg";
+import C3 from "../public/mountains/clouds/cloud-3.svg";
 import styles from "../styles/Mountains.module.css";
 import {MutableRefObject, useCallback, useEffect, useRef} from "react";
 import {Parallax, ParallaxProvider} from "react-scroll-parallax";
@@ -37,19 +40,25 @@ export default function Mountains({
 
     const buildMountains = useCallback((flip = 1) => (
         <ParallaxProvider>
-            <div className={styles.mountains}
-                 style={flip === -1 ? {
-                     transform: "rotateZ(180deg)",
-                 } : {}}>
-                <Parallax speed={-30 * flip}>
-                    <div className={styles.sunset}/>
-                </Parallax>
-                <Parallax speed={-25 * flip}><M1/></Parallax>
-                <Parallax speed={-20 * flip}><M2/></Parallax>
-                <Parallax speed={-15 * flip}><M3/></Parallax>
-                <Parallax speed={-10 * flip}><M4/></Parallax>
-                <Parallax speed={-5 * flip}><M5/></Parallax>
-                <M6/>
+            <div className={styles.graphics} style={flip === -1 ? {
+                transform: "rotateZ(180deg)",
+            } : {}}>
+                <div className={styles.clouds}>
+                    <Parallax speed={-25 * flip}><C1/></Parallax>
+                    <Parallax speed={-20 * flip}><C2/></Parallax>
+                    <Parallax speed={-23 * flip}><C3/></Parallax>
+                </div>
+                <div className={styles.mountains}>
+                    <Parallax speed={-30 * flip}>
+                        <div className={styles.sunset}/>
+                    </Parallax>
+                    <Parallax speed={-25 * flip}><M1/></Parallax>
+                    <Parallax speed={-20 * flip}><M2/></Parallax>
+                    <Parallax speed={-15 * flip}><M3/></Parallax>
+                    <Parallax speed={-10 * flip}><M4/></Parallax>
+                    <Parallax speed={-5 * flip}><M5/></Parallax>
+                    <M6/>
+                </div>
             </div>
         </ParallaxProvider>
     ), []);
