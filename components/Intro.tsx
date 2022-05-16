@@ -12,10 +12,11 @@ export default function Intro(): JSX.Element {
     return (
         <Mountains>
             <main id={"intro"} className={styles.container}>
-                <div className={styles.image}>
+                <div className={styles.imageContainer}>
                     <div className={styles.imageAccent}/>
                     <Image src={"/profile-picture.png"}
                            alt={t("intro.imageAlt")}
+                           className={styles.image}
                            height={528} width={418}/>
                     <div className={styles.imageAccent}/>
                 </div>

@@ -29,24 +29,40 @@
     font-size: 24px;
 }
 
-.image {
+.imageContainer {
     position: relative;
     height: fit-content;
 }
 
+.imageContainer > * {
+    transition: .5s ease;
+}
+
+.imageContainer:hover > * {
+    border-radius: 1em;
+}
+
+.imageContainer:hover > .imageAccent {
+    --movement: 0em;
+}
+
+.image {
+    transition-property: border-radius;
+}
+
 .imageAccent {
-    border: .3em solid var(--color-light);
+    opacity: .8;
+    border: .2em solid var(--color-light);
     position: absolute;
     height: 100%;
     width: 100%;
-}
-
-.imageAccent:first-child {
-    top: 2em;
-    left: 2em;
+    --movement: 2em;
+    top: var(--movement);
+    left: var(--movement);
+    transition-property: top, left, border-radius;
+    z-index: 0;
 }
 
 .imageAccent:last-child {
-    top: -2em;
-    left: -2em;
+    --movement: -2em;
 }
