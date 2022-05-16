@@ -30,9 +30,9 @@ export default function Mountains({
         }
 
 
-        window.addEventListener("scroll", changeColor);
+        window.addEventListener("scroll", () => changeColor());
 
-        return window.removeEventListener("scroll", changeColor);
+        return window.removeEventListener("scroll", () => changeColor());
     }, [mountainsRef]);
 
     const buildMountains = useCallback((flip = 1) => (
