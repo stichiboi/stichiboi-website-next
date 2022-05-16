@@ -1,32 +1,35 @@
 import Mountains from "./Mountains";
 import styles from "../styles/Intro.module.css";
 import {useTranslation} from "next-export-i18n";
-import {useCallback} from "react";
+import Image from "next/image";
+import Link from "./generic/Link";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faLinkedin, faGithub} from "@fortawesome/free-brands-svg-icons";
 
 export default function Intro(): JSX.Element {
     const {t} = useTranslation();
-
-    const linkWithIcon = useCallback((label: string, icon: JSX.Element, onClick: () => unknown) => (
-        <button onClick={onClick}>
-            {icon}
-            {label}
-        </button>
-    ), []);
-
 
     return (
         <Mountains>
             <main id={"intro"} className={styles.container}>
                 <div>
-                    <img src={"/profile-picture.png"} alt={"A photo of me doing cardistry"}/>
+                    <Image src={"/profile-picture.png"}
+                           alt={t("intro.imageAlt")}
+                           height={528} width={418}/>
                 </div>
                 <div className={styles.links}>
                     <hr className={styles.line}/>
-                    <p className={styles.title}>
+                    <h2 className={styles.title}>
                         {t("intro.title")}
-                    </p>
-                    {linkWithIcon("CV", <div/>, () => {
-                    })}
+                    </h2>
+                    <Link label={t("intro.linkedIn")}
+                          icon={<FontAwesomeIcon icon={faLinkedin} size={"lg"}/>}
+                          target={"https://www.linkedin.com/in/daniele-mazzotta-1714b9161/"}
+                    />
+                    <Link label={t("intro.gitHub")}
+                          icon={<FontAwesomeIcon icon={faGithub} size={"lg"}/>}
+                          target={"https://github.com/stichiboi"}
+                    />
                 </div>
             </main>
         </Mountains>

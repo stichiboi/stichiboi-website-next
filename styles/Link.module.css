@@ -1,0 +1,7 @@
+.content {
+    display: flex;
+    align-items: center;
+    color: var(--color-light);
+    gap: 1em;
+    cursor: pointer;
+}

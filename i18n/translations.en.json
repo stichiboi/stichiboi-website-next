@@ -9,5 +9,12 @@
     "description2": "But I probably should have studied Computer Science.",
     "description3": "This is just a place to mess around with some ideas.",
     "discover": "Discover"
+  },
+  "intro": {
+    "title": "Daniele Mazzotta - Software Engineer",
+    "imageAlt": "A photo of me doing cardistry",
+    "cv": "CV",
+    "linkedIn": "LinkedIn",
+    "gitHub": "GitHub"
   }
 }

@@ -24,4 +24,7 @@
 
 .title {
     font-weight: lighter;
+    text-transform: uppercase;
+        letter-spacing: .2em;
+    font-size: 24px;
 }
