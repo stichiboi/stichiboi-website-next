@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "./generic/Link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faLinkedin, faGithub} from "@fortawesome/free-brands-svg-icons";
+import HoverReveal from "./generic/HoverReveal";
 
 export default function Intro(): JSX.Element {
     const {t} = useTranslation();
@@ -23,9 +24,11 @@ export default function Intro(): JSX.Element {
                 </div>
                 <div className={styles.links}>
                     <hr className={styles.line}/>
-                    <h2 className={styles.title}>
-                        {t("intro.title")}
-                    </h2>
+                    <HoverReveal colors={["white", "#7E86A5", "#485C80", "#0D1524"]}>
+                        <h2 className={styles.title}>
+                            {t("intro.title")}
+                        </h2>
+                    </HoverReveal>
                     <Link label={t("intro.linkedIn")}
                           icon={<FontAwesomeIcon icon={faLinkedin} size={"lg"}/>}
                           target={"https://www.linkedin.com/in/daniele-mazzotta-1714b9161/"}

@@ -9,14 +9,10 @@
     right: 100%;
     --delay: 0;
     --background: var(--color-light);
-    --color: var(--color-dark);
     background: var(--background);
-    color: var(--color);
-    transition: 1s ease;
+    transition: .5s ease;
     transition-property: right;
-    transition-delay: var(--delay);
     overflow: hidden;
-
 }
 
 .content:first-child {
@@ -27,4 +23,6 @@
 
 .container:hover > .content {
     right: 0;
+    transition-delay: var(--delay);
+    transition-duration: 1s;
 }
