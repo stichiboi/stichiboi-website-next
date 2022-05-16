@@ -1,11 +1,11 @@
 .container {
     background: var(--color-dark);
     display: flex;
+    flex-direction: column;
     color: var(--color-light);
     justify-content: center;
 
     gap: 10em;
-    padding: 2em 0;
     height: 100vh;
 }
 
@@ -13,7 +13,7 @@
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    gap: 2em;
+    /*gap: 2em;*/
 }
 
 .line {
@@ -76,4 +76,11 @@
 
 .imageAccent:last-child {
     --movement: -2em;
+}
+
+@media (min-width: 750px) {
+    .container {
+        flex-direction: row;
+        padding: 2em 0;
+    }
 }

@@ -38,7 +38,7 @@
 }
 
 .children {
-    padding: 10em;
+    padding: 4em;
     background: var(--color-dark);
     z-index: 1;
     position: relative;
@@ -58,4 +58,23 @@
     height: 100vh;
     width: 100vw;
     background: linear-gradient(180deg, rgba(255, 125, 97, 0) 0%, #FFEFC8 64.06%);
+}
+
+
+@media (min-width: 600px) {
+    .children {
+        padding: 10em;
+    }
+}
+
+@media (min-width: 750px) {
+    .children {
+        padding: 5em;
+    }
+}
+
+@media (min-width: 1000px) {
+    .children {
+        padding: 10em;
+    }
 }
