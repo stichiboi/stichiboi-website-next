@@ -28,9 +28,6 @@
     letter-spacing: .2em;
     font-size: 24px;
     margin: 1em 0;
-    /*height: 3em;*/
-    text-wrap: none;
-    white-space: nowrap;
     color: var(--color-light);
 }
 

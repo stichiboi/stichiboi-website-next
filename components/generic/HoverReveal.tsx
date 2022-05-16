@@ -15,9 +15,7 @@ export default function HoverReveal({children, colors}: { children: React.ReactC
                          "--background": c,
                          "--delay": `${.2 * i}s`
                      } as unknown as CSSProperties}
-                >
-                    {children}
-                </div>
+                />
             ))}
         </div>
     );
