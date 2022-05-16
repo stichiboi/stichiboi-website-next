@@ -1,0 +1,30 @@
+.container {
+    position: relative;
+}
+
+.content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 100%;
+    --delay: 0;
+    --background: var(--color-light);
+    --color: var(--color-dark);
+    background: var(--background);
+    color: var(--color);
+    transition: 1s ease;
+    transition-property: right;
+    transition-delay: var(--delay);
+    overflow: hidden;
+
+}
+
+.content:first-child {
+    right: 0;
+    position: relative;
+    --background: transparent;
+}
+
+.container:hover > .content {
+    right: 0;
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../../styles/Link.module.css";
+import HoverReveal from "./HoverReveal";
 
 export default function Link({icon, label, onClick, target}: {
                                  icon: JSX.Element,
@@ -16,9 +17,9 @@ export default function Link({icon, label, onClick, target}: {
     )
     return (
         <a className={styles.link} href={target} onClick={onClick}>
-            {content}
-            {content}
-            {content}
+            <HoverReveal colors={["white", "#FFA693"]}>
+                {content}
+            </HoverReveal>
         </a>
     );
 }
