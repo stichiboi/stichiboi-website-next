@@ -1,7 +1,38 @@
+.link {
+    position: relative;
+    height: fit-content;
+}
+
 .content {
     display: flex;
     align-items: center;
     color: var(--color-light);
     gap: 1em;
     cursor: pointer;
+    height: 3em;
+}
+
+.content:not(:last-child) {
+    position: absolute;
+    top: 0;
+    color: var(--color-dark);
+    background: var(--color-quiet);
+    left: 0;
+    right: 120%;
+    transition: 1s ease;
+    transition-property: width, right;
+    overflow: hidden;
+}
+
+.content:first-child {
+    background: #FFA693;
+    z-index: 1;
+}
+
+.link:hover > .content:first-child {
+    transition-delay: .2s;
+}
+
+.link:hover > .content:not(:last-child) {
+    right: 0;
 }

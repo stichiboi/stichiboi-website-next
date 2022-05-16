@@ -14,16 +14,11 @@ export default function Link({icon, label, onClick, target}: {
             <p>{label}</p>
         </div>
     )
-    if (target) {
-        return (
-            <a href={target}>
-                {content}
-            </a>
-        )
-    }
     return (
-        <button onClick={onClick}>
+        <a className={styles.link} href={target} onClick={onClick}>
             {content}
-        </button>
+            {content}
+            {content}
+        </a>
     );
 }
