@@ -32,6 +32,8 @@
 .imageContainer {
     position: relative;
     height: fit-content;
+    display: flex;
+    flex-direction: column;
 }
 
 .imageContainer > * {
@@ -50,6 +52,16 @@
     transition-property: border-radius;
 }
 
+.imageDescription {
+    position: absolute;
+    bottom: 0;
+    opacity: .8;
+}
+
+.imageContainer:hover > .imageDescription {
+    bottom: -2em;
+}
+
 .imageAccent {
     opacity: .8;
     border: .2em solid var(--color-light);
@@ -60,7 +72,6 @@
     top: var(--movement);
     left: var(--movement);
     transition-property: top, left, border-radius;
-    z-index: 0;
 }
 
 .imageAccent:last-child {

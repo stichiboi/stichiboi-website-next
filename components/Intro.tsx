@@ -14,6 +14,7 @@ export default function Intro(): JSX.Element {
             <main id={"intro"} className={styles.container}>
                 <div className={styles.imageContainer}>
                     <div className={styles.imageAccent}/>
+                    <p className={styles.imageDescription}>{t("intro.imageAlt")}</p>
                     <Image src={"/profile-picture.png"}
                            alt={t("intro.imageAlt")}
                            className={styles.image}
