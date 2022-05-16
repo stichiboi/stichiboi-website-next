@@ -25,6 +25,28 @@
 .title {
     font-weight: lighter;
     text-transform: uppercase;
-        letter-spacing: .2em;
+    letter-spacing: .2em;
     font-size: 24px;
+}
+
+.image {
+    position: relative;
+    height: fit-content;
+}
+
+.imageAccent {
+    border: .3em solid var(--color-light);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.imageAccent:first-child {
+    top: 2em;
+    left: 2em;
+}
+
+.imageAccent:last-child {
+    top: -2em;
+    left: -2em;
 }
