@@ -29,7 +29,11 @@ export default function Hero(): JSX.Element {
                 </div>
                 <Planetary/>
             </main>
-            <DiscoverLine label={t("hero.discover")} scrollToID={"intro"}/>
+            <DiscoverLine label={t("hero.discover")}
+                          scrollToID={"intro"}
+                          style={{
+                              paddingLeft: "4em"
+                          }}/>
         </div>
     );
 }

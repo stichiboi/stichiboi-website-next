@@ -6,6 +6,8 @@ import Link from "./generic/Link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faLinkedin, faGithub} from "@fortawesome/free-brands-svg-icons";
 import HoverReveal from "./generic/HoverReveal";
+import DiscoverLine from "./generic/DiscoverLine";
+import {CSSProperties} from "react";
 
 export default function Intro(): JSX.Element {
     const {t} = useTranslation();
@@ -37,6 +39,12 @@ export default function Intro(): JSX.Element {
                           icon={<FontAwesomeIcon icon={faGithub} size={"lg"}/>}
                           target={"https://github.com/stichiboi"}
                     />
+                    <DiscoverLine label={t("intro.discover")}
+                                  scrollToID={"projects"}
+                                  style={{
+                                      "--color": "var(--color-light)",
+                                      alignSelf: "flex-end"
+                                  } as unknown as CSSProperties}/>
                 </div>
             </main>
         </Mountains>
