@@ -41,7 +41,6 @@ const Home: NextPage = () => {
     }, []);
 
     useEffect(() => {
-        console.log("Changing color " + activeSection);
         document.getElementById("home")?.style
             .setProperty("background-color", SECTION_COLORS[activeSection || 0]);
     }, [SECTION_COLORS, activeSection]);
