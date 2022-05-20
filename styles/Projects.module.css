@@ -1,0 +1,10 @@
+.container {
+    position: relative;
+    margin-top: 20em;
+}
+
+.snow {
+    position: absolute;
+    margin-top: -20em;
+    z-index: 1;
+}
