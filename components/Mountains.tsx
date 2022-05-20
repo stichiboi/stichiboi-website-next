@@ -9,35 +9,12 @@ import C2 from "../public/mountains/clouds/cloud-2.svg";
 import C3 from "../public/mountains/clouds/cloud-3.svg";
 import T1 from "../public/mountains/trees/tree-1.svg";
 import styles from "../styles/Mountains.module.css";
-import {MutableRefObject, useCallback, useEffect, useRef} from "react";
+import {useCallback} from "react";
 import {Parallax, ParallaxProvider} from "react-scroll-parallax";
 
 export default function Mountains({
                                       children
                                   }: { children: JSX.Element }): JSX.Element {
-    const mountainsRef = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
-    const isBackgroundToggled = useRef(false);
-
-    useEffect(() => {
-        function changeColor() {
-            const yScroll = window.scrollY || window.pageYOffset;
-            const rect = mountainsRef.current.getBoundingClientRect();
-            if (!isBackgroundToggled.current && yScroll > rect.top) {
-                document.getElementById("home")?.style
-                    .setProperty("background-color", "#FFA693");
-                isBackgroundToggled.current = true;
-            } else if (isBackgroundToggled.current && yScroll < rect.top) {
-                document.getElementById("home")?.style
-                    .setProperty("background-color", "transparent");
-                isBackgroundToggled.current = false;
-            }
-        }
-
-
-        window.addEventListener("scroll", () => changeColor());
-
-        return window.removeEventListener("scroll", () => changeColor());
-    }, [mountainsRef]);
 
     const buildMountains = useCallback((flip = 1) => (
         <ParallaxProvider>
@@ -83,7 +60,7 @@ export default function Mountains({
     ), []);
 
     return (
-        <div ref={mountainsRef} className={styles.container}>
+        <div className={styles.container}>
             {buildMountains()}
             <div className={styles.children}>
                 {children}
