@@ -3,7 +3,7 @@ import type {AppProps} from 'next/app'
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import LoadingScreen from "../components/LoadingScreen";
-import MouseTrail from "../components/MouseTrail";
+import {MouseTrail} from "@stichiboi/react-elegant-mouse-trail";
 
 function MyApp({Component, pageProps}: AppProps) {
     const [isLoading, setIsLoading] = useState(true);
