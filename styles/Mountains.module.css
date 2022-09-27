@@ -47,8 +47,8 @@
 .mountains > * {
     position: absolute;
     bottom: 0;
-    transform-origin: 0 0;
-    transform: translateZ(-2px) scale(3);
+    /*transform-origin: 0 0;*/
+    /*transform: translateZ(-2px) scale(3);*/
 }
 
 .mountains > *:last-child {
