@@ -6,7 +6,7 @@ export default function Projects(): JSX.Element {
     return (
         <main id={"projects"} className={styles.container}>
             <div className={styles.snow}>
-                <Snow/>
+                {/*<Snow/>*/}
             </div>
             <div>
                 Sudoku
