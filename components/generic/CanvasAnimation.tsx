@@ -1,4 +1,4 @@
-import React, {MutableRefObject, useCallback, useEffect, useRef} from "react";
+import React, { MutableRefObject, useCallback, useEffect, useRef } from "react";
 
 export default function CanvasAnimation({
                                             className,
@@ -10,8 +10,9 @@ export default function CanvasAnimation({
 
     const resizeCanvas = useCallback(() => {
         if (context.current?.canvas) {
-            context.current.canvas.width = window.innerWidth;
-            context.current.canvas.height = window.innerHeight
+            const boundingBox = context.current?.canvas.getBoundingClientRect();
+            context.current.canvas.width = boundingBox.width;
+            context.current.canvas.height = boundingBox.height;
         }
     }, [context]);
 

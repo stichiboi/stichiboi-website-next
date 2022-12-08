@@ -17,5 +17,12 @@
     "linkedIn": "LinkedIn",
     "gitHub": "GitHub",
     "discover": "Projects"
+  },
+  "projects": {
+    "sudoku": {
+      "title": "Sudoku",
+      "description": "Sudokus are holiday homework for adults. Now with dark mode.",
+      "alt": "Enjoy a cool sudoku. For free. No ads. Just love"
+    }
   }
 }

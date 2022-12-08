@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useRef} from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import CanvasAnimation from "./generic/CanvasAnimation";
 import styles from "../styles/Snow.module.css";
 
@@ -11,11 +11,17 @@ interface Point {
     fallSpeed: number
 }
 
-export default function Snow(): JSX.Element {
+interface SnowProps {
+    className?: string;
+    maxAge?: number;
+    drawProbability?: number;
+}
+
+export default function Snow({ className, maxAge, drawProbability }: SnowProps): JSX.Element {
     const points = useRef<Point[]>([]);
     const COLORS = useMemo(() => ([[185, 247, 251], [218, 233, 255]]), []);
-    const MAX_AGE = 2000;
-    const DRAW_PROBABILITY = .1;
+    const MAX_AGE = useMemo(() => maxAge || 2000, [maxAge]);
+    const DRAW_PROBABILITY = useMemo(() => drawProbability || 0.1, [drawProbability]);
 
     const drawFlake = useCallback((ctx: CanvasRenderingContext2D, flake: Point) => {
         const size = Math.log(flake.age);
@@ -27,7 +33,7 @@ export default function Snow(): JSX.Element {
         ctx.rect(flake.x, flake.y, size, size);
         ctx.fillStyle = `rgba(${[...flake.color, (MAX_AGE - flake.age) / MAX_AGE].join(', ')})`;
         ctx.fill();
-    }, []);
+    }, [MAX_AGE]);
 
     const animatePoints = useCallback((ctx: CanvasRenderingContext2D) => {
         ctx.clearRect(
@@ -46,7 +52,7 @@ export default function Snow(): JSX.Element {
             }
             return p;
         });
-    }, [points, drawFlake]);
+    }, [MAX_AGE, points, drawFlake]);
 
     const draw = useCallback((canvas: HTMLCanvasElement) => {
         if (Math.random() < DRAW_PROBABILITY) {
@@ -56,10 +62,13 @@ export default function Snow(): JSX.Element {
             const y = Math.random() * canvasSize.height / 2;
             const fallSpeed = Math.random() + .1;
             const color = COLORS[Math.floor(Math.random() * COLORS.length)];
-            points.current.push({x, y, color, fallSpeed, age: 0, rotation: 0});
+            points.current.push({ x, y, color, fallSpeed, age: 0, rotation: 0 });
         }
-    }, [points, COLORS]);
+    }, [DRAW_PROBABILITY, COLORS]);
     return (
-        <CanvasAnimation className={styles.container} draw={draw} animatePoints={animatePoints}/>
+        <div className={`${styles.container} ${className}`}>
+            <div className={styles.background}/>
+            <CanvasAnimation className={styles.snow} draw={draw} animatePoints={animatePoints}/>
+        </div>
     );
 }

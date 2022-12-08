@@ -26,6 +26,8 @@ h1, p, hr {
 button {
     background: none;
     border: none;
+
+    cursor: pointer;
 }
 
 * {

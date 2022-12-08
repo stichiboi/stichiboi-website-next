@@ -1,0 +1,28 @@
+.button {
+    --size: 10em;
+    height: var(--size);
+    width: 100%;
+    border-radius: 1em calc(var(--size) / 2) calc(var(--size) / 2);
+    display: flex;
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 26px 26px 52px #00000020;
+    background: rgb(16, 105, 136);
+
+    justify-content: center;
+    transition: border-radius ease .5s;
+}
+
+.button:hover {
+    border-radius: calc(var(--size) / 2);
+}
+
+.content {
+    padding: 1em;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 1em;
+    z-index: 1;
+}

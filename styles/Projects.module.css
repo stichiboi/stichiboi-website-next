@@ -1,10 +1,58 @@
 .container {
     position: relative;
     margin-top: 20em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .snow {
     position: absolute;
-    margin-top: -20em;
+    --translate-y: -20em;
+    height: calc(100% - var(--translate-y));
+    transform: translateY(var(--translate-y));
+    /*margin-top: -20em;*/
+}
+
+.project {
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1em;
+    background: var(--color-light);
+    width: 30em;
+    overflow: hidden;
+}
+
+.content {
+    padding: 3em;
+    gap: 1.5em;
+}
+
+.title {
+    font-family: "Comfortaa", sans-serif;
+    letter-spacing: .175em;
+    font-size: 32px;
+    text-transform: lowercase;
+}
+
+.description {
+
+}
+
+@media (min-width: 600px) {
+    .project {
+        flex-direction: row;
+        width: fit-content;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .title{
+        font-size: 48px;
+    }
 }
