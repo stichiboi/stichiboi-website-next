@@ -73,6 +73,7 @@
     border: 1px solid white;
     --scaleY: 1;
     --delay: 0s;
+    opacity: var(--scaleY);
 }
 
 .descriptionLine:not(:first-child) {
