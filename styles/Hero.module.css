@@ -35,6 +35,8 @@
 }
 
 .descriptionContainer {
+    z-index: 0;
+    position: relative;
     display: flex;
     justify-content: space-between;
 
@@ -56,8 +58,31 @@
     animation-fill-mode: forwards;
 }
 
+.descriptionLines {
+    z-index: -1;
+    padding: 2em 2em 0 2em;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
 .descriptionLine {
+    transition: transform .5s ease;
     border: 1px solid white;
+    --scaleY: 1;
+    --delay: 0s;
+}
+
+.descriptionLine:not(:first-child) {
+    transform: scaleY(0);
+    transform-origin: bottom;
+}
+
+.descriptionContainer:hover .descriptionLine {
+    transform: scaleY(var(--scaleY));
+    transition-delay: var(--delay);
 }
 
 .logo {
