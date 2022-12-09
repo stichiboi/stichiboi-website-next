@@ -47,6 +47,7 @@
 .mountains > * {
     position: absolute;
     bottom: 0;
+    width: 110%;
     /*transform-origin: 0 0;*/
     /*transform: translateZ(-2px) scale(3);*/
 }
@@ -55,73 +56,6 @@
     /*Make sure it connects with the children background*/
     bottom: -15px;
 }
-
-.trees {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-}
-
-.trees > * {
-    color: #0D1524;
-    position: absolute;
-}
-
-.treesFront > *:nth-child(1) {
-    left: 550px;
-    bottom: 120px;
-}
-
-.treesFront > *:nth-child(2) {
-    left: 1050px;
-    bottom: 70px;
-}
-
-.treesFront > *:nth-child(3) {
-    left: 1130px;
-    bottom: 90px;
-}
-
-.treesFront > *:nth-child(4) {
-    left: 1210px;
-    bottom: 115px;
-}
-
-.treesMiddle > * {
-    transform: scale(.7);
-    color: #485C80
-}
-
-.treesMiddle > *:nth-child(1) {
-    bottom: 190px;
-    left: 300px;
-}
-
-.treesMiddle > *:nth-child(2) {
-    bottom: 180px;
-    left: 360px;
-}
-
-.treesMiddle > *:nth-child(3) {
-    bottom: 140px;
-    left: 760px;
-}
-
-.treesMiddle > *:nth-child(4) {
-    bottom: 120px;
-    left: 810px;
-}
-
-.treesMiddle > *:nth-child(5) {
-    bottom: 190px;
-    left: 1510px;
-}
-
-.treesMiddle > *:nth-child(6) {
-    bottom: 180px;
-    left: 1550px;
-}
-
 
 .sunset {
     height: 100vh;

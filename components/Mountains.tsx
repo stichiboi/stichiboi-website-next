@@ -7,10 +7,9 @@ import M6 from "../public/mountains/mountain-6.svg";
 import C1 from "../public/mountains/clouds/cloud-1.svg";
 import C2 from "../public/mountains/clouds/cloud-2.svg";
 import C3 from "../public/mountains/clouds/cloud-3.svg";
-import T1 from "../public/mountains/trees/tree-1.svg";
 import styles from "../styles/Mountains.module.css";
-import {useCallback} from "react";
-import {Parallax, ParallaxProvider} from "react-scroll-parallax";
+import { useCallback } from "react";
+import { Parallax, ParallaxProvider } from "react-scroll-parallax";
 
 export default function Mountains({
                                       children
@@ -34,26 +33,8 @@ export default function Mountains({
                     <Parallax speed={-20 * flip}><M2/></Parallax>
                     <Parallax speed={-15 * flip}><M3/></Parallax>
                     <Parallax speed={-10 * flip}><M4/></Parallax>
-                    <Parallax speed={-5 * flip}>
-                        <div className={`${styles.trees} ${styles.treesMiddle}`}>
-                            <T1/>
-                            <T1/>
-                            <T1/>
-                            <T1/>
-                            <T1/>
-                            <T1/>
-                        </div>
-                        <M5/>
-                    </Parallax>
-                    <Parallax>
-                        <div className={`${styles.trees} ${styles.treesFront}`}>
-                            <T1/>
-                            <T1/>
-                            <T1/>
-                            <T1/>
-                        </div>
-                        <M6/>
-                    </Parallax>
+                    <Parallax speed={-5 * flip}><M5/></Parallax>
+                    <Parallax><M6/></Parallax>
                 </div>
             </div>
         </ParallaxProvider>
