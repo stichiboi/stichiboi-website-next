@@ -13,11 +13,12 @@
     "@fortawesome/free-brands-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
+    "@stichiboi/react-elegant-mouse-trail": "^0.1.5",
     "@svgr/webpack": "^6.2.1",
     "next": "12.1.5",
     "next-export-i18n": "^1.4.3",
-    "react": "18.0.0",
-    "react-dom": "18.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-scroll-parallax": "^3.2.0"
   },
   "devDependencies": {
