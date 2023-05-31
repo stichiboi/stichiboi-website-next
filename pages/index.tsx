@@ -1,10 +1,11 @@
-import type {NextPage} from 'next'
+import type { NextPage } from 'next'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Hero from "../components/Hero";
 import Intro from "../components/Intro";
 import Projects from "../components/Projects";
-import {useCallback, useEffect, useMemo, useState} from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Footer } from "../components/Footer";
 
 const Home: NextPage = () => {
 
@@ -63,6 +64,7 @@ const Home: NextPage = () => {
         <Intro/>
         <Projects/>
       </main>
+      <Footer/>
     </div>
   )
 }

@@ -9,7 +9,7 @@ export default function Hero(): JSX.Element {
   const { t } = useTranslation();
   const NUM_LINES = 6;
   return (
-    <div className={styles.container}>
+    <div className={styles.container} id={"hero"}>
       <main className={styles.main}>
         <div className={styles.content}>
           <div className={styles.titleContainer}>

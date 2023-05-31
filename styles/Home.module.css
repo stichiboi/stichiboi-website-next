@@ -9,7 +9,6 @@
     flex-direction: column;
     /*Used for transitioning in mountains*/
     transition: background-color 1s ease-in;
-    height: 100000px;
 }
 
 .footer {

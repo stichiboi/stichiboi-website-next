@@ -30,5 +30,11 @@
       "description": "Top-level gamers require top-level reflexes. Try to measure them, and see if you can improve.",
       "alt": "Test your skill and improve your high score."
     }
+  },
+  "footer": {
+    "text_1": "This is a simple footer.",
+    "text_2": "Or is it...? 🤔",
+    "copyright": "Made by Stichiboi © 2023",
+    "backToTop": "Back to the top"
   }
 }

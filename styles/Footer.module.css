@@ -1,0 +1,55 @@
+.container {
+
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    padding: 3em;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    justify-content: center;
+    align-items: center;
+    flex: 1 1 auto;
+}
+
+.copyright {
+    flex: none;
+    color: gray;
+    margin-top: auto;
+    font-size: 12px;
+}
+
+.backToTop {
+    padding: 3em;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 4em;
+    display: flex;
+    align-items: flex-end;
+    color: gray;
+}
+
+.backToTop:hover {
+    color: white;
+}
+
+.backToTop > p {
+    transition: .5s ease;
+    transition-property: color, translate;
+}
+
+.backToTop:hover > p {
+    translate: 0 -1em;
+}
