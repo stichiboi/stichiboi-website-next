@@ -7,6 +7,11 @@
     left: 0;
 }
 
+.planetary:hover > .sun {
+    background-color: #ff6d05;
+    box-shadow: 0 0 180px 30px #ff6d0555;
+}
+
 .sun {
     outline: none;
     border: none;
@@ -63,7 +68,7 @@
     height: var(--size);
     border-radius: calc(var(--size) / 2);
     transition: .5s ease-out;
-    transition-property: width, height, animation-duration, opacity, visibility, border-radius;
+    transition-property: width, height, animation-duration, opacity, visibility, background-color, box-shadow;
 }
 
 @keyframes spin {
