@@ -12,41 +12,41 @@ import { useCallback } from "react";
 import { Parallax, ParallaxProvider } from "react-scroll-parallax";
 
 export default function Mountains({
-                                      children
-                                  }: { children: JSX.Element }): JSX.Element {
+  children
+}: { children: JSX.Element }): JSX.Element {
 
-    const buildMountains = useCallback((flip = 1) => (
-        <ParallaxProvider>
-            <div className={styles.graphics} style={flip === -1 ? {
-                transform: "rotateZ(180deg)",
-            } : {}}>
-                <div className={styles.clouds}>
-                    <Parallax speed={-25 * flip}><C1/></Parallax>
-                    <Parallax speed={-20 * flip}><C2/></Parallax>
-                    <Parallax speed={-23 * flip}><C3/></Parallax>
-                </div>
-                <div className={styles.mountains}>
-                    <Parallax speed={-30 * flip}>
-                        <div className={styles.sunset}/>
-                    </Parallax>
-                    <Parallax speed={-25 * flip}><M1/></Parallax>
-                    <Parallax speed={-20 * flip}><M2/></Parallax>
-                    <Parallax speed={-15 * flip}><M3/></Parallax>
-                    <Parallax speed={-10 * flip}><M4/></Parallax>
-                    <Parallax speed={-5 * flip}><M5/></Parallax>
-                    <Parallax><M6/></Parallax>
-                </div>
-            </div>
-        </ParallaxProvider>
-    ), []);
-
-    return (
-        <div className={styles.container}>
-            {buildMountains()}
-            <div className={styles.children}>
-                {children}
-            </div>
-            {buildMountains(-1)}
+  const buildMountains = useCallback((flip = 1) => (
+    <ParallaxProvider>
+      <div className={styles.graphics} style={flip === -1 ? {
+        transform: "rotateZ(180deg)",
+      } : {}}>
+        <div className={styles.clouds}>
+          <Parallax speed={-25 * flip}><C1/></Parallax>
+          <Parallax speed={-20 * flip}><C2/></Parallax>
+          <Parallax speed={-23 * flip}><C3/></Parallax>
         </div>
-    )
+        <div className={styles.mountains}>
+          <Parallax speed={-30 * flip}>
+            <div className={styles.sunset}/>
+          </Parallax>
+          <Parallax speed={-25 * flip}><M1/></Parallax>
+          <Parallax speed={-20 * flip}><M2/></Parallax>
+          <Parallax speed={-15 * flip}><M3/></Parallax>
+          <Parallax speed={-10 * flip}><M4/></Parallax>
+          <Parallax speed={-5 * flip}><M5/></Parallax>
+          <Parallax><M6/></Parallax>
+        </div>
+      </div>
+    </ParallaxProvider>
+  ), []);
+
+  return (
+    <div className={styles.container}>
+      {buildMountains()}
+      <div className={styles.children}>
+        {children}
+      </div>
+      {buildMountains(-1)}
+    </div>
+  )
 }

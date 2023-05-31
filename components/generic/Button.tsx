@@ -10,13 +10,13 @@ export interface ButtonProps {
 }
 
 export default function Button({ label, icon, className, onClick, children }: ButtonProps): JSX.Element {
-    return (
-        <button onClick={onClick} className={`${styles.button} ${className}`}>
-            <div className={styles.content}>
-                {icon}
-                <p>{label}</p>
-            </div>
-            {children}
-        </button>
-    );
+  return (
+    <button onClick={onClick} className={`${styles.button} ${className}`}>
+      <div className={styles.content}>
+        {icon}
+        <p>{label}</p>
+      </div>
+      {children}
+    </button>
+  );
 }

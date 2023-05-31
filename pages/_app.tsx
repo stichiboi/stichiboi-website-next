@@ -6,39 +6,39 @@ import LoadingScreen from "../components/LoadingScreen";
 import {MouseTrail} from "@stichiboi/react-elegant-mouse-trail";
 
 function MyApp({Component, pageProps}: AppProps) {
-    const [isLoading, setIsLoading] = useState(true);
-    const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
-    useEffect(() => {
-        setTimeout(() => setIsLoading(false), 1300 + Math.random() * 1000);
-    }, []);
+  useEffect(() => {
+    setTimeout(() => setIsLoading(false), 1300 + Math.random() * 1000);
+  }, []);
 
-    useEffect(() => {
-        const handleStart = () => {
-            setIsLoading(true);
-        }
-        const handleStop = () => {
-            setIsLoading(false);
-        }
+  useEffect(() => {
+    const handleStart = () => {
+      setIsLoading(true);
+    }
+    const handleStop = () => {
+      setIsLoading(false);
+    }
 
-        router.events.on('routeChangeStart', handleStart)
-        router.events.on('routeChangeComplete', handleStop)
-        router.events.on('routeChangeError', handleStop)
+    router.events.on('routeChangeStart', handleStart)
+    router.events.on('routeChangeComplete', handleStop)
+    router.events.on('routeChangeError', handleStop)
 
-        return () => {
-            router.events.off('routeChangeStart', handleStart)
-            router.events.off('routeChangeComplete', handleStop)
-            router.events.off('routeChangeError', handleStop)
-        }
-    }, [router]);
+    return () => {
+      router.events.off('routeChangeStart', handleStart)
+      router.events.off('routeChangeComplete', handleStop)
+      router.events.off('routeChangeError', handleStop)
+    }
+  }, [router]);
 
-    return (
-        <>
-            <LoadingScreen isLoading={isLoading}/>
-            <Component {...pageProps} />
-            <MouseTrail/>
-        </>
-    )
+  return (
+    <>
+      <LoadingScreen isLoading={isLoading}/>
+      <Component {...pageProps} />
+      <MouseTrail/>
+    </>
+  )
 }
 
 export default MyApp
