@@ -1,30 +1,19 @@
 import React from "react";
 import styles from "../styles/Projects.module.css";
-import Image from "next/image";
 import { useTranslation } from "next-export-i18n";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBroomBall } from "@fortawesome/free-solid-svg-icons";
-import { SnowButton } from "./generic/SnowButton";
+import { ProjectCard } from "./ProjectCard";
 
 export default function Projects(): JSX.Element {
   const { t } = useTranslation();
 
   return (
     <main id={"projects"} className={styles.container}>
-      <div className={styles.project}>
-        <div className={styles.content}>
-          <h3 className={styles.title}>{t("projects.sudoku.title")}</h3>
-          <p className={styles.description}>{t("projects.sudoku.description")}</p>
-          <SnowButton label={t("projects.cta")}
-            icon={<FontAwesomeIcon icon={faBroomBall}/>}
-            onClick={console.log}/>
-        </div>
-        <button className={styles.image} onClick={console.log}>
-          <Image src={"/sudoku-hero.png"}
-            width={687} height={667}
-            alt={t("projects.sudoku.alt")}/>
-        </button>
-      </div>
+      <ProjectCard
+        title={t("projects.sudoku.title")}
+        description={t("projects.sudoku.description")}
+        imageSrc={"/sudoku-hero.png"}
+        imageAlt={t("projects.sudoku.alt")}
+      />
       <div>
         Reflexo
       </div>

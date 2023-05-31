@@ -13,7 +13,7 @@ const Home: NextPage = () => {
   const SECTION_COLORS = useMemo(() => ([
     "transparent",
     "#FFA693",
-    "#106988"
+    "#FFF"
   ]), []);
 
   const changeColor = useCallback(() => {

@@ -19,6 +19,7 @@
     "discover": "Projects"
   },
   "projects": {
+    "cta": "Try it out!",
     "sudoku": {
       "title": "Sudoku",
       "description": "Sudokus are holiday homework for adults. Now with dark mode.",

@@ -1,28 +1,66 @@
 .button {
-    --size: 10em;
+    --size: 8em;
     height: var(--size);
     width: 100%;
-    border-radius: 1em calc(var(--size) / 2) calc(var(--size) / 2);
     display: flex;
+    flex-direction: column;
     position: relative;
-    padding: 0;
+    padding: 2em;
     overflow: hidden;
-    box-shadow: 26px 26px 52px #00000020;
-    background: rgb(16, 105, 136);
+    background: #000;
+    color: white;
+    border-radius: 0 3em 0 0;
 
-    justify-content: center;
-    transition: border-radius ease .5s;
-}
+    justify-content: space-between;
 
-.button:hover {
-    border-radius: calc(var(--size) / 2);
+    --transition-duration: .5s ease-out;
 }
 
 .content {
-    padding: 1em;
     display: flex;
     align-items: center;
     flex-direction: row;
     gap: 1em;
     z-index: 1;
+    transition: var(--transition-duration) translate;
+}
+
+.button:hover > .content {
+    translate: .5em;
+}
+
+.arrows {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.arrow {
+    opacity: 1;
+    transition: var(--transition-duration);
+    transition-property: opacity, translate;
+}
+
+.arrow:not(:first-child) {
+    opacity: 0;
+}
+
+.button:hover .arrow {
+    translate: .5em 0;
+    --opacity: 0;
+    --delay: 0;
+    opacity: var(--opacity);
+    transition-delay: calc(var(--delay) * .1s);
+}
+
+.gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, #e53935, #e35d5b);
+    transition: translate var(--transition-duration);
+    translate: -100%;
+}
+
+.button:hover .gradient {
+    translate: 0;
 }
