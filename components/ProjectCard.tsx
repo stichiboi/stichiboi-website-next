@@ -7,18 +7,23 @@ import { useTranslation } from "next-export-i18n";
 import Button from "./generic/Button";
 
 interface ProjectCardProps {
+  index: number,
   title: string,
   description: string,
   imageSrc: string,
   imageAlt: string
 }
 
-export function ProjectCard({ title, description, imageSrc, imageAlt }: ProjectCardProps): JSX.Element {
+export function ProjectCard({ index, title, description, imageSrc, imageAlt }: ProjectCardProps): JSX.Element {
   const { t } = useTranslation();
 
   return (
     <div className={styles.project}>
       <div className={styles.content}>
+        <div className={styles.index}>
+          <hr/>
+          <p>0{index}</p>
+        </div>
         <h3 className={styles.title}>{title}</h3>
         <p className={styles.description}>{description}</p>
         <Button

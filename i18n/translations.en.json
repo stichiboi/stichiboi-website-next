@@ -23,7 +23,12 @@
     "sudoku": {
       "title": "Sudoku",
       "description": "Sudokus are holiday homework for adults. Now with dark mode.",
-      "alt": "Enjoy a cool sudoku. For free. No ads. Just love"
+      "alt": "Enjoy a cool sudoku. For free. No ads."
+    },
+    "reflexo": {
+      "title": "Reflexo",
+      "description": "Top-level gamers require top-level reflexes. Try to measure them, and see if you can improve.",
+      "alt": "Test your skill and improve your high score."
     }
   }
 }
