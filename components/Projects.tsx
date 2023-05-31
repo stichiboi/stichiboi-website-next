@@ -1,5 +1,4 @@
 import React from "react";
-import Snow from "./Snow";
 import styles from "../styles/Projects.module.css";
 import Image from "next/image";
 import { useTranslation } from "next-export-i18n";
@@ -12,9 +11,6 @@ export default function Projects(): JSX.Element {
 
   return (
     <main id={"projects"} className={styles.container}>
-      <div className={styles.snow}>
-        <Snow/>
-      </div>
       <div className={styles.project}>
         <div className={styles.content}>
           <h3 className={styles.title}>{t("projects.sudoku.title")}</h3>
@@ -30,10 +26,10 @@ export default function Projects(): JSX.Element {
         </button>
       </div>
       <div>
-                Reflexo
+        Reflexo
       </div>
       <div>
-                Clock
+        Clock
       </div>
     </main>
   );

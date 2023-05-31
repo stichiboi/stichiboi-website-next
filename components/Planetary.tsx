@@ -1,7 +1,7 @@
-import {CSSProperties, useCallback, useMemo, useState} from "react";
+import { CSSProperties, useCallback, useEffect, useMemo, useState } from "react";
 import styles from "../styles/Planetary.module.css";
 
-const MAX_ORBITS = 5;
+const MAX_ORBITS = 4;
 
 function generateColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
@@ -13,7 +13,10 @@ function generateGradient() {
   return `linear-gradient(${angle}deg, ${col1}, ${col2})`;
 }
 
-function Orbit({index, onTransitionEnd}: { index: number, onTransitionEnd?: () => unknown }): JSX.Element {
+function Orbit({ index, onTransitionEnd }: {
+  index: number,
+  onTransitionEnd?: () => unknown,
+}): JSX.Element {
   const color = useMemo(() => {
     if (Math.random() > 0.5) {
       return generateColor();
@@ -29,9 +32,14 @@ function Orbit({index, onTransitionEnd}: { index: number, onTransitionEnd?: () =
   const offset = useMemo(() => {
     return `-${Math.random() * 20 + 10}s`;
   }, []);
+
+  useEffect(() => {
+    if (onTransitionEnd) {
+      setTimeout(onTransitionEnd, 1200);
+    }
+  }, [onTransitionEnd]);
   return (
     <div
-      onTransitionEnd={onTransitionEnd}
       className={`${styles.orbit} ${styles.sizable} ${onTransitionEnd ? styles.fadeOut : ''}`}
       style={{
         "--size": `${index * 120 + 40}px`,
@@ -50,37 +58,47 @@ function Orbit({index, onTransitionEnd}: { index: number, onTransitionEnd?: () =
 
 export default function Planetary(): JSX.Element {
 
-  const [orbitData, setOrbitData] = useState<string[]>(['def_first', 'def_second', 'def_third', 'def_fourth']);
-  const [toDelete, setToDelete] = useState<string[]>([]);
+  const [orbitData, setOrbitData] = useState<string[]>(Array.from({ length: 4 }).map((_, i) => `default_${i}`));
+  const [triggerAnimation, setTriggerAnimation] = useState(0);
+
   const orbits = useMemo<JSX.Element[]>(() => {
-    const stable = orbitData.map((k, i) => (
-      <Orbit key={k} index={i}/>
-    ));
-    const fading = toDelete.map((k, i) =>
+    return orbitData.map((k, i) => (
       <Orbit
         key={k}
-        index={i + stable.length}
-        onTransitionEnd={() => {
-          setToDelete(prev => prev.filter(id => id !== k))
-        }}
-      />);
-    return [...stable, ...fading];
-  }, [orbitData, toDelete]);
+        index={i}
+        onTransitionEnd={i > MAX_ORBITS ? () => {
+          setOrbitData(prev => prev.filter(id => k !== id))
+        } : undefined}
+      />
+    ));
+  }, [orbitData]);
 
   const addOrbit = useCallback(() => {
     setOrbitData(prev => {
       const randID = Math.random().toString().slice(2);
-      const nextData = [randID, ...prev];
-      const toDelete = nextData.splice(MAX_ORBITS);
-      setToDelete(toDelete);
-      return nextData;
+      return [randID, ...prev];
     });
-  }, [setOrbitData, setToDelete]);
+  }, [setOrbitData]);
 
   return (
-    <div className={styles.planetary}>
+    <div
+      className={styles.planetary}
+      onMouseEnter={() => {
+        setTriggerAnimation(prev => {
+          const nextId = prev + 1;
+          setTimeout(() => {
+            setTriggerAnimation(prev => {
+              // reset the style only if another animation has not been triggered
+              // otherwise it will interrupt that animation mid-way
+              return prev === nextId ? 0 : prev;
+            })
+            // set a bigger delay than the animation to avoid too many interactions while moving the mouse
+          }, 3000);
+          return nextId;
+        });
+      }}>
       <button className={`${styles.sun} ${styles.sizable}`} onClick={addOrbit}/>
-      <div className={styles.system}>
+      <div className={`${styles.system} ${triggerAnimation ? styles.quickSpin : ""}`}>
         {orbits}
       </div>
     </div>
