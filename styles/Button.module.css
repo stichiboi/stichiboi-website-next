@@ -7,8 +7,8 @@
     position: relative;
     padding: 2em;
     overflow: hidden;
-    background: #000;
-    color: white;
+    background: var(--color-dark);
+    color: var(--color-light);
     border-radius: 0 3em 0 0;
 
     justify-content: space-between;

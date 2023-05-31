@@ -9,8 +9,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: black;
-    color: white;
+    background-color: var(--color-dark);
+    color: var(--color-light);
     padding: 3em;
 }
 
@@ -25,7 +25,7 @@
 
 .copyright {
     flex: none;
-    color: gray;
+    color: var(--color-quiet);
     margin-top: auto;
     font-size: 12px;
 }
@@ -38,11 +38,11 @@
     height: 4em;
     display: flex;
     align-items: flex-end;
-    color: gray;
+    color: var(--color-quiet);
 }
 
 .backToTop:hover {
-    color: white;
+    color: var(--color-light);
 }
 
 .backToTop > p {

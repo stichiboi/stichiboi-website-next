@@ -5,9 +5,9 @@ body {
     font-family: "Lato", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     --text-font-size: 18px;
-    --color-dark: #0D1524;
+    --color-dark: #05080c;
     --color-light: #FFFFFF;
-    --color-quiet: #E0E0E0;
+    --color-quiet: #cbcbcb;
 }
 
 * {
