@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "../styles/Cube.module.css";
 
 import { EffectComposer, RenderPass, BloomEffect, EffectPass } from "postprocessing";
@@ -8,10 +8,17 @@ const CANVAS_ID = "projects-cube-canvas"
 
 export function Cube(): JSX.Element {
 
-  useEffect(() => {
+  const isHovering = useRef(false);
 
-    const height = window.innerHeight;
-    const width = document.body.clientWidth;
+  useEffect(() => {
+    function getSize() {
+      return {
+        height: window.innerHeight,
+        width: document.body.clientWidth
+      }
+    }
+
+    const { height, width } = getSize();
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
@@ -72,17 +79,27 @@ export function Cube(): JSX.Element {
     let direction = 1;
     let prevScroll = window.scrollY;
 
+    let blurring = 0;
+    let blurringFactor = .05;
+
     function animate() {
       const scrollY = window.scrollY - deltaY;
+      const { height } = getSize();
 
       frames += direction;
       if (prevScroll !== scrollY) {
         direction = Math.sign(scrollY - prevScroll);
         prevScroll = scrollY;
       }
-
-      bloomEffect.intensity = Math.min(scrollY * 2 / innerHeight, 1);
-      camera.position.x = Math.min(scrollY * 2 / innerHeight, 1.5);
+      if (isHovering.current) {
+        blurring -= blurringFactor * 3;
+        blurring = Math.max(0, blurring);
+      } else {
+        blurring += blurringFactor;
+        blurring = Math.min(1, blurring);
+      }
+      bloomEffect.intensity = blurring;
+      camera.position.x = Math.min(scrollY * 2 / height, 1.5);
 
       const baseRotation = frames * frameFactor;
       const scrollRotation = scrollY / rescaleFactor;
@@ -95,8 +112,7 @@ export function Cube(): JSX.Element {
     animate();
 
     function onWindowResize() {
-      const width = document.body.clientWidth;
-      const height = window.innerHeight;
+      const { width, height } = getSize();
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
 
@@ -114,7 +130,17 @@ export function Cube(): JSX.Element {
 
   return (
     <div className={styles.container}>
-      <canvas id={CANVAS_ID}/>
+      <canvas
+        id={CANVAS_ID}
+        onMouseEnter={() => {
+          console.log("entering");
+          isHovering.current = true;
+        }}
+        onMouseLeave={() => {
+          console.log("leaving");
+          isHovering.current = false;
+        }}
+      />
     </div>
   )
 }

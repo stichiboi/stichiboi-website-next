@@ -2,6 +2,12 @@
     position: relative;
 }
 
+.about {
+    z-index: 1;
+    position: absolute;
+    padding: 3em;
+}
+
 .project {
     position: relative;
     padding: 3em;
@@ -42,6 +48,16 @@
 }
 
 @media (min-width: 600px) {
+
+    .about {
+        left: 50%;
+        top: 50vh;
+        translate: 0 -50%;
+        /* override the .content min-width */
+        min-width: 0;
+        width: 35em;
+    }
+
     .project {
         flex-direction: row;
         gap: 2em

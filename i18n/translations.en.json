@@ -19,6 +19,10 @@
     "discover": "Projects"
   },
   "projects": {
+    "about": {
+      "text": "Here, you'll find a collection of my projects that showcase my skills, passion, and creativity. From web development to software applications, I've tackled diverse challenges, demonstrating versatility, dedication, and exceptional results.",
+      "title": "Projects"
+    },
     "cta": "Try it out!",
     "sudoku": {
       "title": "Sudoku",

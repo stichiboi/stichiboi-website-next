@@ -10,6 +10,10 @@ export default function Projects(): JSX.Element {
 
   return (
     <section id={"projects"} className={styles.container} ref={scrollRef}>
+      <div className={`${styles.content} ${styles.about}`}>
+        <h3 className={styles.title}>{t("projects.about.title")}</h3>
+        <p>{t("projects.about.text")}</p>
+      </div>
       <Cube/>
       <ProjectCard
         index={1}
