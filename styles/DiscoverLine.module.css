@@ -9,7 +9,7 @@
 
     --color: var(--color-dark);
     color: var(--color);
-    padding: 1em;
+    padding: 1em 1em 1em 0;
     align-items: center;
 }
 
