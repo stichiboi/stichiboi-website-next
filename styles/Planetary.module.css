@@ -17,6 +17,7 @@
     border: none;
     background: #FFAD05;
     position: absolute;
+    z-index: -1;
 }
 
 .system {
