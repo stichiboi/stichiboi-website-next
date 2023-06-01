@@ -11,7 +11,7 @@ export function Cube(): JSX.Element {
   useEffect(() => {
 
     const height = window.innerHeight;
-    const width = document.body.scrollWidth;
+    const width = document.body.clientWidth;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
@@ -94,8 +94,21 @@ export function Cube(): JSX.Element {
 
     animate();
 
+    function onWindowResize() {
+      const width = document.body.clientWidth;
+      const height = window.innerHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+
+      renderer.setSize(width, height);
+      composer.setSize(width, height);
+    }
+
+    window.addEventListener("resize", onWindowResize);
+
     return () => {
       composer.passes.forEach(p => p.dispose());
+      window.removeEventListener("resize", onWindowResize);
     }
   }, []);
 
