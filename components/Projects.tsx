@@ -2,13 +2,15 @@ import React, { useRef } from "react";
 import styles from "../styles/Projects.module.css";
 import { useTranslation } from "next-export-i18n";
 import { ProjectCard } from "./ProjectCard";
+import { Cube } from "./Cube";
 
 export default function Projects(): JSX.Element {
   const { t } = useTranslation();
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   return (
-    <main id={"projects"} className={styles.container} ref={scrollRef}>
+    <section id={"projects"} className={styles.container} ref={scrollRef}>
+      <Cube/>
       <ProjectCard
         index={1}
         title={t("projects.sudoku.title")}
@@ -23,6 +25,6 @@ export default function Projects(): JSX.Element {
         imageSrc={"/reflexo-hero.png"}
         imageAlt={t("projects.reflexo.alt")}
       />
-    </main>
+    </section>
   );
 }

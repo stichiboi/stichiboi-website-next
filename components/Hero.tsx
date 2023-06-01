@@ -20,32 +20,34 @@ export default function Hero(): JSX.Element {
 
           <div className={styles.descriptionContainer}>
             <div className={`${styles.description}`}>
-              {t('hero.description')}
-              <br/>
-              {t('hero.description2')}
-              <br/>
-              {t('hero.description3')}
+              <p>{t('hero.description')}</p>
+              <p>{t('hero.description2')}</p>
+              <p>{t('hero.description3')}</p>
             </div>
             <div className={styles.descriptionLines}>
               {Array.from({ length: NUM_LINES }).map((_, i) => (
-                <hr key={i}
+                <hr
+                  key={i}
                   className={`${styles.descriptionLine}`}
                   style={{
                     "--scaleY": Math.exp((NUM_LINES - i) / 3) / Math.exp(NUM_LINES / 3),
                     "--delay": `${0.1 * (i - 1)}s`
                   } as unknown as CSSProperties
-                  }/>))
-              }
+                  }
+                />)
+              )}
             </div>
           </div>
         </div>
         <Planetary/>
       </main>
-      <DiscoverLine label={t("hero.discover")}
+      <DiscoverLine
+        label={t("hero.discover")}
         scrollToID={"intro"}
         style={{
-          paddingLeft: "4em"
-        }}/>
+          marginLeft: "3em"
+        }}
+      />
     </div>
   );
 }

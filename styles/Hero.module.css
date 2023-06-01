@@ -1,12 +1,13 @@
 .container {
-    width: 100vw;
+    /*width: 100vw;*/
     height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .main {
-    height: 100%;
+    flex: 1 1 auto;
     display: grid;
     grid-template-columns: 2fr 3fr;
     align-items: center;
@@ -15,9 +16,9 @@
 .content {
     display: grid;
     grid-template-rows: .5fr 3em 1fr;
-    margin: 0 0 0 4rem;
     height: 100%;
     position: relative;
+    margin-left: 3em;
 }
 
 .titleContainer {
@@ -38,10 +39,9 @@
     z-index: 0;
     position: relative;
     display: flex;
-    justify-content: space-between;
 
     padding: 2em 2em 0 2em;
-    margin: 0 -2em 3em -2em;
+    margin: 0 -2em;
     transition: .5s ease-out;
     transition-property: background-color, padding-top;
     animation: description-fade-in .5s ease-out;
@@ -60,12 +60,11 @@
 
 .descriptionLines {
     z-index: -1;
-    padding: 2em 2em 0 2em;
     position: absolute;
     inset: 0;
     display: flex;
     flex-direction: row-reverse;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .descriptionLine {

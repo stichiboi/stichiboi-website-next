@@ -1,5 +1,7 @@
 .container {
     margin: 32em 0;
+    width: 100vw;
+    overflow-x: hidden;
 }
 
 .graphics {
@@ -49,7 +51,6 @@
     position: absolute;
     bottom: 0;
     width: 110%;
-
 }
 
 .sunset {

@@ -1,16 +1,20 @@
 import '../styles/globals.css'
-import type {AppProps} from 'next/app'
-import {useEffect, useState} from "react";
-import {useRouter} from "next/router";
+import type { AppProps } from 'next/app'
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import LoadingScreen from "../components/LoadingScreen";
-import {MouseTrail} from "@stichiboi/react-elegant-mouse-trail";
+import { MouseTrail } from "@stichiboi/react-elegant-mouse-trail";
 
-function MyApp({Component, pageProps}: AppProps) {
+
+const BASE_LOAD_TIME = 0;//1300;
+
+
+function MyApp({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    setTimeout(() => setIsLoading(false), 1300 + Math.random() * 1000);
+    setTimeout(() => setIsLoading(false), BASE_LOAD_TIME + Math.random() * 1000);
   }, []);
 
   useEffect(() => {

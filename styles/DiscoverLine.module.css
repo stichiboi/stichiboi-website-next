@@ -1,11 +1,13 @@
 .discoverMore {
+    z-index: 1;
+    flex: none;
     display: flex;
     gap: 1em;
     bottom: 1em;
     width: 100%;
     padding-right: 0;
 
-    position: absolute;
+    position: sticky;
     cursor: pointer;
     align-items: baseline;
 
