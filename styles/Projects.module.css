@@ -11,9 +11,10 @@
 .project {
     position: relative;
     padding: 3em;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    gap: 1em;
 }
 
 .content {
