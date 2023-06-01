@@ -3,24 +3,18 @@
     flex: none;
     display: flex;
     gap: 1em;
-    bottom: 1em;
     width: 100%;
-    padding-right: 0;
-
     position: sticky;
     cursor: pointer;
-    align-items: baseline;
 
     --color: var(--color-dark);
     color: var(--color);
+    padding: 1em;
+    align-items: center;
 }
 
 .discoverArrow {
     transition: transform .2s ease, opacity .1s ease;
-}
-
-.discoverArrowWrapper {
-    padding-top: 2em;
 }
 
 .discoverMore:hover .discoverArrow {
