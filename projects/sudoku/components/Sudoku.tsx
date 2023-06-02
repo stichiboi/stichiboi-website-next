@@ -203,6 +203,7 @@ export function Sudoku({ sudoku, onExit }: { sudoku: ISudoku, onExit: (playAgain
   const noteModeButton = useMemo(() => {
     return (
       <ActionButton
+        tooltip={"Toggle note mode"}
         onClick={toggleNoteMode}
         isToggled={noteMode.current}
       >
@@ -370,26 +371,26 @@ export function Sudoku({ sudoku, onExit }: { sudoku: ISudoku, onExit: (playAgain
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <ActionButton onClick={onExit}>
+        <ActionButton tooltip={"Return to menu"} onClick={onExit}>
           <Cancel/>
         </ActionButton>
         <p>{timer}</p>
         <h3 className={styles.difficulty}>{DIFFICULTY[sudoku.difficulty]}</h3>
       </header>
-      <section className={styles.board}>{board}</section>
+      {board}
       <section className={styles.actions}>
         <div className={styles.actionGroup}>
           {noteModeButton}
-          <ActionButton onClick={() => erase(selected.current)}>
+          <ActionButton tooltip={"Clear cell"} onClick={() => erase(selected.current)}>
             <Undo/>
           </ActionButton>
         </div>
         {controls}
         <div className={styles.actionGroup}>
-          <ActionButton onClick={check}>
+          <ActionButton tooltip={"Check for mistakes"} onClick={check}>
             <Check/>
           </ActionButton>
-          <ActionButton onClick={() => giveHint(false)}>
+          <ActionButton tooltip={"Ask for a hint"} onClick={() => giveHint(false)}>
             <QuestionMark/>
           </ActionButton>
         </div>

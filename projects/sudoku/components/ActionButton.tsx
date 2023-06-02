@@ -7,7 +7,8 @@ interface ActionButtonProps {
   onClick: () => unknown,
   className?: string,
   isToggled?: boolean,
-  fill?: boolean
+  fill?: boolean,
+  tooltip?: string
 }
 
 export default function ActionButton({
@@ -15,7 +16,8 @@ export default function ActionButton({
   onClick,
   className,
   isToggled,
-  fill
+  fill,
+  tooltip
 }: ActionButtonProps) {
 
 
@@ -27,7 +29,7 @@ export default function ActionButton({
   ].filter(Boolean);
 
   return (
-    <button className={classes.join(" ")} onClick={onClick}>
+    <button title={tooltip} className={classes.join(" ")} onClick={onClick}>
       {children}
     </button>
   )

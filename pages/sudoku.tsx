@@ -2,7 +2,7 @@ import { App } from "../projects/sudoku/App";
 import Head from "next/head";
 import { Lato } from "next/font/google";
 
-const lato = Lato({ subsets: ["latin"], weight: ["100", "400"] });
+const lato = Lato({ subsets: ["latin"], weight: ["100", "400", "700"] });
 
 export default function SudokuPage() {
   return (
