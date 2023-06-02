@@ -1,0 +1,17 @@
+.image {
+    max-width: 100%;
+    height: auto;
+}
+
+.image:hover {
+    animation: pulse .8s ease;
+}
+
+@keyframes pulse {
+    from, to {
+        scale: 1
+    }
+    50% {
+        scale: 1.05;
+    }
+}

@@ -14,6 +14,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1em;
 }
 
@@ -25,16 +26,13 @@
     line-height: 1.8em;
 }
 
-.image {
+.link {
     flex: 1 1 auto;
     padding: 0;
     display: flex;
     align-items: center;
-}
-
-.image > img {
-    max-width: 100%;
-    height: auto;
+    overflow: hidden;
+    height: fit-content;
 }
 
 .title {
@@ -59,7 +57,7 @@
 @media (min-width: 600px) {
 
     .about {
-        left: 50%;
+        left: 40%;
         top: 50vh;
         translate: 0 -50%;
         /* override the .content min-width */

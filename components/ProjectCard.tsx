@@ -1,11 +1,12 @@
 import styles from "../styles/Projects.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBroomBall } from "@fortawesome/free-solid-svg-icons";
-import Image from "next/image";
 import React from "react";
 import { useTranslation } from "next-export-i18n";
 import ButtonLink from "./generic/ButtonLink";
 import Link from "next/link";
+import { ImageWithNoise } from "./generic/ImageWithNoise";
+
 
 interface ProjectCardProps {
   index: number,
@@ -18,6 +19,8 @@ interface ProjectCardProps {
 
 export function ProjectCard({ index, title, description, imageSrc, imageAlt, target }: ProjectCardProps): JSX.Element {
   const { t } = useTranslation();
+  const cardId = `image_${title}`;
+
 
   return (
     <div className={styles.project}>
@@ -33,13 +36,13 @@ export function ProjectCard({ index, title, description, imageSrc, imageAlt, tar
           icon={<FontAwesomeIcon icon={faBroomBall}/>}
           target={target}/>
       </div>
-      <Link className={styles.image} href={target} passHref>
-        <Image
-          src={imageSrc}
-          width={687}
-          height={667}
-          alt={imageAlt}
-        />
+      <Link
+        id={cardId}
+        className={styles.link}
+        href={target}
+        passHref
+      >
+        <ImageWithNoise cardId={cardId} imageAlt={imageAlt} imageSrc={imageSrc}/>
       </Link>
     </div>
   );
