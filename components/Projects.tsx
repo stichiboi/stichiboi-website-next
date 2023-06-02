@@ -17,6 +17,7 @@ export default function Projects(): JSX.Element {
       <Cube/>
       <ProjectCard
         index={1}
+        target={"/sudoku"}
         title={t("projects.sudoku.title")}
         description={t("projects.sudoku.description")}
         imageSrc={"/sudoku-hero.png"}
@@ -24,6 +25,7 @@ export default function Projects(): JSX.Element {
       />
       <ProjectCard
         index={2}
+        target={"#"}
         title={t("projects.reflexo.title")}
         description={t("projects.reflexo.description")}
         imageSrc={"/reflexo-hero.png"}

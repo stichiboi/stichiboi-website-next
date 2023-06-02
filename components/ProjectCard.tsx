@@ -4,17 +4,19 @@ import { faBroomBall } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import React from "react";
 import { useTranslation } from "next-export-i18n";
-import Button from "./generic/Button";
+import ButtonLink from "./generic/ButtonLink";
+import Link from "next/link";
 
 interface ProjectCardProps {
   index: number,
   title: string,
   description: string,
   imageSrc: string,
-  imageAlt: string
+  imageAlt: string,
+  target: string
 }
 
-export function ProjectCard({ index, title, description, imageSrc, imageAlt }: ProjectCardProps): JSX.Element {
+export function ProjectCard({ index, title, description, imageSrc, imageAlt, target }: ProjectCardProps): JSX.Element {
   const { t } = useTranslation();
 
   return (
@@ -26,19 +28,19 @@ export function ProjectCard({ index, title, description, imageSrc, imageAlt }: P
         </div>
         <h3 className={styles.title}>{title}</h3>
         <p className={styles.description}>{description}</p>
-        <Button
+        <ButtonLink
           label={t("projects.cta")}
           icon={<FontAwesomeIcon icon={faBroomBall}/>}
-          onClick={console.log}/>
+          target={target}/>
       </div>
-      <button className={styles.image} onClick={console.log}>
+      <Link className={styles.image} href={target} passHref>
         <Image
           src={imageSrc}
           width={687}
           height={667}
           alt={imageAlt}
         />
-      </button>
+      </Link>
     </div>
   );
 }

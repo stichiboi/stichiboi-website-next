@@ -1,7 +1,7 @@
 import styles from "../styles/Intro.module.css";
 import { useTranslation } from "next-export-i18n";
 import Image from "next/image";
-import Link from "./generic/Link";
+import HoverLink from "./generic/HoverLink";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 import HoverReveal from "./generic/HoverReveal";
@@ -31,12 +31,12 @@ export default function Intro(): JSX.Element {
               {t("intro.title")}
             </h2>
           </HoverReveal>
-          <Link
+          <HoverLink
             label={t("intro.linkedIn")}
             icon={<FontAwesomeIcon icon={faLinkedin} size={"lg"}/>}
             target={"https://www.linkedin.com/in/daniele-mazzotta-1714b9161/"}
           />
-          <Link
+          <HoverLink
             label={t("intro.gitHub")}
             icon={<FontAwesomeIcon icon={faGithub} size={"lg"}/>}
             target={"https://github.com/stichiboi"}
