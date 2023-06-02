@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { DIFFICULTY } from "../types/types";
 import { NavArrowLeft, NavArrowRight } from "iconoir-react";
 import styles from "../styles/Stepper.module.css";
@@ -20,28 +20,27 @@ export function Stepper({
 }: StepperProps) {
 
   const [value, setValue] = useState(0);
+  const getValue = useCallback(() => {
+    return parseInt(localStorage.getItem(saveKey) || '3');
+  }, [saveKey]);
 
   useEffect(() => {
     setValue(getValue());
-  }, [saveKey]);
+  }, [getValue, saveKey]);
 
   useEffect(() => {
     localStorage.setItem(saveKey, value.toString());
     onChange(value);
-  }, [value]);
-
-  function getValue() {
-    return parseInt(localStorage.getItem(saveKey) || '3');
-  }
-
-  function changeTriesCount(modifier: number) {
+  }, [onChange, saveKey, value]);
+  
+  const changeTriesCount = useCallback((modifier: number) => {
     setValue(prev => {
       if (min !== undefined && prev + modifier < min || max !== undefined && prev + modifier > max) {
         return prev;
       }
       return prev + modifier;
     });
-  }
+  }, [max, min]);
 
   return (
     <div className={styles.container}>

@@ -22,12 +22,14 @@ export function Toggle({
 
   const [value, setValue] = useState(false);
 
-  useEffect(() => setValue(getValue()), [saveKey]);
+  useEffect(() => {
+    setValue(getValue());
+  }, [getValue, saveKey]);
 
   useEffect(() => {
     localStorage.setItem(saveKey, value.toString());
     onToggle(value);
-  }, [value]);
+  }, [onToggle, saveKey, value]);
 
   return (
     <button
@@ -36,7 +38,7 @@ export function Toggle({
     >
       {leftIcon}
       <div className={styles.toggle}>
-        <span className={styles.slider} />
+        <span className={styles.slider}/>
       </div>
       {rightIcon}
     </button>
