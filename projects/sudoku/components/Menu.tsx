@@ -15,8 +15,8 @@ export function Menu({ setDifficulty, onStartGame, toggleDarkMode }: MenuProps):
   return (
     <div className={styles.menu}>
       <div className={styles.difficultyPicker}>
-        <h3>{"Difficulty"}</h3>
         <Stepper
+          label={"Difficulty"}
           saveKey={"stichi-sudoku-difficulty"}
           onChange={(value) => setDifficulty(value)}
           max={DIFFICULTY.Hard}

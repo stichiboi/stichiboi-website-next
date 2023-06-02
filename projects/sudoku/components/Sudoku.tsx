@@ -13,14 +13,18 @@ import ActionButton from "./ActionButton";
 import Grid from "./Grid";
 import Cell from "./Cell";
 import { checkValidity, getFreeCells, loop, visitDeps } from "../sudokuGenerator";
-import confetti from 'canvas-confetti';
 import styles from "../styles/Sudoku.module.css";
 import EndPopup from "./EndPopup";
 
 const HINT_PENALTY = 30000; // 30 sec
 const CHECK_PENALTY = 30000; // 30 sec
 
-export function Sudoku({ sudoku, onExit }: { sudoku: ISudoku, onExit: (playAgain?: boolean) => unknown }) {
+interface SudokuProps {
+  sudoku: ISudoku,
+  onExit: () => unknown
+}
+
+export function Sudoku({ sudoku, onExit }: SudokuProps) {
   const [, setStartTime] = useState(0);
   const formatTimer = useCallback((timer: number) => {
     const date = new Date(timer);
@@ -89,7 +93,7 @@ export function Sudoku({ sudoku, onExit }: { sudoku: ISudoku, onExit: (playAgain
       cell.notes.clear();
       cell.isError = false;
     }, true);
-  }, [sudoku]);
+  }, [actionWrapper, sudoku.puzzle]);
 
   const check = useCallback(() => {
     actionWrapper(() => {
@@ -304,9 +308,6 @@ export function Sudoku({ sudoku, onExit }: { sudoku: ISudoku, onExit: (playAgain
       document.removeEventListener('keydown', movementEventListener);
     }
   }, [erase, setNumber]);
-
-
-
 
 
   function recordNumberCount(number: number, op = 1) {

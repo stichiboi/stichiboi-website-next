@@ -11,16 +11,6 @@ export function App(): JSX.Element {
   const [isDarkMode, setDarkMode] = useState(false);
   const [sudoku, setSudoku] = useState<undefined | ISudoku>();
 
-  useEffect(() => {
-    const body = document.getElementsByTagName('body')[0];
-    if (body) {
-      if (isDarkMode)
-        body.classList.add('dark-mode');
-      else
-        body.classList.remove('dark-mode');
-    }
-  }, [isDarkMode]);
-
   const buildSudoku = useCallback(() => {
     setSudoku(generateSudoku(difficulty));
   }, [difficulty]);
@@ -31,8 +21,8 @@ export function App(): JSX.Element {
         sudoku ?
           <Sudoku
             sudoku={sudoku}
-            onExit={(playAgain) => {
-              setSudoku(playAgain ? generateSudoku(difficulty) : undefined);
+            onExit={() => {
+              setSudoku(undefined);
             }}
           />
           :

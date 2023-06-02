@@ -4,6 +4,7 @@ import { NavArrowLeft, NavArrowRight } from "iconoir-react";
 import styles from "../styles/Stepper.module.css";
 
 interface StepperProps {
+  label: string,
   saveKey: string,
   onChange: (value: number) => void,
   min?: number,
@@ -11,6 +12,7 @@ interface StepperProps {
 }
 
 export function Stepper({
+  label,
   saveKey,
   onChange,
   min,
@@ -42,14 +44,17 @@ export function Stepper({
   }
 
   return (
-    <div className={styles.stepper}>
-      <button onClick={() => changeTriesCount(-1)}>
-        <NavArrowLeft/>
-      </button>
-      <p>{DIFFICULTY[value]}</p>
-      <button onClick={() => changeTriesCount(1)}>
-        <NavArrowRight/>
-      </button>
+    <div className={styles.container}>
+      <h3>{label}</h3>
+      <div className={styles.stepper}>
+        <button onClick={() => changeTriesCount(-1)}>
+          <NavArrowLeft/>
+        </button>
+        <p>{DIFFICULTY[value]}</p>
+        <button onClick={() => changeTriesCount(1)}>
+          <NavArrowRight/>
+        </button>
+      </div>
     </div>
   )
 }

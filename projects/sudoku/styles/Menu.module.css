@@ -9,12 +9,6 @@
     gap: 10em;
 }
 
-.difficultyPicker {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .toggleDarkMode{
     position: absolute;
     top: var(--main-ui-padding);

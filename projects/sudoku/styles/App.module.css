@@ -1,10 +1,5 @@
 .app {
-    --color-dark: #121212;
-    --color-light: #FFFAFA;
-    --color-quiet: #787D79;
-    --color-highlight-soft: #BBE5ED;
-    --color-highlight-main: #78C0E0;
-    --color-error: #F86262;
+
     --font-size: 16px;
     --font-size-big: 24px;
     --font-size-small: 10px;
@@ -28,6 +23,23 @@
     background-color: var(--color-light);
 }
 
+.app, .app * {
+    --color-dark: #121212;
+    --color-light: #FFFAFA;
+    --color-quiet: #787D79;
+    --color-highlight-soft: #BBE5ED;
+    --color-highlight-main: #78C0E0;
+    --color-error: #F86262;
+}
+
+.app.darkMode, .app.darkMode * {
+    --color-dark: #FFFAFA;
+    --color-light: #121212;
+    --color-quiet: #e1e1e1;
+    --color-highlight-soft: #6380BF;
+    --color-highlight-main: #3961D0;
+}
+
 .app > div {
     height: 100%;
 }
@@ -35,14 +47,6 @@
 .app * {
     transition: .2s ease-out;
     transition-property: color, background-color;
-}
-
-.app.darkMode {
-    --color-dark: #FFFAFA;
-    --color-light: #121212;
-    --color-quiet: #e1e1e1;
-    --color-highlight-soft: #6380BF;
-    --color-highlight-main: #3961D0;
 }
 
 .app p {

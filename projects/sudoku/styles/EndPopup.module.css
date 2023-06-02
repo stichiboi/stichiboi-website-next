@@ -22,6 +22,7 @@
 
 .text {
     font-family: var(--font-family);
+    color: var(--color-dark)
 }
 
 .popup.toggled {
