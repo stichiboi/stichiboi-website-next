@@ -85,9 +85,9 @@
 }
 
 @media (min-width: 400px) {
-    .sun {
-        z-index: -1;
-    }
+    /*.sun {*/
+    /*    z-index: -1;*/
+    /*}*/
 
     .planetary {
         position: relative;

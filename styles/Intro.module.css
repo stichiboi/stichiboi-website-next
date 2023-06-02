@@ -45,6 +45,8 @@
     height: fit-content;
     display: flex;
     justify-content: center;
+    /* set z-index since we need to set the description to -1 */
+    z-index: 0;
 }
 
 .imageContainer > * {
@@ -67,6 +69,7 @@
     position: absolute;
     bottom: 0;
     opacity: .8;
+    z-index: -1;
 }
 
 .imageContainer:hover > .imageDescription {

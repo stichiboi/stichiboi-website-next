@@ -35,7 +35,7 @@
 }
 
 .descriptionContainer {
-    z-index: 0;
+    z-index: 1;
     position: relative;
     display: flex;
 
