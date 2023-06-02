@@ -6,23 +6,31 @@ import LoadingScreen from "../components/LoadingScreen";
 import { MouseTrail } from "@stichiboi/react-elegant-mouse-trail";
 
 
-const BASE_LOAD_TIME = 0;//1300;
+const MIN_LOAD_TIME = 1000;
 
 
-function MyApp({ Component, pageProps }: AppProps) {
+function RootApp({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    setTimeout(() => setIsLoading(false), BASE_LOAD_TIME + Math.random() * 1000);
+    setTimeout(() => setIsLoading(false), MIN_LOAD_TIME);
   }, []);
 
   useEffect(() => {
+    let recentSwitch = false;
     const handleStart = () => {
+      recentSwitch = true;
       setIsLoading(true);
+      setTimeout(() => recentSwitch = false, MIN_LOAD_TIME);
     }
     const handleStop = () => {
-      setIsLoading(false);
+      if (!recentSwitch) {
+        setIsLoading(false);
+      } else {
+        // check at intervals
+        setTimeout(handleStop, MIN_LOAD_TIME / 5);
+      }
     }
 
     router.events.on('routeChangeStart', handleStart)
@@ -45,4 +53,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   )
 }
 
-export default MyApp
+export default RootApp

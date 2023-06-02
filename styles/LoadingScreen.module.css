@@ -8,13 +8,14 @@
     background: white;
     z-index: 10;
     transition: .5s ease-in;
-    transition-property: visibility, bottom;
+    transition-property: none;
 }
 
 .container.toggled {
     bottom: 100%;
     visibility: hidden;
     transition-delay: 1s;
+    transition-property: visibility, bottom;
 }
 
 .text {
