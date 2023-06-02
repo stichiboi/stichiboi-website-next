@@ -2,7 +2,8 @@ import { Stepper } from "./Stepper";
 import { DIFFICULTY } from "../types/types";
 import { Toggle } from "./Toggle";
 import { HalfMoon, SunLight } from "iconoir-react";
-import styles from "../styles/Menu.module.css"; // Import the CSS module
+import styles from "../styles/Menu.module.css";
+import { ButtonCTA } from "./ButtonCTA"; // Import the CSS module
 
 interface MenuProps {
   setDifficulty: (difficulty: number) => unknown;
@@ -22,9 +23,9 @@ export function Menu({ setDifficulty, onStartGame, toggleDarkMode }: MenuProps):
           min={DIFFICULTY.Trivial}
         />
       </div>
-      <button className={styles.buttonCta} onClick={onStartGame}>
+      <ButtonCTA onClick={onStartGame}>
         {"New Game"}
-      </button>
+      </ButtonCTA>
       <Toggle
         saveKey={"stichi-sudoku-dark-mode"}
         onToggle={toggleDarkMode}

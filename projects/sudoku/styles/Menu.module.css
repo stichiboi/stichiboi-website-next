@@ -22,12 +22,3 @@
     margin: 0 !important;
     gap: 2em;
 }
-
-.buttonCta {
-    border: none;
-    padding: 12px;
-    margin: 0;
-    border-radius: var(--default-border-radius);
-    background: var(--color-dark);
-    color: var(--color-light);
-}

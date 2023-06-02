@@ -15,6 +15,7 @@ import Cell from "./Cell";
 import { checkValidity, getFreeCells, loop, visitDeps } from "../sudokuGenerator";
 import confetti from 'canvas-confetti';
 import styles from "../styles/Sudoku.module.css";
+import EndPopup from "./EndPopup";
 
 const HINT_PENALTY = 30000; // 30 sec
 const CHECK_PENALTY = 30000; // 30 sec
@@ -34,8 +35,6 @@ export function Sudoku({ sudoku, onExit }: { sudoku: ISudoku, onExit: (playAgain
   const [timerId, setTimerId] = useState(0);
   const [numberCount, setNumberCount] = useState({} as { [key: number]: number });
 
-  const [_triggerConfetti, _setTriggerConfetti] = useState(0);
-  const throwConfetti = useCallback(() => _setTriggerConfetti(prev => ++prev), []);
 
   const [_triggerCheck, _setTriggerCheck] = useState(0);
   const triggerCheck = useCallback(() => _setTriggerCheck(prev => ++prev), []);
@@ -306,58 +305,9 @@ export function Sudoku({ sudoku, onExit }: { sudoku: ISudoku, onExit: (playAgain
     }
   }, [erase, setNumber]);
 
-  //Confetti
-  useEffect(() => {
-    if (isComplete) {
-      throwConfetti();
-    }
-  }, [isComplete]);
 
-  useEffect(() => {
-    function fire(particleRatio: number, opts?: confetti.Options) {
-      const count = 200;
-      const defaults = {
-        origin: { y: 1 }
-      };
-      return confetti(Object.assign({}, defaults, opts, {
-        particleCount: Math.floor(count * particleRatio)
-      }));
-    }
 
-    function bigConfetti() {
-      fire(0.25, {
-        spread: 26,
-        startVelocity: 55,
-      });
-      fire(0.2, {
-        spread: 60,
-      });
-      fire(0.35, {
-        spread: 100,
-        decay: 0.91,
-      });
-      fire(0.1, {
-        spread: 120,
-        startVelocity: 25,
-        decay: 0.92,
-      });
-      fire(0.1, {
-        spread: 120,
-        startVelocity: 45,
-      });
-    }
 
-    function smallConfetti() {
-      fire(0.5, {
-        particleCount: 100,
-        spread: 70
-      });
-    }
-
-    if (_triggerConfetti) {
-      Math.random() > 0.5 ? smallConfetti() : bigConfetti();
-    }
-  }, [_triggerConfetti]);
 
   function recordNumberCount(number: number, op = 1) {
     //Wrapper to keep track of the number of digits in the sudoku
@@ -395,14 +345,7 @@ export function Sudoku({ sudoku, onExit }: { sudoku: ISudoku, onExit: (playAgain
           </ActionButton>
         </div>
       </section>
-      <div
-        onMouseEnter={throwConfetti}
-        className={`popup sudoku-complete --spacing --vertical ${isComplete ? 'toggled' : ''}`}>
-        <button onClick={throwConfetti}>{`Completed in ${timer} 🎉`}</button>
-        <div className={"button-group --spacing"}>
-          <button className={"button-cta --quiet"} onClick={() => onExit()}>{"Menu"}</button>
-        </div>
-      </div>
+      <EndPopup onExit={onExit} isComplete={isComplete} timer={timer}/>
     </div>
   );
 }

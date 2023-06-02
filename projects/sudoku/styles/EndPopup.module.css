@@ -1,0 +1,30 @@
+.popup {
+    visibility: hidden;
+    opacity: 0;
+    transition: .5s ease-out;
+    transition-property: opacity, visibility;
+
+    display: flex;
+    flex-direction: column;
+    background: var(--color-light);
+    border-radius: var(--default-border-radius);
+    box-shadow: 0 3px 29px rgba(0, 0, 0, 0.12);
+
+    position: absolute;
+    align-items: center;
+    padding: 32px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--color-dark);
+    gap: 3em;
+}
+
+.text {
+    font-family: var(--font-family);
+}
+
+.popup.toggled {
+    visibility: visible;
+    opacity: 1;
+}
