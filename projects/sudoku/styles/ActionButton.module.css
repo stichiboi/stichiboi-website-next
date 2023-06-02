@@ -1,0 +1,17 @@
+.buttonAction {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-dark);
+    border-radius: var(--default-border-radius);
+}
+
+.buttonAction.fill {
+    width: 100%;
+    height: 100%;
+}
+
+.toggled {
+    background-color: var(--color-highlight-main);
+}

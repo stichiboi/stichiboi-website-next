@@ -15,7 +15,9 @@
     "@fortawesome/react-fontawesome": "^0.1.18",
     "@stichiboi/react-elegant-mouse-trail": "^0.1.8",
     "@svgr/webpack": "^6.2.1",
-    "next": "12.2.4",
+    "canvas-confetti": "^1.6.0",
+    "iconoir-react": "^6.8.0",
+    "next": "^13.4.4",
     "next-export-i18n": "^1.4.3",
     "postprocessing": "^6.31.0",
     "react": "18.2.0",
@@ -24,6 +26,7 @@
     "three": "^0.153.0"
   },
   "devDependencies": {
+    "@types/canvas-confetti": "^1.6.0",
     "@types/node": "17.0.25",
     "@types/react": "18.0.6",
     "@types/react-dom": "18.0.2",

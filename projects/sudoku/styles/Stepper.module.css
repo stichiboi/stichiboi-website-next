@@ -1,0 +1,16 @@
+.stepper {
+    display: flex;
+    align-items: center;
+    width: 12em;
+    justify-content: space-between;
+}
+
+.stepper > p {
+    text-align: center;
+    flex: 1 1 auto;
+}
+
+.stepper > * {
+    --spacing: 10px;
+    color: currentColor;
+}

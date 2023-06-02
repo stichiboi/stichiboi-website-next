@@ -1,0 +1,51 @@
+.container {
+    --divisor: 1;
+    position: relative;
+    --grid-size: calc((min(86vw, 60vh) + (3 - var(--divisor)) * 12px) / var(--divisor));
+    width: var(--grid-size);
+    height: var(--grid-size);
+}
+
+.container.small,
+.container .container {
+    --divisor: 3;
+}
+
+.container > .lineSet:nth-child(2n) {
+    transform: rotateZ(90deg);
+}
+
+.lineSet {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex: 1 1 auto;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+}
+
+.lineSet > hr {
+    width: 100%;
+    margin: 0;
+    border: none;
+    background: var(--color-dark);
+
+    --thickness: calc(3px / var(--divisor));
+    border-radius: calc(var(--thickness) / 2);
+    height: var(--thickness);
+}
+
+.contents {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    height: 100%;
+}
+
+.contentWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+}

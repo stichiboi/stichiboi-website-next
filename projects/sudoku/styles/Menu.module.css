@@ -1,0 +1,33 @@
+.menu {
+    height: 100%;
+    flex: 1 1 auto;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10em;
+}
+
+.difficultyPicker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.toggleDarkMode{
+    position: absolute;
+    top: var(--main-ui-padding);
+    right: var(--main-ui-padding);
+    margin: 0 !important;
+    gap: 2em;
+}
+
+.buttonCta {
+    border: none;
+    padding: 12px;
+    margin: 0;
+    border-radius: var(--default-border-radius);
+    background: var(--color-dark);
+    color: var(--color-light);
+}

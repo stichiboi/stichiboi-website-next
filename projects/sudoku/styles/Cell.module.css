@@ -1,0 +1,11 @@
+.fixed {
+    font-weight: bold;
+}
+
+.highlightSoft {
+    background-color: var(--color-highlight-soft);
+}
+
+.highlightError {
+    background-color: var(--color-error);
+}
