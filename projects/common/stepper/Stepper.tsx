@@ -1,14 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { DIFFICULTY } from "../types/types";
-import { NavArrowLeft, NavArrowRight } from "iconoir-react";
-import styles from "../styles/Stepper.module.css";
+import React, { ReactNode, useCallback, useEffect, useState } from "react";
+import styles from "./Stepper.module.css";
 
 interface StepperProps {
-  label: string,
+  label?: string,
   saveKey: string,
   onChange: (value: number) => void,
   min?: number,
-  max?: number
+  max?: number,
+  leftIcon: ReactNode,
+  rightIcon: ReactNode,
+  displayValue?: (_: number) => string
 }
 
 export function Stepper({
@@ -16,7 +17,10 @@ export function Stepper({
   saveKey,
   onChange,
   min,
-  max
+  max,
+  leftIcon,
+  rightIcon,
+  displayValue
 }: StepperProps) {
 
   const [value, setValue] = useState(0);
@@ -32,7 +36,7 @@ export function Stepper({
     localStorage.setItem(saveKey, value.toString());
     onChange(value);
   }, [onChange, saveKey, value]);
-  
+
   const changeTriesCount = useCallback((modifier: number) => {
     setValue(prev => {
       if (min !== undefined && prev + modifier < min || max !== undefined && prev + modifier > max) {
@@ -44,14 +48,14 @@ export function Stepper({
 
   return (
     <div className={styles.container}>
-      <h3>{label}</h3>
+      {label ? <h3>{label}</h3> : null}
       <div className={styles.stepper}>
         <button onClick={() => changeTriesCount(-1)}>
-          <NavArrowLeft/>
+          {leftIcon}
         </button>
-        <p>{DIFFICULTY[value]}</p>
+        <p>{displayValue ? displayValue(value) : value}</p>
         <button onClick={() => changeTriesCount(1)}>
-          <NavArrowRight/>
+          {rightIcon}
         </button>
       </div>
     </div>

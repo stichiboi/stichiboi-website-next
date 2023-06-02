@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.content {
+    display: flex;
+    max-height: calc(19px * 3 + var(--spacing) * 2);
+    overflow: auto;
+    flex-direction: column;
+    gap: .5em;
+}
+

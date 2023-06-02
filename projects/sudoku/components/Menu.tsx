@@ -1,9 +1,9 @@
-import { Stepper } from "./Stepper";
+import { Stepper } from "../../common/stepper/Stepper";
 import { DIFFICULTY } from "../types/types";
 import { Toggle } from "./Toggle";
-import { HalfMoon, SunLight } from "iconoir-react";
+import { HalfMoon, NavArrowLeft, NavArrowRight, SunLight } from "iconoir-react";
 import styles from "../styles/Menu.module.css";
-import { ButtonCTA } from "./ButtonCTA"; // Import the CSS module
+import { ButtonCTA } from "../../common/button/ButtonCTA";
 
 interface MenuProps {
   setDifficulty: (difficulty: number) => unknown;
@@ -21,6 +21,9 @@ export function Menu({ setDifficulty, onStartGame, toggleDarkMode }: MenuProps):
           onChange={(value) => setDifficulty(value)}
           max={DIFFICULTY.Hard}
           min={DIFFICULTY.Trivial}
+          leftIcon={<NavArrowLeft/>}
+          rightIcon={<NavArrowRight/>}
+          displayValue={v => DIFFICULTY[v]}
         />
       </div>
       <ButtonCTA onClick={onStartGame}>

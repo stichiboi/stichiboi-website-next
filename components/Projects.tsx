@@ -25,7 +25,7 @@ export default function Projects(): JSX.Element {
       />
       <ProjectCard
         index={2}
-        target={"#"}
+        target={"/reflexo"}
         title={t("projects.reflexo.title")}
         description={t("projects.reflexo.description")}
         imageSrc={"/reflexo-hero.png"}

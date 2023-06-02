@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import confetti from "canvas-confetti";
 import styles from "../styles/EndPopup.module.css";
-import { ButtonCTA } from "./ButtonCTA";
+import { ButtonCTA } from "../../common/button/ButtonCTA";
 
 interface EndPopup {
   onExit: () => unknown,

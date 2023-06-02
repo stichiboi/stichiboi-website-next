@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import styles from "../styles/ButtonCTA.module.css";
+import styles from "./ButtonCTA.module.css";
 
 interface ButtonCTAProps {
   onClick: () => unknown,

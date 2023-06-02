@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { DIFFICULTY, ISudoku } from "./types/types";
 import { generateSudoku } from "./sudokuGenerator";
 import { Sudoku } from "./components/Sudoku";
