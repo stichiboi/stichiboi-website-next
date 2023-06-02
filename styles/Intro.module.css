@@ -5,8 +5,8 @@
     display: flex;
     flex-direction: column;
     color: var(--color-light);
-    justify-content: center;
-    padding: 3em;
+    justify-content: space-between;
+    padding: 3em 3em 0;
 }
 
 .main {
@@ -98,8 +98,7 @@
     }
 
     .main {
-        gap: 10em;
+        justify-content: space-between;
         flex-direction: row;
-        align-items: center;
     }
 }

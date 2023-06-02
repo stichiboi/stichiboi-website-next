@@ -28,6 +28,13 @@
 .image {
     flex: 1 1 auto;
     padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.image > img {
+    max-width: 100%;
+    height: auto;
 }
 
 .title {
