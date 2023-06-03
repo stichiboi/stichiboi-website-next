@@ -1,1 +1,1 @@
-export type ResultType = (number | string);
+export type ResultType = (number | "Invalid result");
