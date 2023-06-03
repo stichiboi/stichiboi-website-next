@@ -199,16 +199,6 @@ export function visitDeps(x: number, y: number, callback: (tx: number, ty: numbe
   });
 }
 
-function gradeSudokus() {
-  Promise.all(puzzles.slice(0, 2500).map(gradeSudoku))
-    .then(res => {
-      console.log('Sorting');
-      res.sort((a, b) => a.score < b.score ? -1 : 1);
-      console.log('Done sorting');
-      console.log(res.map(v => v.s));
-    });
-}
-
 function gradeSudoku(s: string) {
   return new Promise<{ score: number, s: string }>(resolve => {
     const board = stringToBoard(s);
