@@ -41,11 +41,11 @@
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     height: 100%;
+    gap: 8px;
 }
 
 .contentWrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 4px;
 }
