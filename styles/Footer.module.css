@@ -8,7 +8,7 @@
     align-items: center;
     background-color: var(--color-dark);
     color: var(--color-light);
-    padding: 3em;
+    padding: 3em 3em 1em 3em;
 }
 
 .main {
@@ -28,9 +28,9 @@
 }
 
 .backToTop {
-    padding: 3em;
+    padding: 1em 3em;
     position: absolute;
-    right: 0;
+    left: 0;
     bottom: 0;
     height: 4em;
     display: flex;
