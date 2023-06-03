@@ -1,12 +1,12 @@
 .menu {
+    padding: 2em 0;
     position: absolute;
     inset: 0;
     z-index: 1;
     display: flex;
     flex-direction: column;
-    gap: 3em;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     transition: .2s ease;
     transition-property: opacity, visibility;
 }
@@ -16,20 +16,31 @@
     visibility: hidden;
 }
 
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+    align-items: center;
+}
+
+.tutorial {
+    background-color: white;
+    padding: 2em;
+    max-width: 30em;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
 .start {
     background: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    --size: 72px;
 }
 
 .footer {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 32px;
-
+    width: 100%;
     display: flex;
     justify-content: space-between;
     padding: 0 24px;

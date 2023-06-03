@@ -6,7 +6,6 @@ import Results from "./Results";
 import Info from "./Info";
 import { SettingsContext } from "./SettingsContext";
 import styles from "../styles/Menu.module.css";
-import Popup from "./Popup";
 
 export const LOCAL_SCORE_KEY = 'reflexo-best-score';
 
@@ -18,13 +17,13 @@ export function getLocalScore() {
 }
 
 interface MenuProps {
-  running: boolean,
+  isRunning: boolean,
   onStart: () => void,
   results: ResultType[]
 }
 
 export function Menu({
-  running,
+  isRunning,
   onStart,
   results
 }: MenuProps) {
@@ -38,23 +37,30 @@ export function Menu({
   }, []);
 
   return (
-    <div className={`${styles.menu} ${running ? styles.hidden : ''}`}>
-      {!running && results.length ?
-        <Results results={results}/>
-        :
-        <Popup defaultToggled={true}>
-          <strong>{"How to"}</strong>
-          <p>
-            {"The objective is to measure your eye-hand reaction time."}<br/>
-            {"After you press play, wait for the green screen: click it as soon as it appears."}<br/>
-            {`After ${numberOfTries} round${numberOfTries > 1 ? 's' : ''}, your average time will be calculated.`}<br/>
-            {"Try it a couple of times to see if you can improve!"}
-          </p>
-        </Popup>
-      }
-      <button className={styles.start} onClick={onStart}>
-        <Play/>
-      </button>
+    <div className={`${styles.menu} ${isRunning ? styles.hidden : ""}`}>
+      <header>
+        {localScore !== undefined ?
+          <p>{`Best: ${localScore} ms`}</p> : ''
+        }
+      </header>
+      <main className={styles.content}>
+        {!isRunning && results.length ?
+          <Results results={results}/>
+          :
+          <div className={styles.tutorial}>
+            <strong>{"How to"}</strong>
+            <p>
+              {"The objective is to measure your eye-hand reaction time."}<br/>
+              {"After you press play, wait for the green screen: click it as soon as it appears."}<br/>
+              {`After ${numberOfTries} round${numberOfTries > 1 ? 's' : ''}, your average time will be calculated.`}<br/>
+              {"Try it a couple of times to see if you can improve!"}
+            </p>
+          </div>
+        }
+        <button className={styles.start} onClick={onStart}>
+          <Play width={72} height={72}/>
+        </button>
+      </main>
       <footer className={styles.footer}>
         <SettingsContainer
           clearLocalScore={() => {
@@ -62,9 +68,6 @@ export function Menu({
             setLocalScore(undefined);
           }}
         />
-        {localScore !== undefined ?
-          <p>{`Best: ${localScore} ms`}</p> : ''
-        }
         <Info/>
       </footer>
     </div>

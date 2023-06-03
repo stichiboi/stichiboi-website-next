@@ -19,12 +19,12 @@ const TIME_RANGE = {
 }
 
 interface ReflexerProps {
-  running: boolean,
+  isRunning: boolean,
   onResult: (result: ResultType) => void
 }
 
 export function Reflexer({
-  running,
+  isRunning,
   onResult
 }: ReflexerProps) {
   const getColor = useCallback((target: string[]) => {
@@ -37,27 +37,29 @@ export function Reflexer({
   const [validTime, setValidTime] = useState<undefined | number>();
 
   useEffect(() => {
-    if (running && !validTime) {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-        setColor(getColor(FILL_COLORS));
+    setTimeoutId(prev => {
+      if (isRunning && !validTime) {
+        if (prev) {
+          clearTimeout(prev);
+          setColor(getColor(FILL_COLORS));
+        }
+        const time = Math.random() * (TIME_RANGE.end - TIME_RANGE.start) + TIME_RANGE.start;
+        return setTimeout(() => {
+          setColor(getColor(VALID_COLORS));
+          setValidTime(Date.now());
+        }, time) as unknown as number;
+      } else if (!isRunning) {
+        clearTimeout(prev);
+        return 0;
       }
-      const time = Math.random() * (TIME_RANGE.end - TIME_RANGE.start) + TIME_RANGE.start;
-      const id = setTimeout(() => {
-        setColor(getColor(VALID_COLORS));
-        setValidTime(Date.now());
-      }, time);
-      setTimeoutId(id as unknown as number);
-    } else if (!running) {
-      clearTimeout(timeoutId);
-      setTimeoutId(0);
-    }
-  }, [getColor, running, timeoutId, validTime]);
+      return prev;
+    });
+  }, [getColor, isRunning, validTime]);
 
 
   function registerEvent() {
-    if (running) {
-      const result = validTime ? Date.now() - validTime : 'Invalid result';
+    if (isRunning) {
+      const result = validTime ? Date.now() - validTime : "Invalid result";
       onResult(result);
       setValidTime(undefined);
     }
@@ -68,6 +70,7 @@ export function Reflexer({
       className={styles.reflexer}
       style={{ backgroundColor: color }}
       onMouseDown={registerEvent}
+      onKeyDown={registerEvent}
     />
   )
 }

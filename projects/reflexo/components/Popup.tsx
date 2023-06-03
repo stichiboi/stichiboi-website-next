@@ -1,25 +1,19 @@
 import { ReactNode, useState } from "react";
 import styles from "../styles/Popup.module.css";
+import { Popover } from "@headlessui/react";
 
 interface PopupProps {
-  label?: ReactNode,
+  label: ReactNode,
+  containerClassName?: string,
   children: ReactNode,
   defaultToggled?: boolean
 }
 
-export default function Popup({ label, children, defaultToggled }: PopupProps) {
-  const [toggled, setToggled] = useState(defaultToggled || false);
-
+export default function Popup({ label, containerClassName, children }: PopupProps) {
   return (
-    <div className={styles.container}>
-      {label ?
-        <button onClick={() => setToggled(prev => !prev)}>
-          {label}
-        </button> : null
-      }
-      <div className={`${styles.popup} ${toggled ? styles.toggled : ''}`}>
-        {children}
-      </div>
-    </div>
-  )
+    <Popover className={`${styles.container} ${containerClassName || ""}`}>
+      {label ? <Popover.Button>{label}</Popover.Button> : null}
+      <Popover.Panel className={styles.popup}>{children}</Popover.Panel>
+    </Popover>
+  );
 }

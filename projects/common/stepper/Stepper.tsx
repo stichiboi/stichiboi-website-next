@@ -16,14 +16,14 @@ export function Stepper({
   label,
   saveKey,
   onChange,
-  min,
-  max,
+  min = 0,
+  max = 10,
   leftIcon,
   rightIcon,
   displayValue
 }: StepperProps) {
 
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState((max + min) / 2);
   const getValue = useCallback(() => {
     return parseInt(localStorage.getItem(saveKey) || '3');
   }, [saveKey]);

@@ -2,3 +2,7 @@
     font-weight: bold;
     white-space: nowrap;
 }
+
+.popup {
+    align-items: flex-end;
+}

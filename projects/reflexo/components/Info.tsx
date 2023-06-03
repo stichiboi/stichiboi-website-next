@@ -4,10 +4,8 @@ import styles from "../styles/Info.module.css";
 
 export default function Info() {
   return (
-    <Popup label={<Heart/>}>
-      <p className={styles.textHeader}>
-        {"Hello there!"}
-      </p>
+    <Popup label={<Heart/>} containerClassName={styles.popup}>
+      <p>{"Hello there!"}</p>
       <Emoji/>
     </Popup>
   )

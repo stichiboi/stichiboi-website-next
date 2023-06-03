@@ -16,6 +16,7 @@ export function App(): JSX.Element {
   }, [numberOfTries, results]);
 
   const start = useCallback(() => {
+    console.log("Starting", running);
     if (!running) {
       setResults([]);
       setRunning(true);
@@ -25,12 +26,12 @@ export function App(): JSX.Element {
   return (
     <SettingsContext.Provider value={{ numberOfTries, setNumberOfTries }}>
       <Reflexer
-        running={running}
+        isRunning={running}
         onResult={result => {
           setResults(prev => prev.concat(result));
         }}
       />
-      <Menu running={running} onStart={start} results={results}/>
+      <Menu isRunning={running} onStart={start} results={results}/>
     </SettingsContext.Provider>
   );
 }

@@ -7,17 +7,13 @@
 }
 
 .popup {
-    bottom: calc(100% + var(--spacing));
+    min-width: 8em;
+    position: absolute;
+    bottom: 3em;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-
-    visibility: hidden;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: .2s ease;
-    transition-property: visibility, opacity, transform;
 
     background: var(--color-light);
     padding: 24px;
