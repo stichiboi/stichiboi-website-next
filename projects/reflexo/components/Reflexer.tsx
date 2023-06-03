@@ -33,7 +33,7 @@ export function Reflexer({
   }, []);
 
   const [color, setColor] = useState(getColor(FILL_COLORS));
-  const [timeoutId, setTimeoutId] = useState(0);
+  const [_, setTimeoutId] = useState(0);
   const [validTime, setValidTime] = useState<undefined | number>();
 
   useEffect(() => {

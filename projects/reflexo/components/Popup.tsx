@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import styles from "../styles/Popup.module.css";
 import { Popover } from "@headlessui/react";
 
