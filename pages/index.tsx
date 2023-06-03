@@ -50,8 +50,12 @@ const Home: NextPage = () => {
     return () => window.removeEventListener("scroll", changeColor);
   }, [changeColor]);
 
+  useEffect(() => {
+    document.body.style.backgroundColor = themeColor;
+  }, [themeColor]);
+
   return (
-    <main className={styles.container} style={{ backgroundColor: themeColor }}>
+    <main className={styles.container}>
       <Head>
         <title>{"Stichiboi | Creative Developer"}</title>
         <meta name="description" content="Making tools for people since 2018"/>
