@@ -17,19 +17,20 @@
 }
 
 .content {
+    max-width: 30em;
     display: flex;
     flex-direction: column;
-    gap: 3em;
+    gap: 1em;
     align-items: center;
 }
 
 .tutorial {
+    width: 100%;
     background-color: white;
     padding: 2em;
-    max-width: 30em;
     display: flex;
     flex-direction: column;
-    gap: 2em;
+    gap: 1em;
 }
 
 .start {

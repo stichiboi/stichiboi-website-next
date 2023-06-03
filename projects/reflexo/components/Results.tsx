@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { getLocalScore, LOCAL_SCORE_KEY } from "./Menu";
 import { ResultType } from "../types/types";
-import Popup from "./Popup";
+import menuStyles from "../styles/Menu.module.css";
 import styles from "../styles/Results.module.css";
 
 export default function Results({ results }: { results: ResultType[] }) {
@@ -35,29 +35,28 @@ export default function Results({ results }: { results: ResultType[] }) {
     }
   }, [average]);
 
-
   function formatResultType(r: ResultType) {
     return typeof r === 'number' ? `${r} ms` : r;
   }
 
   return (
-    <Popup label={<div/>} defaultToggled>
+    <div className={menuStyles.tutorial}>
       <section className={styles.container}>
         <strong>{"Results"}</strong>
         <div className={styles.content}>
-          {results.map((r, ind) => (
+          {results.length ? results.map((r, ind) => (
             <p key={ind}>{formatResultType(r)}</p>
-          ))}
+          )) : <em>{"No results yet"}</em>}
         </div>
       </section>
       <section className={styles.container}>
         <strong>{"Average"}</strong>
         {average ?
           <p>{formatResultType(average)}</p>
-          : <p>{'Invalid result'}</p>
+          : <em>{'Invalid result'}</em>
         }
         {isBest ? <em>{"New best!"}</em> : ''}
       </section>
-    </Popup>
+    </div>
   )
 }

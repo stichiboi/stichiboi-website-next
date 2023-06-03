@@ -44,19 +44,16 @@ export function Menu({
         }
       </header>
       <main className={styles.content}>
-        {!isRunning && results.length ?
-          <Results results={results}/>
-          :
-          <div className={styles.tutorial}>
-            <strong>{"How to"}</strong>
-            <p>
-              {"The objective is to measure your eye-hand reaction time."}<br/>
-              {"After you press play, wait for the green screen: click it as soon as it appears."}<br/>
-              {`After ${numberOfTries} round${numberOfTries > 1 ? 's' : ''}, your average time will be calculated.`}<br/>
-              {"Try it a couple of times to see if you can improve!"}
-            </p>
-          </div>
-        }
+        <Results results={results}/>
+        <div className={styles.tutorial}>
+          <strong>{"How to play"}</strong>
+          <p>
+            {"The objective is to measure your eye-hand reaction time."}<br/>
+            {"After you press play, wait for the green screen: click it as soon as it appears."}<br/>
+            {`After ${numberOfTries} round${numberOfTries > 1 ? 's' : ''}, your average time will be calculated.`}<br/>
+            {"Try it a couple of times to see if you can improve!"}
+          </p>
+        </div>
         <button className={styles.start} onClick={onStart}>
           <Play width={72} height={72}/>
         </button>
