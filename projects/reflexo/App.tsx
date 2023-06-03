@@ -6,32 +6,35 @@ import { ResultType } from "./types/types";
 
 export function App(): JSX.Element {
   const [numberOfTries, setNumberOfTries] = useState(3);
-  const [running, setRunning] = useState(false);
+  const [isRunning, setIsRunning] = useState(false);
   const [results, setResults] = useState<ResultType[]>([]);
 
   useEffect(() => {
     if (results.length >= numberOfTries) {
-      setRunning(false);
+      setIsRunning(false);
     }
   }, [numberOfTries, results]);
 
   const start = useCallback(() => {
-    console.log("Starting", running);
-    if (!running) {
+    if (!isRunning) {
       setResults([]);
-      setRunning(true);
+      setIsRunning(true);
     }
-  }, [running]);
+  }, [isRunning]);
+
+  const onResult = useCallback((result: ResultType) => {
+    setResults(prev => prev.concat(result));
+  }, []);
 
   return (
     <SettingsContext.Provider value={{ numberOfTries, setNumberOfTries }}>
-      <Reflexer
-        isRunning={running}
-        onResult={result => {
-          setResults(prev => prev.concat(result));
-        }}
-      />
-      <Menu isRunning={running} onStart={start} results={results}/>
+      {
+        isRunning &&
+          <Reflexer
+            onResult={onResult}
+          />
+      }
+      <Menu isRunning={isRunning} onStart={start} results={results}/>
     </SettingsContext.Provider>
   );
 }

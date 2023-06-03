@@ -45,6 +45,9 @@ export function Menu({
       </header>
       <main className={styles.content}>
         <Results results={results}/>
+        <button className={styles.start} onClick={onStart}>
+          <Play width={72} height={72}/>
+        </button>
         <div className={styles.tutorial}>
           <strong>{"How to play"}</strong>
           <p>
@@ -54,9 +57,6 @@ export function Menu({
             {"Try it a couple of times to see if you can improve!"}
           </p>
         </div>
-        <button className={styles.start} onClick={onStart}>
-          <Play width={72} height={72}/>
-        </button>
       </main>
       <footer className={styles.footer}>
         <SettingsContainer

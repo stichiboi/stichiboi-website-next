@@ -19,12 +19,10 @@ const TIME_RANGE = {
 }
 
 interface ReflexerProps {
-  isRunning: boolean,
   onResult: (result: ResultType) => void
 }
 
 export function Reflexer({
-  isRunning,
   onResult
 }: ReflexerProps) {
   const getColor = useCallback((target: string[]) => {
@@ -37,8 +35,8 @@ export function Reflexer({
   const [validTime, setValidTime] = useState<undefined | number>();
 
   useEffect(() => {
-    setTimeoutId(prev => {
-      if (isRunning && !validTime) {
+    if (!validTime) {
+      setTimeoutId(prev => {
         if (prev) {
           clearTimeout(prev);
           setColor(getColor(FILL_COLORS));
@@ -48,22 +46,15 @@ export function Reflexer({
           setColor(getColor(VALID_COLORS));
           setValidTime(Date.now());
         }, time) as unknown as number;
-      } else if (!isRunning) {
-        clearTimeout(prev);
-        return 0;
-      }
-      return prev;
-    });
-  }, [getColor, isRunning, validTime]);
-
-
-  function registerEvent() {
-    if (isRunning) {
-      const result = validTime ? Date.now() - validTime : "Invalid result";
-      onResult(result);
-      setValidTime(undefined);
+      });
     }
-  }
+  }, [getColor, validTime]);
+
+  const registerEvent = useCallback(() => {
+    const result: ResultType = validTime ? Date.now() - validTime : "Invalid result";
+    onResult(result);
+    setValidTime(undefined);
+  }, [onResult, validTime]);
 
   return (
     <div

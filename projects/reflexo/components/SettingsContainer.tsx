@@ -24,6 +24,7 @@ export default function SettingsContainer({
         saveKey={NUM_TRIES_KEY}
         onChange={setNumberOfTries}
         min={3}
+        max={6}
         leftIcon={<Minus/>}
         rightIcon={<Plus/>}
       />
