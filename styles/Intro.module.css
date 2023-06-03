@@ -47,6 +47,8 @@
     justify-content: center;
     /* set z-index since we need to set the description to -1 */
     z-index: 0;
+    /* set margin to include also the size of the accents */
+    margin: 2em 0;
 }
 
 .imageContainer > * {
@@ -62,6 +64,8 @@
 }
 
 .image {
+    width: 100%;
+    height: auto;
     transition-property: border-radius;
 }
 
@@ -73,7 +77,7 @@
 }
 
 .imageContainer:hover > .imageDescription {
-    bottom: -2em;
+    translate: 0 100%;
 }
 
 .imageAccent {
@@ -100,5 +104,9 @@
     .main {
         justify-content: space-between;
         flex-direction: row;
+    }
+
+    .imageContainer {
+        margin: 2em;
     }
 }
