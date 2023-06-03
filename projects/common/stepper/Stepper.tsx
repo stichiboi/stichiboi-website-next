@@ -41,8 +41,8 @@ export function Stepper({
     }
   }, [onChange, saveKey, value]);
   const updateValue = useCallback((modifier: -1 | 1) => {
-    setValue(prev =>{
-      if(!prev){
+    setValue(prev => {
+      if (prev === undefined) {
         // return middle between max and min
         return (max + min) / 2;
       }
@@ -59,7 +59,7 @@ export function Stepper({
         <button onClick={() => updateValue(-1)}>
           {leftIcon}
         </button>
-        <p>{(displayValue && value) ? displayValue(value) : value}</p>
+        <p>{(displayValue && value !== undefined) ? displayValue(value) : value}</p>
         <button onClick={() => updateValue(1)}>
           {rightIcon}
         </button>
