@@ -51,12 +51,12 @@ const Home: NextPage = () => {
   }, [changeColor]);
 
   return (
-    <main className={styles.container}>
+    <main className={styles.container} style={{ backgroundColor: themeColor }}>
       <Head>
         <title>{"Stichiboi | Creative Developer"}</title>
         <meta name="description" content="Making tools for people since 2018"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
-        <meta name="theme-color" content={themeColor}/>
+        {/*<meta name="theme-color" content={themeColor}/>*/}
       </Head>
       <Hero/>
       <Intro/>
