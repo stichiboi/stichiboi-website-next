@@ -28,13 +28,13 @@ export function Menu({
   results
 }: MenuProps) {
 
-  const [localScore, setLocalScore] = useState<undefined | number>();
+  const [localScore, setLocalScore] = useState<number>();
   const { numberOfTries } = useContext(SettingsContext);
 
   useEffect(() => {
     const score = getLocalScore();
     setLocalScore(score);
-  }, [results]);
+  }, [isRunning]);
 
   return (
     <div className={`${styles.menu} ${isRunning ? styles.hidden : ""}`}>
