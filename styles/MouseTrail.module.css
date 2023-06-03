@@ -3,8 +3,6 @@
     position: fixed;
     width: 100vw;
     height: 100vh;
-    /* fix height in mobile safari */
-    height: -webkit-fill-available;;
     z-index: 2;
     top: 0;
     left: 0;
