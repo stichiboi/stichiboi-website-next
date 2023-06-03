@@ -133,11 +133,9 @@ export function Cube(): JSX.Element {
       <canvas
         id={CANVAS_ID}
         onMouseEnter={() => {
-          console.log("entering");
           isHovering.current = true;
         }}
         onMouseLeave={() => {
-          console.log("leaving");
           isHovering.current = false;
         }}
       />
