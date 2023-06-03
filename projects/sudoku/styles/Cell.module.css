@@ -1,3 +1,19 @@
+.cellNotes {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.cellNotes > p {
+    color: var(--color-quiet);
+    font-size: var(--font-size-small);
+    font-weight: normal;
+}
+
 .fixed {
     font-weight: bold;
 }

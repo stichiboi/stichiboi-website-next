@@ -3,6 +3,7 @@ import {
   Board,
   CELL_HIGHLIGHT,
   DIFFICULTY,
+  ICell,
   ICoords,
   InvalidBoardError,
   ISudoku,
@@ -187,18 +188,21 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
         contents={Array.from({ length: sudoku.solution.length })
           .map((_, i) => {
             const missCount = sudoku.puzzle.length - numberCount[i + 1];
+            const cell: ICell = {
+              value: i + 1,
+              notes: new Set([missCount]),
+              isFixed: true,
+              isError: false
+            }
             return (
-              <ActionButton
+              <Cell
                 key={i}
+                cell={cell}
                 onClick={() => setNumber(i + 1, selected.current)}
-                fill
-              >
-                <p>{i + 1}</p>
-                <div className={`${styles.cellNotes} ${styles.sudokuMissingCount}`}>
-                  {(isNaN(missCount) || missCount === 0) ? '' : missCount}
-                </div>
-              </ActionButton>
-            )
+                highlight={CELL_HIGHLIGHT.None}
+                forceNotes
+              />
+            );
           })}/>
     )
   }, [sudoku, numberCount]);

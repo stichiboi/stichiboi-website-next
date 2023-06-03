@@ -6,8 +6,14 @@ import styles from "../styles/Cell.module.css";
 export default function Cell({
   cell,
   onClick,
-  highlight
-}: { cell: ICell, onClick: () => unknown, highlight: CELL_HIGHLIGHT }) {
+  highlight,
+  forceNotes
+}: {
+  cell: ICell,
+  onClick: () => unknown,
+  highlight: CELL_HIGHLIGHT,
+  forceNotes?: boolean
+}) {
 
   const formatNotes = useCallback((notes: Set<number>) => {
     return Array.from(notes)
@@ -39,8 +45,8 @@ export default function Cell({
       isToggled={highlight === CELL_HIGHLIGHT.Main}
       className={classes.join(" ")}
     >
-      {cell.value || <div className={"cell-notes"}>{formatNotes(cell.notes)}</div>}
-
+      <p>{cell.value || null}</p>
+      {forceNotes || !cell.value ? <div className={styles.cellNotes}>{formatNotes(cell.notes)}</div> : null}
     </ActionButton>
   );
 }

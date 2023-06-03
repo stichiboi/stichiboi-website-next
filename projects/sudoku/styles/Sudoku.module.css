@@ -29,18 +29,3 @@
     display: flex;
     gap: 1em;
 }
-
-.cellNotes {
-    color: var(--color-quiet);
-    font-size: var(--font-size-small);
-    display: flex;
-    flex: 1 1 auto;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-}
-
-.sudokuMissingCount {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
