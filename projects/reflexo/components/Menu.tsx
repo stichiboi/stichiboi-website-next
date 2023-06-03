@@ -34,18 +34,18 @@ export function Menu({
   useEffect(() => {
     const score = getLocalScore();
     setLocalScore(score);
-  }, []);
+  }, [results]);
 
   return (
     <div className={`${styles.menu} ${isRunning ? styles.hidden : ""}`}>
       <header>
         {localScore !== undefined ?
-          <p>{`Best: ${localScore} ms`}</p> : ''
+          <p title={"Your best score"}>{`⭐ ${localScore} ms`}</p> : <em>{"No best score yet"}</em>
         }
       </header>
       <main className={styles.content}>
         <Results results={results}/>
-        <button className={styles.start} onClick={onStart}>
+        <button className={styles.start} onClick={onStart} title={"Start playing"}>
           <Play width={72} height={72}/>
         </button>
         <div className={styles.tutorial}>

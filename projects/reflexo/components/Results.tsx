@@ -52,10 +52,9 @@ export default function Results({ results }: { results: ResultType[] }) {
       <section className={styles.container}>
         <strong>{"Average"}</strong>
         {average ?
-          <p>{formatResultType(average)}</p>
-          : <em>{'Invalid result'}</em>
+          <p>{formatResultType(average)} {isBest ? <em>{"🎉 New best score!"}</em> : ""}</p>
+          : <em>{"Invalid result"}</em>
         }
-        {isBest ? <em>{"New best!"}</em> : ''}
       </section>
     </div>
   )
