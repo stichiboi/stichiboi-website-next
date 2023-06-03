@@ -11,7 +11,9 @@
 .project {
     position: relative;
     padding: 3em;
-    min-height: 100vh;
+        min-height: 100vh;
+    /* fix height in mobile safari */
+    min-height: -webkit-fill-available;;
     display: flex;
     flex-direction: column;
     align-items: center;

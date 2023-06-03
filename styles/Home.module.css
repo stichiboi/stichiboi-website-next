@@ -1,6 +1,8 @@
 .container {
     /*overflow-x: hidden;*/
-    min-height: 100vh;
+        min-height: 100vh;
+    /* fix height in mobile safari */
+    min-height: -webkit-fill-available;;
     flex: 1;
     display: flex;
     flex-direction: column;

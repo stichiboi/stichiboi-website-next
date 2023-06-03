@@ -1,6 +1,8 @@
 .container {
     /* set min height because picture might cause really big content*/
-    min-height: 100vh;
+        min-height: 100vh;
+    /* fix height in mobile safari */
+    min-height: -webkit-fill-available;;
     background: var(--color-dark);
     display: flex;
     flex-direction: column;
