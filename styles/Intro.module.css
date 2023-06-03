@@ -32,8 +32,8 @@
 }
 
 .title {
-    font-weight: lighter;
-    text-transform: uppercase;
+    font-family: "Comfortaa", sans-serif;
+    text-transform: lowercase;
     letter-spacing: .2em;
     font-size: 24px;
     margin: 1em 0;
