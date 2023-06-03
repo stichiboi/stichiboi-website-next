@@ -39,6 +39,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: scale .2s ease;
+}
+
+.start:hover {
+    scale: 1.1;
+}
+
+.start:active {
+    scale: 1;
 }
 
 .footer {
