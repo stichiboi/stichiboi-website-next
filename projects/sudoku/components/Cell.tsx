@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { CELL_HIGHLIGHT, ICell } from "../types/types";
+import { CELL_HIGHLIGHT, ICell } from "../types";
 import ActionButton from "./ActionButton";
 import styles from "../styles/Cell.module.css";
 

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Play } from 'iconoir-react';
-import { ResultType } from "../types/types";
+import { ResultType } from "../types";
 import SettingsContainer from "./SettingsContainer";
 import Results from "./Results";
 import Info from "./Info";

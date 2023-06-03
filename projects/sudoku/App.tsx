@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { DIFFICULTY, ISudoku } from "./types/types";
+import { DIFFICULTY, ISudoku } from "./types";
 import { generateSudoku } from "./sudokuGenerator";
 import { Sudoku } from "./components/Sudoku";
 import { Menu } from "./components/Menu";

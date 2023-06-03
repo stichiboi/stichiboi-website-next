@@ -1,5 +1,5 @@
 import { Stepper } from "../../common/stepper/Stepper";
-import { DIFFICULTY } from "../types/types";
+import { DIFFICULTY } from "../types";
 import { Toggle } from "./Toggle";
 import { HalfMoon, NavArrowLeft, NavArrowRight, SunLight } from "iconoir-react";
 import styles from "../styles/Menu.module.css";

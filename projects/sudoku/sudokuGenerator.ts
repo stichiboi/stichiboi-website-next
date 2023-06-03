@@ -1,4 +1,4 @@
-import {Board, DIFFICULTY, ICell, ICoords, InvalidBoardError, ISudoku, SUDOKU_VALIDITY} from "./types/types";
+import {Board, DIFFICULTY, ICell, ICoords, InvalidBoardError, ISudoku, SUDOKU_VALIDITY} from "./types";
 import puzzles from "./puzzles.json";
 
 const SUDOKU_SIZE = 9;

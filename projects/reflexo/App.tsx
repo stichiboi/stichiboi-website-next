@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Reflexer } from "./components/Reflexer";
 import { SettingsContext } from "./components/SettingsContext";
 import { Menu } from "./components/Menu";
-import { ResultType } from "./types/types"
+import { ResultType } from "./types"
 
 export function App(): JSX.Element {
   const [numberOfTries, setNumberOfTries] = useState(3);

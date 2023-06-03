@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { getLocalScore, LOCAL_SCORE_KEY } from "./Menu";
-import { ResultType } from "../types/types";
+import { ResultType } from "../types";
 import menuStyles from "../styles/Menu.module.css";
 import styles from "../styles/Results.module.css";
 

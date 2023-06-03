@@ -7,7 +7,7 @@ import {
   InvalidBoardError,
   ISudoku,
   SUDOKU_VALIDITY
-} from "../types/types";
+} from "../types";
 import { Cancel, Check, EditPencil, QuestionMark, Undo } from "iconoir-react";
 import ActionButton from "./ActionButton";
 import Grid from "./Grid";

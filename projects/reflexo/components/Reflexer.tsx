@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { ResultType } from "../types/types";
+import { ResultType } from "../types";
 import styles from "../styles/Reflexer.module.css";
 import { pickRandomElement } from "../utils";
 
