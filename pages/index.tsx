@@ -7,7 +7,7 @@ import Projects from "../components/Projects";
 import { useCallback, useEffect, useState } from "react";
 import { Footer } from "../components/Footer";
 
-const colorLight = "#FFF";
+const colorLight = "#FFFAFA";
 const colorDark = "#05080c";
 
 const SECTION_COLORS = [
