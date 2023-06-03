@@ -44,6 +44,7 @@
     height: 100%;
 }
 
+.app,
 .app * {
     transition: .2s ease-out;
     transition-property: color, background-color;
