@@ -5,7 +5,7 @@ import React from "react";
 export function Footer(): JSX.Element {
   const { t } = useTranslation();
   return (
-    <footer className={styles.container}>
+    <footer id={"footer"} className={styles.container}>
       <div className={styles.main}>
         <p>{t("footer.text_1")}</p>
         <p>{t("footer.text_2")}</p>

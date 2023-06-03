@@ -4,52 +4,50 @@ import styles from '../styles/Home.module.css'
 import Hero from "../components/Hero";
 import Intro from "../components/Intro";
 import Projects from "../components/Projects";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Footer } from "../components/Footer";
 
+const colorLight = "#FFF";
+const colorDark = "#05080c";
+
+const SECTION_COLORS = [
+  colorLight, // hero
+  colorDark, // intro
+  colorLight, // projects
+  colorDark, // footer
+].reverse(); // reverse so it matches the search order
 const Home: NextPage = () => {
 
   const [sections, setSections] = useState<(HTMLElement | null)[]>([])
-  const [activeSection, setActiveSection] = useState(0);
-  const SECTION_COLORS = useMemo(() => ([
-    "transparent",
-    "#FFA693",
-    "#FFF"
-  ]), []);
+
+  const [themeColor, setThemeColor] = useState<string>(SECTION_COLORS[0]);
 
   const changeColor = useCallback(() => {
-    const yScroll = window.scrollY || window.pageYOffset;
-    //Note: sections need to be searched in reverse
-    // -> the section with highest .top should be the first to be checked
+    // note: sections need to be searched in reverse
+    // -> the section with negative top closest to 0 should be the first to be checked
     const index = sections.findIndex(section => {
       if (!section) return;
       const rect = section.getBoundingClientRect();
-      if (yScroll > rect.top) {
+      if (rect.top < 1) {
         return true;
       }
     }) || 0;
-    //SECTION_COLORS are not in reverse
-    setActiveSection(sections.length - 1 - index);
+    setThemeColor(SECTION_COLORS[index]);
   }, [sections]);
 
   useEffect(() => {
-    //Sections are reversed for performance improvements
+    // sections are reversed for performance improvements
     setSections([
-      document.getElementById("home"),
-      document.getElementById("mountains"),
-      document.getElementById("projects")
+      document.getElementById("hero"),
+      document.getElementById("intro"),
+      document.getElementById("projects"),
+      document.getElementById("footer"),
     ].reverse());
   }, []);
 
   useEffect(() => {
-    document.getElementById("home")?.style
-      .setProperty("background-color", SECTION_COLORS[activeSection || 0]);
-  }, [SECTION_COLORS, activeSection]);
-
-  useEffect(() => {
-    window.addEventListener("scroll", () => changeColor());
-
-    return window.removeEventListener("scroll", () => changeColor());
+    window.addEventListener("scroll", changeColor);
+    return () => window.removeEventListener("scroll", changeColor);
   }, [changeColor]);
 
   return (
@@ -58,6 +56,7 @@ const Home: NextPage = () => {
         <title>{"Stichiboi | Creative Developer"}</title>
         <meta name="description" content="Making tools for people since 2018"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+        <meta name="theme-color" content={themeColor}/>
       </Head>
       <Hero/>
       <Intro/>
