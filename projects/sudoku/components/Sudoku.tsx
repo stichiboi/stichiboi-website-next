@@ -38,7 +38,7 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
   const selected = useRef<ICoords>();
   const [isComplete, setIsComplete] = useState(false);
   const [timerId, setTimerId] = useState(0);
-  const [numberCount, setNumberCount] = useState({} as { [key: number]: number });
+  const [numberCount, setNumberCount] = useState<Map<number, number>>(new Map<number, number>());
 
 
   const [_triggerCheck, _setTriggerCheck] = useState(0);
@@ -160,50 +160,58 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
     return CELL_HIGHLIGHT.None;
   }, [root, sudoku.puzzle]);
 
+  const buildCell = useCallback((gridIndex: number, cellIndex: number) => {
+    const y = Math.floor(gridIndex / root) * root + Math.floor(cellIndex / root);
+    const x = cellIndex % root + gridIndex % root * root;
+    return (
+      <Cell
+        key={cellIndex}
+        cell={sudoku.puzzle[y][x]}
+        highlight={getHighlight(x, y)}
+        onClick={() => {
+          if (selected.current?.x === x && selected.current?.y === y) {
+            selected.current = undefined
+          } else {
+            selected.current = { x, y }
+          }
+          triggerRender();
+        }}
+      />);
+  }, [getHighlight, root, sudoku.puzzle, triggerRender]);
+
+  const buildSubGrid = useCallback((gridIndex: number) => {
+    return (
+      <Grid
+        key={gridIndex}
+        size={root}
+        contents={Array.from({ length: sudoku.solution.length })
+          .map((_, cellIndex) => buildCell(gridIndex, cellIndex))
+        }
+      />
+    );
+  }, [buildCell, root, sudoku.solution.length]);
+
   const board = useMemo(() => {
+    if (!_triggerRender) return null;
     return (
       <Grid
         size={root}
-        contents={Array.from({ length: sudoku.solution.length })
-          .map((_v, i) => (
-            <Grid
-              key={i}
-              size={root}
-              contents={Array.from({ length: sudoku.solution.length })
-                .map((_v, j) => {
-                  const y = Math.floor(i / root) * root + Math.floor(j / root);
-                  const x = j % root + i % root * root;
-                  return (
-                    <Cell
-                      key={j}
-                      cell={sudoku.puzzle[y][x]}
-                      highlight={getHighlight(x, y)}
-                      onClick={() => {
-                        if (selected.current?.x === x && selected.current?.y === y) {
-                          selected.current = undefined
-                        } else {
-                          selected.current = { x, y }
-                        }
-                        triggerRender();
-                      }}
-                    />);
-                })
-              }
-            />)
-          )
+        contents={
+          Array.from({ length: sudoku.solution.length })
+            .map((_, gridIndex) => buildSubGrid(gridIndex))
         }
       />
     )
-  }, [_triggerRender]);
+  }, [_triggerRender, buildSubGrid, root, sudoku.solution.length]);
 
   const controls = useMemo(() => {
     return (
       <Grid
         size={root}
-        isSmall={true}
+        isSmall
         contents={Array.from({ length: sudoku.solution.length })
           .map((_, i) => {
-            const missCount = sudoku.puzzle.length - numberCount[i + 1];
+            const missCount = sudoku.puzzle.length - (numberCount.get(i + 1) || 0);
             const cell: ICell = {
               value: i + 1,
               notes: new Set([missCount]),
@@ -253,10 +261,12 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
   }, [sudoku]);
 
   useEffect(() => {
-    const temp = {} as { [key: number]: number };
+
+    const temp = new Map<number, number>();
     loop(((x, y) => {
       const value = sudoku.puzzle[y][x].value;
-      temp[value] = (temp[value] || 0) + 1;
+      // increase the value by 1
+      temp.set(value, (temp.get(value) || 0) + 1)
     }));
     setNumberCount(temp);
   }, [sudoku]);
@@ -330,14 +340,14 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
   }, [erase, setNumber]);
 
 
-  function recordNumberCount(number: number, op = 1) {
+  const recordNumberCount = useCallback((number: number, op = 1) => {
     //Wrapper to keep track of the number of digits in the sudoku
     setNumberCount(prev => {
-      const newCount = { ...prev };
-      newCount[number] += op;
+      const newCount = new Map(prev);
+      newCount.set(number, (newCount.get(number) || 0) + op);
       return newCount;
     });
-  }
+  }, []);
 
   return (
     <div className={styles.container}>
