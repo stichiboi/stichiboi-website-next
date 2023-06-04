@@ -24,6 +24,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-scroll-parallax": "^3.2.0",
+    "react-timer-hook": "^3.0.6",
     "three": "0.152.2"
   },
   "devDependencies": {

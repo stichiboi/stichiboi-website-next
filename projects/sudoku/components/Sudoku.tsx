@@ -16,9 +16,10 @@ import Cell from "./Cell";
 import { checkValidity, getFreeCells, loop, visitDeps } from "../sudokuGenerator";
 import styles from "../styles/Sudoku.module.css";
 import EndPopup from "./EndPopup";
+import { useStopwatch } from "react-timer-hook";
 
-const HINT_PENALTY = 30000; // 30 sec
-const CHECK_PENALTY = 30000; // 30 sec
+const HINT_PENALTY_SECONDS = 30;
+const CHECK_PENALTY_SECONDS = 30;
 
 interface SudokuProps {
   sudoku: ISudoku,
@@ -26,33 +27,39 @@ interface SudokuProps {
 }
 
 export function Sudoku({ sudoku, onExit }: SudokuProps) {
-  const [, setStartTime] = useState(0);
-  const formatTimer = useCallback((timer: number) => {
-    const date = new Date(timer);
-    const m = date.getMinutes(), s = date.getSeconds();
-    return `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
-  }, []);
+  const { minutes, seconds, pause } = useStopwatch({ autoStart: true });
+  const [timePenalties, setTimePenalties] = useState(0);
+  const timerDisplay = useMemo(() => {
+    const totalSeconds = minutes * 60 + seconds + timePenalties;
+    const minutesWithPenalties = Math.floor(totalSeconds / 60);
+    const secondsWithPenalties = totalSeconds - minutesWithPenalties * 60;
+
+    function asString(v: number) {
+      return v.toString().padStart(2, "0");
+    }
+
+    return `${asString(minutesWithPenalties)}:${asString(secondsWithPenalties)}`;
+  }, [minutes, seconds, timePenalties]);
+
   const root = useMemo(() => Math.floor(Math.sqrt(sudoku.solution.length)), [sudoku.solution]);
-  const [timer, setTimer] = useState('--:--');
   const noteMode = useRef(false);
   const selected = useRef<ICoords>();
   const [isComplete, setIsComplete] = useState(false);
-  const [timerId, setTimerId] = useState(0);
   const [numberCount, setNumberCount] = useState<Map<number, number>>(new Map<number, number>());
 
-
-  const [_triggerCheck, _setTriggerCheck] = useState(0);
+  const [_triggerCheck, _setTriggerCheck] = useState(1);
   const triggerCheck = useCallback(() => _setTriggerCheck(prev => ++prev), []);
 
   const [_triggerRender, _setTriggerRender] = useState(0);
   const triggerRender = useCallback(() => _setTriggerRender(prev => ++prev), []);
 
-  const [_triggerNoteMode, _setTriggerNoteMode] = useState(0);
+  const [_triggerNoteMode, _setTriggerNoteMode] = useState(1);
   const toggleNoteMode = useCallback(() => {
     noteMode.current = !noteMode.current;
     _setTriggerNoteMode(prev => ++prev);
   }, []);
 
+  // any action might require to rerender the sudoku, so this is a utility function to manage that
   const actionWrapper = useCallback((callback: () => unknown, needsRender?: boolean) => {
     if (isComplete) return;
     callback();
@@ -60,6 +67,15 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
       triggerRender();
     }
   }, [isComplete, triggerRender]);
+
+  const recordNumberCount = useCallback((number: number, op = 1) => {
+    // wrapper to keep track of the number of inserted digits in the sudoku
+    setNumberCount(prev => {
+      const newCount = new Map(prev);
+      newCount.set(number, (newCount.get(number) || 0) + op);
+      return newCount;
+    });
+  }, []);
 
   const setNumber = useCallback((number: number, coords: ICoords | undefined, isHint?: boolean) => {
     actionWrapper(() => {
@@ -86,7 +102,7 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
         }
       }
     }, true);
-  }, [actionWrapper, sudoku.puzzle, triggerCheck]);
+  }, [actionWrapper, recordNumberCount, sudoku.puzzle, triggerCheck]);
 
   const erase = useCallback((coords: ICoords | undefined) => {
     actionWrapper(() => {
@@ -98,11 +114,11 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
       cell.notes.clear();
       cell.isError = false;
     }, true);
-  }, [actionWrapper, sudoku.puzzle]);
+  }, [actionWrapper, recordNumberCount, sudoku.puzzle]);
 
   const check = useCallback(() => {
     actionWrapper(() => {
-      setStartTime(prev => prev - CHECK_PENALTY);
+      setTimePenalties(prev => prev + CHECK_PENALTY_SECONDS);
       loop(((x, y) => {
         const cell = sudoku.puzzle[y][x];
         if (cell.value && cell.value !== sudoku.solution[y][x]) {
@@ -114,7 +130,7 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
 
   const giveHint = useCallback((giveAll?: boolean) => {
     actionWrapper(() => {
-      setStartTime(prev => prev - HINT_PENALTY);
+      setTimePenalties(prev => prev + HINT_PENALTY_SECONDS);
       const freeCells = getFreeCells(sudoku.puzzle);
       if (giveAll) {
         for (const c of freeCells) {
@@ -205,13 +221,14 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
   }, [_triggerRender, buildSubGrid, root, sudoku.solution.length]);
 
   const controls = useMemo(() => {
+    const length = sudoku.solution.length;
     return (
       <Grid
         size={root}
         isSmall
-        contents={Array.from({ length: sudoku.solution.length })
+        contents={Array.from({ length })
           .map((_, i) => {
-            const missCount = sudoku.puzzle.length - (numberCount.get(i + 1) || 0);
+            const missCount = length - (numberCount.get(i + 1) || 0);
             const cell: ICell = {
               value: i + 1,
               notes: new Set([missCount]),
@@ -229,9 +246,10 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
             );
           })}/>
     )
-  }, [sudoku, numberCount]);
+  }, [sudoku.solution.length, root, numberCount, setNumber]);
 
   const noteModeButton = useMemo(() => {
+    if (!_triggerNoteMode) return null;
     return (
       <ActionButton
         tooltip={"Toggle note mode"}
@@ -241,27 +259,14 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
         <EditPencil/>
       </ActionButton>
     )
-  }, [_triggerNoteMode]);
+  }, [_triggerNoteMode, toggleNoteMode]);
 
   useEffect(() => {
-    setStartTime(Date.now() - sudoku.time);
     triggerRender();
-    setIsComplete(false);
     selected.current = undefined;
-    if (timerId) clearInterval(timerId);
-    const id = setInterval(() => {
-      setStartTime(startTime => {
-        sudoku.time = Date.now() - startTime;
-        setTimer(formatTimer(sudoku.time));
-        return startTime;
-      });
-    }, 500);
-    setTimerId(id as unknown as number);
-    return () => clearInterval(id);
-  }, [sudoku]);
+  }, [sudoku, triggerRender]);
 
   useEffect(() => {
-
     const temp = new Map<number, number>();
     loop(((x, y) => {
       const value = sudoku.puzzle[y][x].value;
@@ -272,12 +277,15 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
   }, [sudoku]);
 
   useEffect(() => {
-    if (isComplete) clearInterval(timerId);
-  }, [isComplete]);
+    if (isComplete) {
+      pause();
+    }
+  }, [isComplete, pause]);
 
   useEffect(() => {
+    if (!_triggerCheck) return;
     try {
-      const asBoard = Array.from({ length: sudoku.puzzle.length }).map(() => []) as Board;
+      const asBoard: Board = Array.from({ length: sudoku.puzzle.length }).map(() => []);
       loop(((x, y) => {
         const value = sudoku.puzzle[y][x].value;
         if (!value) throw InvalidBoardError;
@@ -286,9 +294,9 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
       const validity = checkValidity(asBoard, false);
       if (validity === SUDOKU_VALIDITY.Ok) setIsComplete(true);
     } catch (e) {
-      //Incomplete
+      // incomplete
     }
-  }, [_triggerCheck]);
+  }, [_triggerCheck, sudoku.puzzle]);
 
   //Event listeners
   useEffect(() => {
@@ -307,16 +315,17 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
 
     function movementEventListener(event: KeyboardEvent) {
       function getNewLocation(location: ICoords): ICoords | undefined {
+        const length = sudoku.puzzle.length;
         const { x, y } = location;
         switch (event.key) {
         case "ArrowUp":
-          return { x, y: y - 1 < 0 ? sudoku.puzzle.length - 1 : y - 1 };
+          return { x, y: y - 1 < 0 ? length - 1 : y - 1 };
         case "ArrowDown":
-          return { x, y: (y + 1) % sudoku.puzzle.length };
+          return { x, y: (y + 1) % length };
         case "ArrowLeft":
-          return { y, x: x - 1 < 0 ? sudoku.puzzle.length - 1 : x - 1 };
+          return { y, x: x - 1 < 0 ? length - 1 : x - 1 };
         case "ArrowRight":
-          return { y, x: (x + 1) % sudoku.puzzle.length };
+          return { y, x: (x + 1) % length };
         }
       }
 
@@ -328,7 +337,6 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
         event.preventDefault();
         toggleNoteMode();
       }
-
     }
 
     document.addEventListener('keyup', keyboardEventListener);
@@ -337,17 +345,7 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
       document.removeEventListener('keyup', keyboardEventListener);
       document.removeEventListener('keydown', movementEventListener);
     }
-  }, [erase, setNumber]);
-
-
-  const recordNumberCount = useCallback((number: number, op = 1) => {
-    //Wrapper to keep track of the number of digits in the sudoku
-    setNumberCount(prev => {
-      const newCount = new Map(prev);
-      newCount.set(number, (newCount.get(number) || 0) + op);
-      return newCount;
-    });
-  }, []);
+  }, [erase, setNumber, sudoku.puzzle.length, toggleNoteMode, triggerRender]);
 
   return (
     <div className={styles.container}>
@@ -355,7 +353,7 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
         <ActionButton tooltip={"Return to menu"} onClick={onExit}>
           <Cancel/>
         </ActionButton>
-        <p>{timer}</p>
+        <p>{timerDisplay}</p>
         <h3 className={styles.difficulty}>{DIFFICULTY[sudoku.difficulty]}</h3>
       </header>
       {board}
@@ -376,7 +374,7 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
           </ActionButton>
         </div>
       </section>
-      <EndPopup onExit={onExit} isComplete={isComplete} timer={timer}/>
+      <EndPopup onExit={onExit} isComplete={isComplete} timer={timerDisplay}/>
     </div>
   );
 }
