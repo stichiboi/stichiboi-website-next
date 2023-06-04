@@ -1,17 +1,26 @@
+.container {
+    position: relative;
+}
+
 .image {
     max-width: 100%;
     height: auto;
 }
 
-.image:hover {
-    animation: pulse .8s ease;
+.description {
+    position: absolute;
+    z-index: 1;
+    color: var(--color-dark);
+    transition: .8s ease;
+    transition-property: top, opacity;
+    opacity: 0;
+    top: 70%;
+    left: 50%;
+    translate: -50% -50%;
 }
 
-@keyframes pulse {
-    from, to {
-        scale: 1
-    }
-    50% {
-        scale: 1.05;
-    }
+.container:hover > .description {
+    opacity: 1;
+    top: 50%;
 }
+
