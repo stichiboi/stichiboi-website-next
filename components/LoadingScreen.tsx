@@ -8,11 +8,12 @@ export default function LoadingScreen({ isLoading }: { isLoading: boolean }): JS
   const { t } = useTranslation();
   const dots = useMemo(() => {
     return Array.from({ length: DOT_COUNT }).map((_, i) => (
-      <div key={i}
-           className={`${styles.dotContainer} ${isLoading ? "" : styles.toggled}`}
-           style={{
-             "--delay": `calc(var(--duration) * ${i / DOT_COUNT});`
-           } as unknown as CSSProperties}>
+      <div
+        key={i}
+        className={`${styles.dotContainer} ${isLoading ? "" : styles.toggled}`}
+        style={{
+          "--delay": `calc(var(--duration) * ${i / DOT_COUNT});`
+        } as unknown as CSSProperties}>
         <div className={styles.dot} />
       </div>
     ))
