@@ -6,6 +6,8 @@
     color: var(--color-dark);
     border-radius: var(--default-border-radius);
     font-family: var(--font-family);
+    /* override default padding on buttons on mobile safari */
+    padding: 0;
 }
 
 .buttonAction.fill {

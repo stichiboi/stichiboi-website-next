@@ -10,6 +10,8 @@
     flex: 1 1 auto;
     display: grid;
     grid-template-columns: 2fr 3fr;
+    /* set otherwise the 100% height will not be respected in mobile safari */
+    grid-template-rows: 1fr;
     align-items: center;
 }
 
