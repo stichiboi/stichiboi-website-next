@@ -16,11 +16,16 @@ const SECTION_COLORS = [
   colorLight, // projects
   colorDark, // footer
 ].reverse(); // reverse so it matches the search order
-const Home: NextPage = () => {
+
+interface HomeProps {
+  isLoading: boolean
+}
+
+const Home: NextPage<HomeProps> = ({ isLoading }) => {
 
   const [sections, setSections] = useState<(HTMLElement | null)[]>([])
 
-  const [themeColor, setThemeColor] = useState<string>(SECTION_COLORS[0]);
+  const [themeColor, setThemeColor] = useState<string>();
 
   const changeColor = useCallback(() => {
     // note: sections need to be searched in reverse
@@ -47,25 +52,28 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     window.addEventListener("scroll", changeColor);
+    changeColor();
     return () => window.removeEventListener("scroll", changeColor);
   }, [changeColor]);
 
   useEffect(() => {
-    document.body.style.backgroundColor = themeColor;
-  }, [themeColor]);
+    if (themeColor && !isLoading) {
+      document.body.style.backgroundColor = themeColor;
+    }
+  }, [themeColor, isLoading]);
 
   return (
     <main className={styles.container}>
       <Head>
         <title>{"Stichiboi | Creative Developer"}</title>
-        <meta name="description" content="Making tools for people since 2018"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+        <meta name="description" content="Making tools for people since 2018" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         {/*<meta name="theme-color" content={themeColor}/>*/}
       </Head>
-      <Hero/>
-      <Intro/>
-      <Projects/>
-      <Footer/>
+      <Hero />
+      <Intro />
+      <Projects />
+      <Footer />
     </main>
   )
 }

@@ -47,7 +47,7 @@ function RootApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <LoadingScreen isLoading={isLoading}/>
-      <Component {...pageProps} />
+      <Component {...pageProps} isLoading={isLoading} />
       <MouseTrail/>
     </>
   )
