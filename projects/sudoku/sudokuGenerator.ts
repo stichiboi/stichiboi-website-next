@@ -54,7 +54,7 @@ function solve(board: Board): Board {
       return SUDOKU_SIZE_ARR.map(() => true);
     });
   });
-    //Find cell with least amount of possible values
+    //Find cell with the least amount of possible values
   loop((x, y) => {
     const value = board[y][x];
     if (value) {
@@ -81,7 +81,7 @@ function solve(board: Board): Board {
 
       if (values.length === 0) throw InvalidBoardError;
 
-      //This wont update any dependent cells, nor check if the value is still available
+      // this won't update any dependent cells, nor check if the value is still available
       if (values.length === 1) tempBoard[y][x] = values[0];
 
       if (values.length < minArr.length) {
@@ -193,7 +193,7 @@ export function visitDeps(x: number, y: number, callback: (tx: number, ty: numbe
   SUDOKU_SIZE_ARR.forEach((_v, i) => {
     const tx = sx + i % SUDOKU_ROOT;
     const ty = sy + Math.floor(i / SUDOKU_ROOT);
-    //Use && instead of || to avoid double checking cells in the same row and column
+    //Use && instead of || to avoid double-checking cells in the same row and column
     if (tx !== x && ty !== y)
       callback(tx, ty);
   });

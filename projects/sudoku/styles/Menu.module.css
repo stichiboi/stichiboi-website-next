@@ -9,10 +9,8 @@
     gap: 10em;
 }
 
-.toggleDarkMode{
+.toggleDarkMode {
     position: absolute;
-    top: var(--main-ui-padding);
-    right: var(--main-ui-padding);
     margin: 0 !important;
     gap: 2em;
 }
