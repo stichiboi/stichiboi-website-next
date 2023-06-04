@@ -56,8 +56,10 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
   const actionWrapper = useCallback((callback: () => unknown, needsRender?: boolean) => {
     if (isComplete) return;
     callback();
-    if (needsRender) triggerRender();
-  }, [sudoku, isComplete]);
+    if (needsRender) {
+      triggerRender();
+    }
+  }, [isComplete, triggerRender]);
 
   const setNumber = useCallback((number: number, coords: ICoords | undefined, isHint?: boolean) => {
     actionWrapper(() => {
@@ -79,10 +81,12 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
           }));
           triggerCheck();
         }
-        if (isHint) cell.isFixed = true;
+        if (isHint) {
+          cell.isFixed = true;
+        }
       }
     }, true);
-  }, [sudoku]);
+  }, [actionWrapper, sudoku.puzzle, triggerCheck]);
 
   const erase = useCallback((coords: ICoords | undefined) => {
     actionWrapper(() => {
@@ -106,7 +110,7 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
         }
       }));
     }, true);
-  }, [sudoku]);
+  }, [actionWrapper, sudoku.puzzle, sudoku.solution]);
 
   const giveHint = useCallback((giveAll?: boolean) => {
     actionWrapper(() => {
@@ -124,25 +128,37 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
         setNumber(sudoku.solution[coords.y][coords.x], coords, true);
       }
     });
-  }, [sudoku]);
+  }, [actionWrapper, setNumber, sudoku.puzzle, sudoku.solution]);
 
   const getHighlight = useCallback((x: number, y: number) => {
     const cell = sudoku.puzzle[y][x];
-    if (cell.isError) return CELL_HIGHLIGHT.Error;
-    if (!selected.current) return CELL_HIGHLIGHT.None;
+    if (cell.isError) {
+      return CELL_HIGHLIGHT.Error;
+    }
+    if (!selected.current) {
+      return CELL_HIGHLIGHT.None;
+    }
     const sx = selected.current.x, sy = selected.current.y;
-    //Is in row or column (or both)
-    let high = (x === sx ? 1 : 0) + (y === sy ? 1 : 0);
-    if (high) return high;
-    //Same number
+    // is in row or column (or both, which means it's the selected cell, in which case Soft + Soft becomes Main)
+    let high: CELL_HIGHLIGHT =
+      (x === sx ? CELL_HIGHLIGHT.Soft : CELL_HIGHLIGHT.None)
+      + (y === sy ? CELL_HIGHLIGHT.Soft : CELL_HIGHLIGHT.None);
+    if (high) {
+      return high;
+    }
+    // same number
     const currValue = cell.value;
-    if (currValue && sudoku.puzzle[sy][sx].value === currValue) return CELL_HIGHLIGHT.Soft
-    //If in same block
+    if (currValue && sudoku.puzzle[sy][sx].value === currValue) {
+      return CELL_HIGHLIGHT.Soft;
+    }
+    // if in same block
     const bx = Math.floor(x / root), by = Math.floor(y / root);
     const bsx = Math.floor(sx / root), bsy = Math.floor(sy / root);
-    if (bx === bsx && by === bsy) return CELL_HIGHLIGHT.Soft;
+    if (bx === bsx && by === bsy) {
+      return CELL_HIGHLIGHT.Soft;
+    }
     return CELL_HIGHLIGHT.None;
-  }, [sudoku]);
+  }, [root, sudoku.puzzle]);
 
   const board = useMemo(() => {
     return (
