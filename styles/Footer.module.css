@@ -1,12 +1,31 @@
-.container {
+.footer {
+    height: 100vh;
+    background: var(--color-dark);
+    display: flex;
+    overflow: hidden;
     position: relative;
-    min-height: 100vh;
+}
 
+.background {
+    position: absolute;
+    /*left: 0;*/
+    inset: 0;
+}
+
+.background > img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.container {
+    width: 100%;
+    min-height: 100%;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: var(--color-dark);
     color: var(--color-light);
     padding: 3em 3em 1em 3em;
 }
