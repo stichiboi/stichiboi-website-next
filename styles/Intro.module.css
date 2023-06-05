@@ -1,12 +1,31 @@
-.container {
+.intro {
     /* set min height because picture might cause really big content*/
     min-height: 100vh;
     background: var(--color-dark);
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+.container {
+    width: 100%;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
     color: var(--color-light);
     justify-content: space-between;
     padding: 3em 3em 0;
+}
+
+.background {
+    position: absolute;
+    left: -5em;
+    align-self: center;
+}
+
+.background > img {
+    height: 100%;
+    object-fit: cover;
 }
 
 .main {
@@ -99,6 +118,10 @@
 @media (min-width: 750px) {
     .content {
         gap: 3em;
+    }
+
+    .background {
+        left: 1em;
     }
 
     .main {
