@@ -37,6 +37,7 @@
     justify-content: center;
     align-items: center;
     flex: 1 1 auto;
+    width: 100%;
 }
 
 .copyright {
@@ -61,11 +62,37 @@
     color: var(--color-light);
 }
 
-.backToTop > p {
+.backToTop > .backToTopLabel {
     transition: .5s ease;
     transition-property: color, translate;
 }
 
-.backToTop:hover > p {
+.backToTop:hover > .backToTopLabel {
     translate: 0 -1em;
+}
+
+.logo {
+    --size: 3em;
+    width: var(--size);
+    height: var(--size);
+}
+
+.text {
+    max-width: 8em;
+    text-align: center;
+    opacity: 0;
+    translate: 0 -100%;
+    transition: 1.5s ease;
+    transition-property: opacity, translate;
+}
+
+.main:hover > .text {
+    opacity: 1;
+    translate: 0;
+}
+
+@media (min-width: 600px) {
+    .text {
+        max-width: 100em;
+    }
 }

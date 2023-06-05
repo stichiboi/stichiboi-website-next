@@ -2,6 +2,7 @@ import styles from "../styles/Footer.module.css";
 import { useTranslation } from "next-export-i18n";
 import React from "react";
 import Image from "next/image";
+import Logo from "../public/stichiboi-logo.svg";
 
 export function Footer(): JSX.Element {
   const { t } = useTranslation();
@@ -12,8 +13,8 @@ export function Footer(): JSX.Element {
       </div>
       <div className={styles.container}>
         <div className={styles.main}>
-          <p>{t("footer.text_1")}</p>
-          <p>{t("footer.text_2")}</p>
+          <div className={styles.logo}><Logo/></div>
+          <p className={styles.text}>{t("footer.text")}</p>
         </div>
         <p className={styles.copyright}>{t("footer.copyright")}</p>
         <button
@@ -24,7 +25,7 @@ export function Footer(): JSX.Element {
               behavior: "smooth", block: "start"
             })
           }}>
-          <p>{"↑"}</p>
+          <p className={styles.backToTopLabel}>{"↑"}</p>
         </button>
       </div>
     </footer>

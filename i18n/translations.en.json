@@ -36,8 +36,7 @@
     }
   },
   "footer": {
-    "text_1": "This is a simple footer.",
-    "text_2": "Or is it...? 🤔",
+    "text": "Making tools for people since 2018",
     "copyright": "Made by Stichiboi © 2023",
     "backToTop": "Back to the top"
   }
