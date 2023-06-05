@@ -1,4 +1,4 @@
-import {Html, Head, Main, NextScript} from 'next/document'
+import { Html, Head, Main, NextScript } from 'next/document'
 
 export default function Document() {
   return (
@@ -9,7 +9,9 @@ export default function Document() {
         <link
           href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Lato:wght@100;400&display=swap"
           rel="stylesheet"/>
-        <link rel="icon" href="/favicon.ico"/>
+        <link rel={"icon"} href={"/favicon.ico"}/>
+        <meta name={"og:image"} content={"/social_media_preview.png"}/>
+        <meta name={"og:image:alt"} content={"Welcome to my portfolio!"}/>
       </Head>
       <body>
         <Main/>
