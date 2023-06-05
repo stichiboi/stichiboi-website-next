@@ -8,7 +8,7 @@ export function Footer(): JSX.Element {
   return (
     <footer id={"footer"} className={styles.footer}>
       <div className={styles.background}>
-        <Image src={"/footer-background-pattern.png"} alt={"null"} width={1280} height={1280}/>
+        <Image src={"/background-pattern.png"} alt={"null"} width={1280} height={1280}/>
       </div>
       <div className={styles.container}>
         <div className={styles.main}>
