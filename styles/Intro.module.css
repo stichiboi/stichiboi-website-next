@@ -59,6 +59,10 @@
     color: var(--color-light);
 }
 
+.text {
+    margin: 1em 0;
+}
+
 .imageContainer {
     position: relative;
     height: fit-content;

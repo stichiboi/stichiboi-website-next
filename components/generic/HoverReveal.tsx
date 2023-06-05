@@ -1,7 +1,12 @@
-import React, {CSSProperties} from "react";
+import React, { CSSProperties, ReactNode } from "react";
 import styles from "../../styles/HoverReveal.module.css";
 
-export default function HoverReveal({children, colors}: { children: React.ReactChild, colors: string[] }): JSX.Element {
+interface HoverRevealProps {
+  children: ReactNode,
+  colors: string[]
+}
+
+export default function HoverReveal({ children, colors }: HoverRevealProps): JSX.Element {
 
   return (
     <div className={styles.container}>

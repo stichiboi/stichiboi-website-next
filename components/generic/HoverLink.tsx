@@ -21,7 +21,7 @@ export default function HoverLink({ icon, label, onClick, target }: HoverLinkPro
   )
   return (
     <Link className={styles.link} href={target} onClick={onClick} passHref>
-      <HoverReveal colors={["white", "#FFA693"]}>
+      <HoverReveal colors={["#EAA05B", "#D0542F"]}>
         {content}
       </HoverReveal>
     </Link>

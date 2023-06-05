@@ -5,13 +5,15 @@
   },
   "hero": {
     "title": "Stichiboi",
-    "description": "I'm Daniele, a Physics Engineering graduate from Italy.",
-    "description2": "But I probably should have studied Computer Science.",
-    "description3": "This is just a place to mess around with some ideas.",
+    "description": "I'm Daniele, and I love building tools for people.",
+    "description2": "I aim for efficiency and uncompromising quality.",
+    "description3": "If I have to do it twice, I'll probably automate it.",
     "discover": "Discover"
   },
   "intro": {
-    "title": "Daniele Mazzotta - Software Engineer",
+    "title": "Daniele Mazzotta - Full Stack Engineer",
+    "text": "\"Full\" isn't just the usual frontend + backend.",
+    "text2": "I mean it from UI design to CI/CD ops.",
     "imageAlt": "A photo of me doing cardistry",
     "cv": "CV",
     "linkedIn": "LinkedIn",

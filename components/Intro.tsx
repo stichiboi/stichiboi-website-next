@@ -11,6 +11,8 @@ import { CSSProperties } from "react";
 export default function Intro(): JSX.Element {
   const { t } = useTranslation();
 
+  const hoverColorsText = ["#519463", "#116E64"];
+
   return (
     <section id={"intro"} className={styles.intro}>
       <div className={styles.background}>
@@ -35,10 +37,16 @@ export default function Intro(): JSX.Element {
           </div>
           <div className={styles.links}>
             <hr className={styles.line}/>
-            <HoverReveal colors={["white", "#7E86A5", "#485C80", "#0D1524"]}>
+            <HoverReveal colors={hoverColorsText}>
               <h2 className={styles.title}>
                 {t("intro.title")}
               </h2>
+            </HoverReveal>
+            <HoverReveal colors={hoverColorsText}>
+              <div className={styles.text}>
+                <p>{t("intro.text")}</p>
+                <p>{t("intro.text2")}</p>
+              </div>
             </HoverReveal>
             <HoverLink
               label={t("intro.linkedIn")}
