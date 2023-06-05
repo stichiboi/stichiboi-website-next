@@ -14,12 +14,12 @@ export default function DiscoverLine({
   }, [scrollToID]);
 
   return (
-    <button className={styles.discoverMore} onClick={scrollIntoView} style={style}>
-      <div className={styles.discoverArrowWrapper}>
-        <div className={styles.discoverArrow}>{"→"}</div>
+    <button className={styles.container} onClick={scrollIntoView} style={style}>
+      <div className={styles.arrowWrapper}>
+        <div className={styles.arrow}>{"→"}</div>
       </div>
-      <p>{label}</p>
-      <hr className={styles.discoverLine}/>
+      <p className={styles.label}>{label}</p>
+      <hr className={styles.line}/>
     </button>
   );
 }
