@@ -13,7 +13,7 @@
 }
 
 .menu > svg {
-    color: black;
+    color: var(--color-dark);
 }
 
 .menu.hidden {

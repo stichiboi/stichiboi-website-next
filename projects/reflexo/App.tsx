@@ -28,7 +28,7 @@ export function App(): JSX.Element {
 
   useEffect(() => {
     if (!isRunning) {
-      document.body.style.backgroundColor = "white";
+      document.body.style.backgroundColor = "var(--color-light)";
     }
   }, [isRunning]);
 
