@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import LoadingScreen from "../components/LoadingScreen";
 import { MouseTrail } from "@stichiboi/react-elegant-mouse-trail";
-
+import { IconoirProvider } from "iconoir-react";
 
 const MIN_LOAD_TIME = 1000;
 
@@ -45,11 +45,15 @@ function RootApp({ Component, pageProps }: AppProps) {
   }, [router]);
 
   return (
-    <>
+    <IconoirProvider
+      iconProps={{
+        // iOS sets the color of svg to blue by default
+        color: "currentColor"
+      }}>
       <LoadingScreen isLoading={isLoading}/>
-      <Component {...pageProps} isLoading={isLoading} />
+      <Component {...pageProps} isLoading={isLoading}/>
       <MouseTrail/>
-    </>
+    </IconoirProvider>
   )
 }
 

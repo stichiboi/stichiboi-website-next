@@ -21,6 +21,7 @@
     --font-family: "Lato", "Roboto", sans-serif;
     font-family: var(--font-family);
     background-color: var(--color-light);
+    color: var(--color-dark);
 }
 
 .app, .app * {
