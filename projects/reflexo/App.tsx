@@ -24,18 +24,23 @@ export function App(): JSX.Element {
 
   const onResult = useCallback((result: ResultType) => {
     setResults(prev => prev.concat(result));
-
   }, []);
+
+  useEffect(() => {
+    if (!isRunning) {
+      document.body.style.backgroundColor = "white";
+    }
+  }, [isRunning]);
 
   return (
     <SettingsContext.Provider value={{ numberOfTries, setNumberOfTries }}>
       {
         isRunning &&
-          <Reflexer
-            onResult={onResult}
-          />
+        <Reflexer
+          onResult={onResult}
+        />
       }
-      <Menu isRunning={isRunning} onStart={start} results={results}/>
+      <Menu isRunning={isRunning} onStart={start} results={results} />
     </SettingsContext.Provider>
   );
 }

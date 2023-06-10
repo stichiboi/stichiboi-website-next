@@ -34,8 +34,8 @@ interface ReflexerProps {
 }
 
 export function Reflexer({
-  onResult
-}: ReflexerProps) {
+                           onResult
+                         }: ReflexerProps) {
 
   const [color, setColor] = useState(pickRandomElement(FILL_COLORS));
   const [_, setTimeoutId] = useState(0);
@@ -57,6 +57,10 @@ export function Reflexer({
       });
     }
   }, [validTime]);
+
+  useEffect(() => {
+    document.body.style.backgroundColor = color;
+  }, [color]);
 
   const registerEvent = useCallback(() => {
     const result: ResultType = validTime ? Date.now() - validTime : "Invalid result";
