@@ -12,6 +12,10 @@
     transition-property: opacity, visibility;
 }
 
+.menu > svg {
+    color: black;
+}
+
 .menu.hidden {
     opacity: 0;
     visibility: hidden;

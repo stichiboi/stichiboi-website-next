@@ -37,7 +37,3 @@ button {
 * {
     box-sizing: border-box;
 }
-
-svg {
-    color: var(--color-dark);
-}
