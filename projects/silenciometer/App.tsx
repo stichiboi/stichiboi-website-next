@@ -4,22 +4,23 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useAnalyser } from "./useAnalyser";
 import { Controls } from "./components/Controls";
 
-// number of amplitudes to keep -> 1 datapoint = 1 frame
-const MEMORY_SIZE = 1000;
 // the delta between amplitude and average will be raised to this power
 // note: the value will always be < 1 -> power needs to be fractional to accentuate the delta.
 // otherwise, you can put a value > 1 to dampen it
 const NOISE_POWER = 1 / 1.5;
-// values within this margin of the average will be considered as 0 for the noise calculation
-// useful to remove background noise
-const NOISE_MARGIN = 0.1;
+
 
 export function App(): JSX.Element {
+
+  // values within this margin of the average will be considered as 0 for the noise calculation
+  // useful to remove background noise
+  const [noiseMargin, setNoiseMargin] = useState(10);
+  const [memoryDuration, setMemoryDuration] = useState(60);
 
   // lower is better
   const [noise, setNoise] = useState(0);
 
-  const [amplitude, setAmplitude] = useState<number[]>(Array.from({ length: MEMORY_SIZE }).map(() => 0));
+  const [amplitude, setAmplitude] = useState<number[]>([]);
   const [frequency, setFrequency] = useState<number[]>([]);
   // ref is required since its value is used in animation frame callback
   const isRunningRef = useRef<boolean>();
@@ -29,7 +30,7 @@ export function App(): JSX.Element {
   useEffect(() => {
     const totalAmplitude = amplitude.reduce((prev, curr) => prev + curr, 0);
     const average = totalAmplitude / amplitude.length;
-    const margin = average * NOISE_MARGIN;
+    const margin = average * noiseMargin / 10;
     const noise = amplitude.reduce((prev, curr) => {
       const delta = curr - average;
       if (delta < average + margin) {
@@ -41,7 +42,7 @@ export function App(): JSX.Element {
       return prev + delta;
     }, 0);
     setNoise(noise);
-  }, [amplitude]);
+  }, [amplitude, noiseMargin]);
 
   function shouldDraw(analyser: AnalyserNode | undefined): analyser is AnalyserNode {
     return Boolean(analyser) && Boolean(isRunningRef.current);
@@ -58,12 +59,14 @@ export function App(): JSX.Element {
     }, 0);
     const avgAmplitude = Math.sqrt(sum / bufferLength) / 64;
 
+    // assume the frame rate is 60 fps
+    const memorySize = memoryDuration * 60;
     setAmplitude(prevState => {
-      const next = prevState.slice(prevState.length - MEMORY_SIZE);
+      const next = prevState.slice(prevState.length - memorySize);
       next.push(avgAmplitude);
       return next;
     });
-  }, [analyser]);
+  }, [analyser, memoryDuration]);
 
   const drawFrequency = useCallback(() => {
     if (!shouldDraw(analyser)) return;
@@ -87,7 +90,11 @@ export function App(): JSX.Element {
   return (
     <main className={styles.main}>
       <p className={styles.score}>{noise.toFixed(2)}</p>
-      <Controls onRunningToggle={value => isRunningRef.current = value}/>
+      <Controls
+        onRunningToggle={value => isRunningRef.current = value}
+        setNoiseMargin={setNoiseMargin}
+        setMemoryDuration={setMemoryDuration}
+      />
       <Chart data={amplitude} draw={drawAmplitude}/>
       <Chart data={frequency} draw={drawFrequency}/>
     </main>

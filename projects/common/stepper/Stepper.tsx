@@ -1,29 +1,37 @@
 import React, { ReactNode, useCallback, useEffect, useState } from "react";
 import styles from "./Stepper.module.css";
+import { Minus, Plus } from "iconoir-react";
 
 interface StepperProps {
   label?: string,
+  explanation?: string,
+  defaultValue: number,
   saveKey: string,
   onChange: (value: number) => void,
   min?: number,
   max?: number,
-  leftIcon: ReactNode,
-  rightIcon: ReactNode,
+  stepSize?: number,
+  leftIcon?: ReactNode,
+  rightIcon?: ReactNode,
   displayValue?: (_: number) => string
 }
 
 export function Stepper({
   label,
+  explanation,
+  defaultValue,
   saveKey,
   onChange,
   min = 0,
   max = 10,
-  leftIcon,
-  rightIcon,
+  stepSize = 1,
+  leftIcon = <Minus/>,
+  rightIcon = <Plus/>,
   displayValue
 }: StepperProps) {
 
-  const [value, setValue] = useState<number>();
+  const [value, setValue] = useState<number>(defaultValue);
+
   useEffect(() => {
     const saved = localStorage.getItem(saveKey);
     if (saved) {
@@ -35,12 +43,18 @@ export function Stepper({
   }, [saveKey]);
 
   useEffect(() => {
-    if (value !== undefined) {
-      localStorage.setItem(saveKey, value.toString());
-      onChange(value);
-    }
+    onChange(value);
   }, [onChange, saveKey, value]);
-  const updateValue = useCallback((modifier: -1 | 1) => {
+
+  useEffect(() => {
+    // call in setValue to ensure it's always the latest value
+    setValue(prev => {
+      localStorage.setItem(saveKey, prev.toString());
+      return prev;
+    });
+  }, [value, saveKey]);
+
+  const updateValue = useCallback((modifier: number) => {
     setValue(prev => {
       if (prev === undefined) {
         // return middle between max and min
@@ -55,12 +69,13 @@ export function Stepper({
   return (
     <div className={styles.container}>
       {label ? <h3>{label}</h3> : null}
+      {explanation ? <em>{explanation}</em> : null}
       <div className={styles.stepper}>
-        <button onClick={() => updateValue(-1)}>
+        <button onClick={() => updateValue(-stepSize)}>
           {leftIcon}
         </button>
         <p>{(displayValue && value !== undefined) ? displayValue(value) : value}</p>
-        <button onClick={() => updateValue(1)}>
+        <button onClick={() => updateValue(stepSize)}>
           {rightIcon}
         </button>
       </div>

@@ -3,7 +3,6 @@ import { SettingsContext } from "./SettingsContext";
 import { Settings } from "iconoir-react";
 import Popup from "./Popup";
 import { Stepper } from "../../common/stepper/Stepper";
-import { Minus, Plus } from "iconoir-react";
 import { ButtonCTA } from "../../common/button/ButtonCTA";
 
 const NUM_TRIES_KEY = 'reflexo-num-tries';
@@ -23,10 +22,9 @@ export default function SettingsContainer({
         label={"Number of tries"}
         saveKey={NUM_TRIES_KEY}
         onChange={setNumberOfTries}
+        defaultValue={3}
         min={3}
         max={6}
-        leftIcon={<Minus/>}
-        rightIcon={<Plus/>}
       />
       <ButtonCTA onClick={clearLocalScore}>
         {"Reset best score"}
