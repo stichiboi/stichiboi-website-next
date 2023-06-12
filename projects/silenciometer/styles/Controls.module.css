@@ -14,11 +14,11 @@
     position: absolute;
     top: 2em;
     left: 2em;
-    right: 2em;
 }
 
 .panel {
     background: var(--color-light);
+    max-width: calc(100vw - 4em);
 }
 
 @media (min-width: 600px) {

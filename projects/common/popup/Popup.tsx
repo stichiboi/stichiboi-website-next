@@ -100,7 +100,7 @@ export function Popup({
         {isMounted &&
             <div
               ref={refs.setFloating}
-              className={`popup --vertical --spacing ${containerClassName || ""}`}
+              className={containerClassName}
               style={{
                 position: strategy,
                 top: y ?? 0,
