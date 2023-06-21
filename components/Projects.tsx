@@ -25,6 +25,14 @@ export default function Projects(): JSX.Element {
       />
       <ProjectCard
         index={2}
+        target={"/silenciometer"}
+        title={t("projects.silenciometer.title")}
+        description={t("projects.silenciometer.description")}
+        imageSrc={"/silenciometer-hero.png"}
+        imageAlt={t("projects.silenciometer.alt")}
+      />
+      <ProjectCard
+        index={3}
         target={"/reflexo"}
         title={t("projects.reflexo.title")}
         description={t("projects.reflexo.description")}

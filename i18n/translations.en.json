@@ -31,6 +31,11 @@
       "description": "Sudokus are holiday homework for adults. Now with dark mode.",
       "alt": "Enjoy a cool sudoku. For free. No ads."
     },
+    "silenciometer": {
+      "title": "Silenciometer",
+      "description": "Measure the noise around you. Used to gamify quietness in a classroom. Or to see how consistent is my whistling.",
+      "alt": "How quiet is your environment?"
+    },
     "reflexo": {
       "title": "Reflexo",
       "description": "Top-level gamers require top-level reflexes. Try to measure them, and see if you can improve.",
