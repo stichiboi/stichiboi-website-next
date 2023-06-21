@@ -41,6 +41,7 @@
     letter-spacing: .175em;
     font-size: 32px;
     text-transform: lowercase;
+    word-break: break-all;
 }
 
 .index {
