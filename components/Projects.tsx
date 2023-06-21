@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import styles from "../styles/Projects.module.css";
 import { useTranslation } from "next-export-i18n";
 import { ProjectCard } from "./ProjectCard";
-import { Cube } from "./Cube";
+import { Stack } from "./Stack";
 
 export default function Projects(): JSX.Element {
   const { t } = useTranslation();
@@ -14,7 +14,7 @@ export default function Projects(): JSX.Element {
         <h3 className={styles.title}>{t("projects.about.title")}</h3>
         <p>{t("projects.about.text")}</p>
       </div>
-      <Cube/>
+      <Stack/>
       <ProjectCard
         index={1}
         target={"/sudoku"}
