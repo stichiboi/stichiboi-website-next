@@ -9,6 +9,8 @@ body {
     --color-light: #FFFAFA;
     --color-quiet: #cbcbcb;
 
+    --title-size: 32px;
+
     background-color: var(--color-light);
 
     transition: .2s ease background-color;
@@ -16,6 +18,7 @@ body {
 
 * {
     font-size: var(--text-font-size);
+    box-sizing: border-box;
 }
 
 a {
@@ -30,10 +33,10 @@ h1, p, hr {
 button {
     background: none;
     border: none;
-
-    cursor: pointer;
 }
 
-* {
-    box-sizing: border-box;
+@media (min-width: 600px) {
+    body {
+        --title-size: 48px;
+    }
 }

@@ -8,17 +8,22 @@
 .title {
     overflow: hidden;
     display: grid;
-    --height: 32px;
-    height: var(--height);
+    position: relative;
 }
 
 .letters {
     gap: 0.175em;
     display: flex;
+    flex: 1 1 auto;
+}
+
+.letters:last-child {
+    position: absolute;
+    top: 100%;
 }
 
 .letter {
-    font-size: var(--height);
+    font-size: var(--title-size);
     font-family: 'Comfortaa', cursive;
     text-transform: lowercase;
     --index: 0;

@@ -24,6 +24,9 @@
     flex-direction: column;
     gap: 1.5em;
     min-width: 50%;
+}
+
+.content > p {
     line-height: 1.8em;
 }
 
