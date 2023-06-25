@@ -13,7 +13,6 @@ export default function Projects(): JSX.Element {
     <section id={"projects"} className={styles.container} ref={scrollRef}>
       <div className={`${styles.content} ${styles.about}`}>
         <Title text={t("projects.about.title")}/>
-        {/*<h3 className={styles.title}>{t("projects.about.title")}</h3>*/}
         <p>{t("projects.about.text")}</p>
       </div>
       <Cube/>

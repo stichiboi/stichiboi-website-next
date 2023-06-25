@@ -13,7 +13,6 @@
 .letters {
     gap: 0.175em;
     display: flex;
-    flex: 1 1 auto;
 }
 
 .letters:last-child {

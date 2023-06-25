@@ -26,6 +26,10 @@
     min-width: 50%;
 }
 
+.title {
+    margin: 1em 0;
+}
+
 .content > p {
     line-height: 1.8em;
 }
@@ -37,13 +41,6 @@
     align-items: center;
     overflow: hidden;
     height: fit-content;
-}
-
-.title {
-    font-family: "Comfortaa", sans-serif;
-    letter-spacing: .175em;
-    font-size: 32px;
-    text-transform: lowercase;
 }
 
 .index {
@@ -77,9 +74,5 @@
     .content {
         display: flex;
         justify-content: center;
-    }
-
-    .title {
-        font-size: 48px;
     }
 }

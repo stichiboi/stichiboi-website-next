@@ -6,6 +6,7 @@ import { useTranslation } from "next-export-i18n";
 import ButtonLink from "./generic/ButtonLink";
 import Link from "next/link";
 import { ImageWithNoise } from "./generic/ImageWithNoise";
+import { Title } from "./generic/Title";
 
 
 interface ProjectCardProps {
@@ -26,15 +27,15 @@ export function ProjectCard({ index, title, description, imageSrc, imageAlt, tar
     <div className={styles.project}>
       <div className={styles.content}>
         <div className={styles.index}>
-          <hr/>
+          <hr />
           <p>0{index}</p>
         </div>
-        <h3 className={styles.title}>{title}</h3>
+        <Title text={title} className={styles.title} />
         <p className={styles.description}>{description}</p>
         <ButtonLink
           label={t("projects.cta")}
-          icon={<FontAwesomeIcon icon={faBroomBall}/>}
-          target={target}/>
+          icon={<FontAwesomeIcon icon={faBroomBall} />}
+          target={target} />
       </div>
       <Link
         id={cardId}
@@ -42,7 +43,7 @@ export function ProjectCard({ index, title, description, imageSrc, imageAlt, tar
         href={target}
         passHref
       >
-        <ImageWithNoise cardId={cardId} imageAlt={imageAlt} imageSrc={imageSrc}/>
+        <ImageWithNoise cardId={cardId} imageAlt={imageAlt} imageSrc={imageSrc} />
       </Link>
     </div>
   );

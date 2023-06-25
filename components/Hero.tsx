@@ -13,7 +13,7 @@ export default function Hero(): JSX.Element {
     <div className={styles.container} id={"hero"}>
       <main className={styles.main}>
         <div className={styles.content}>
-          <Title text={t('hero.title')} icon={<Logo />} className={styles.title} />
+          <Title text={t('hero.title')} icon={<Logo />} className={styles.title} isH1 />
           <hr className={`${styles.accentLine}`} />
 
           <div className={styles.descriptionContainer}>
