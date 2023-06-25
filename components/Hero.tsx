@@ -4,6 +4,7 @@ import { useTranslation } from "next-export-i18n";
 import Logo from "../public/stichiboi-logo.svg";
 import DiscoverLine from "./generic/DiscoverLine";
 import { CSSProperties } from "react";
+import { Title } from "./generic/Title";
 
 export default function Hero(): JSX.Element {
   const { t } = useTranslation();
@@ -12,11 +13,8 @@ export default function Hero(): JSX.Element {
     <div className={styles.container} id={"hero"}>
       <main className={styles.main}>
         <div className={styles.content}>
-          <div className={styles.titleContainer}>
-            <div className={styles.logo}><Logo/></div>
-            <h1 className={styles.title}>{t('hero.title')}</h1>
-          </div>
-          <hr className={`${styles.accentLine}`}/>
+          <Title text={t('hero.title')} icon={<Logo />} />
+          <hr className={`${styles.accentLine}`} />
 
           <div className={styles.descriptionContainer}>
             <div className={`${styles.description}`}>
@@ -39,7 +37,7 @@ export default function Hero(): JSX.Element {
             </div>
           </div>
         </div>
-        <Planetary/>
+        <Planetary />
       </main>
       <DiscoverLine
         label={t("hero.discover")}

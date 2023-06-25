@@ -1,0 +1,37 @@
+.container {
+    display: flex;
+    align-items: baseline;
+    gap: 1em;
+    align-self: end;
+}
+
+.title {
+    overflow: hidden;
+    display: grid;
+    --height: 32px;
+    height: var(--height);
+}
+
+.letters {
+    gap: 0.175em;
+    display: flex;
+}
+
+.letter {
+    font-size: var(--height);
+    font-family: 'Comfortaa', cursive;
+    text-transform: lowercase;
+    --index: 0;
+    transition: transform ease .3s;
+}
+
+.container:hover .letter {
+    transition-delay: calc(var(--index) * .04s);
+    transform: translateY(-100%);
+}
+
+.icon {
+    --size: 3em;
+    width: var(--size);
+    height: var(--size);
+}

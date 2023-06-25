@@ -22,24 +22,24 @@
     flex-grow: 1;
 }
 
-.titleContainer a {
+.container a {
     color: #0070f3;
     text-decoration: none;
 }
 
-.titleContainer a:hover,
-.titleContainer a:focus,
-.titleContainer a:active {
+.container a:hover,
+.container a:focus,
+.container a:active {
     text-decoration: underline;
 }
 
-.titleContainer {
+.container {
     margin: 0;
     line-height: 1.15;
     font-size: 4rem;
 }
 
-.titleContainer,
+.container,
 .description {
     text-align: center;
 }
@@ -97,7 +97,7 @@
     line-height: 1.5;
 }
 
-.logo {
+.icon {
     height: 1em;
     margin-left: 0.5rem;
 }

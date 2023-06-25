@@ -24,19 +24,6 @@
     z-index: 1;
 }
 
-.titleContainer {
-    display: flex;
-    align-items: baseline;
-    gap: 1em;
-    align-self: end;
-}
-
-.title {
-    font-family: 'Comfortaa', cursive;
-    text-transform: lowercase;
-    letter-spacing: 0.175em;
-    font-size: 32px;
-}
 
 .descriptionContainer {
     z-index: 1;
@@ -88,11 +75,6 @@
     transition-delay: var(--delay);
 }
 
-.logo {
-    --size: 3em;
-    width: var(--size);
-    height: var(--size);
-}
 
 .accentLine {
     height: 1px;
