@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
 import Hero from "../components/Hero";
 import Intro from "../components/Intro";
 import Projects from "../components/Projects";
@@ -63,7 +62,7 @@ const Home: NextPage<HomeProps> = ({ isLoading }) => {
   }, [themeColor, isLoading]);
 
   return (
-    <main className={styles.container}>
+    <main>
       <Head>
         <title>{"Stichiboi | Creative Developer"}</title>
         <meta name="description" content="Making tools for people since 2018" />

@@ -24,6 +24,9 @@
     z-index: 1;
 }
 
+.title {
+    align-self: flex-end;
+}
 
 .descriptionContainer {
     z-index: 1;

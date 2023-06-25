@@ -3,10 +3,11 @@ import { CSSProperties, ReactNode, useMemo } from "react";
 
 interface TitleProps {
   text: string,
-  icon?: ReactNode
+  icon?: ReactNode,
+  className?: string
 }
 
-export function Title({ icon, text }: TitleProps) {
+export function Title({ icon, text, className }: TitleProps) {
 
   const letters = useMemo(() => {
     return Array.from(text).map((char, index) => {
@@ -20,7 +21,7 @@ export function Title({ icon, text }: TitleProps) {
   }, [text]);
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${className || ""}`}>
       {icon && <div className={styles.icon}>{icon}</div>}
       <div className={styles.title}>
         <h1 className={styles.letters}>
