@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import styles from "../styles/Projects.module.css";
 import { useTranslation } from "next-export-i18n";
 import { ProjectCard } from "./ProjectCard";
-import { Cube } from "./Cube";
+import { Stack } from "./Stack";
 import { Title } from "./generic/Title";
 
 export default function Projects(): JSX.Element {
@@ -15,7 +15,7 @@ export default function Projects(): JSX.Element {
         <Title text={t("projects.about.title")}/>
         <p>{t("projects.about.text")}</p>
       </div>
-      <Cube/>
+      <Stack/>
       <ProjectCard
         index={1}
         target={"/sudoku"}
@@ -26,6 +26,14 @@ export default function Projects(): JSX.Element {
       />
       <ProjectCard
         index={2}
+        target={"/silenciometer"}
+        title={t("projects.silenciometer.title")}
+        description={t("projects.silenciometer.description")}
+        imageSrc={"/silenciometer-hero.png"}
+        imageAlt={t("projects.silenciometer.alt")}
+      />
+      <ProjectCard
+        index={3}
         target={"/reflexo"}
         title={t("projects.reflexo.title")}
         description={t("projects.reflexo.description")}

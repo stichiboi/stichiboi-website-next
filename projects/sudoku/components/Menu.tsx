@@ -19,6 +19,7 @@ export function Menu({ setDifficulty, onStartGame, toggleDarkMode }: MenuProps):
           label={"Difficulty"}
           saveKey={"stichi-sudoku-difficulty"}
           onChange={(value) => setDifficulty(value)}
+          defaultValue={DIFFICULTY.Medium}
           max={DIFFICULTY.Hard}
           min={DIFFICULTY.Trivial}
           leftIcon={<NavArrowLeft/>}

@@ -9,3 +9,23 @@
     align-items: center;
     color: var(--color-dark);
 }
+
+.popover {
+    position: absolute;
+    top: 2em;
+    left: 2em;
+}
+
+.panel {
+    background: var(--color-light);
+    max-width: calc(100vw - 4em);
+}
+
+@media (min-width: 600px) {
+    .popover {
+        top: 3em;
+        left: 3em;
+        /* otherwise it would stretch across the whole screen*/
+        right: auto;
+    }
+}

@@ -10,6 +10,7 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Lato:wght@100;400&display=swap"
           rel="stylesheet"/>
         <link rel={"icon"} href={"/favicon.ico"}/>
+        <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png"/>
         <meta name={"og:image"} content={"/social_media_preview.png"}/>
         <meta name={"og:image:alt"} content={"Welcome to my portfolio!"}/>
       </Head>

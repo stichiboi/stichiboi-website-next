@@ -1,14 +1,13 @@
 import * as THREE from "three";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import styles from "../styles/Cube.module.css";
 
-import { EffectComposer, RenderPass, BloomEffect, EffectPass } from "postprocessing";
+import { EffectComposer, RenderPass } from "postprocessing";
 
-const CANVAS_ID = "projects-cube-canvas"
+const CANVAS_ID = "projects-cube-canvas";
+const STACK_COUNT = 15;
 
-export function Cube(): JSX.Element {
-
-  const isHovering = useRef(false);
+export function Stack(): JSX.Element {
 
   useEffect(() => {
     function getSize() {
@@ -31,9 +30,6 @@ export function Cube(): JSX.Element {
     const canvas = document.getElementById(CANVAS_ID);
     if (!canvas) return;
 
-    // starting value of y, used to calculate offset of scroll from the sticky container
-    const deltaY = canvas.getBoundingClientRect().y;
-
     const renderer = new THREE.WebGLRenderer({
       canvas,
       antialias: true,
@@ -41,70 +37,56 @@ export function Cube(): JSX.Element {
     });
 
     renderer.setSize(width, height);
-    renderer.setClearColor("#fff", 0.0);
+
     const light = new THREE.DirectionalLight(0xffffff);
     light.castShadow = true;
-    light.position.set(0, 0, 1);
+    light.position.set(1, 1, 1);
     scene.add(light);
 
     const size = 2;
-    const geometry = new THREE.BoxGeometry(size, size, size);
-    const material = new THREE.MeshPhongMaterial({
-      color: "#ff0000",
+    const material = new THREE.MeshPhysicalMaterial({
+      color: "#39E0CD",
+      opacity: .3,
+      transparent: true,
     });
-    const cube = new THREE.Mesh(geometry, material);
+    const objects = Array.from({ length: STACK_COUNT }).map((_, i) => {
+      const height = size / 6;
+      const geometry = new THREE.BoxGeometry(size, height, size);
 
-    const wireFrameMaterial = new THREE.MeshBasicMaterial({
-      color: "#000",
-      wireframe: true
+      const cube = new THREE.Mesh(geometry, material);
+      cube.position.y = -i * height + 1;
+      return cube;
     });
-    const wireFrame = new THREE.Mesh(geometry, wireFrameMaterial);
-    cube.add(wireFrame);
-    scene.add(cube);
 
+    objects.forEach(object => scene.add(object));
     const renderPass = new RenderPass(scene, camera);
-    const bloomEffect = new BloomEffect({
-      intensity: 0,
-      luminanceThreshold: 0.05,
-      luminanceSmoothing: 0.05,
-    });
-    const bloomPass = new EffectPass(camera, bloomEffect);
     const composer = new EffectComposer(renderer);
     composer.addPass(renderPass);
-    composer.addPass(bloomPass);
 
     const frameFactor = .01;
     const rescaleFactor = 400;
     let frames = 0;
     let direction = 1;
     let prevScroll = window.scrollY;
-
-    let blurring = 0;
-    let blurringFactor = .05;
+    const parentRect = canvas.parentElement?.parentElement?.getBoundingClientRect();
+    const parentHeight = parentRect?.height || 1;
+    // starting value of y, used to calculate offset of scroll from the sticky container
+    const deltaY = (parentRect?.top || 0) - document.body.getBoundingClientRect().y;
 
     function animate() {
       const scrollY = window.scrollY - deltaY;
-      const { height } = getSize();
-
       frames += direction;
       if (prevScroll !== scrollY) {
         direction = Math.sign(scrollY - prevScroll);
         prevScroll = scrollY;
       }
-      if (isHovering.current) {
-        blurring -= blurringFactor * 3;
-        blurring = Math.max(0, blurring);
-      } else {
-        blurring += blurringFactor;
-        blurring = Math.min(1, blurring);
-      }
-      bloomEffect.intensity = blurring;
-      camera.position.x = Math.min(scrollY * 2 / height, 1.5);
-
+      camera.position.x = -(0.5 - scrollY / parentHeight) * 4;
+      camera.position.y = -scrollY / parentHeight * 2;
       const baseRotation = frames * frameFactor;
       const scrollRotation = scrollY / rescaleFactor;
-      cube.rotation.x = baseRotation + scrollRotation;
-      cube.rotation.y = baseRotation + scrollRotation;
+      objects.forEach((object, i) => {
+        object.rotation.y = baseRotation + scrollRotation + i / 7;
+      });
       requestAnimationFrame(animate);
       composer.render();
     }
@@ -130,15 +112,7 @@ export function Cube(): JSX.Element {
 
   return (
     <div className={styles.container}>
-      <canvas
-        id={CANVAS_ID}
-        onMouseEnter={() => {
-          isHovering.current = true;
-        }}
-        onMouseLeave={() => {
-          isHovering.current = false;
-        }}
-      />
+      <canvas id={CANVAS_ID}/>
     </div>
   )
 }
