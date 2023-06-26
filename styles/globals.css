@@ -10,6 +10,7 @@ body {
     --color-quiet: #cbcbcb;
 
     --title-size: 32px;
+    --default-padding: 1.5em;
 
     background-color: var(--color-light);
 
@@ -38,5 +39,6 @@ button {
 @media (min-width: 600px) {
     body {
         --title-size: 48px;
+        --default-padding: 3em;
     }
 }

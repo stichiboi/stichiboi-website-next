@@ -14,7 +14,7 @@
     flex-direction: column;
     color: var(--color-light);
     justify-content: space-between;
-    padding: 3em 3em 0;
+    padding: 3em var(--default-padding) 0;
 }
 
 .background {

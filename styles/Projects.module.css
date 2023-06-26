@@ -6,12 +6,12 @@
 .about {
     z-index: 1;
     position: absolute;
-    padding: 3em;
+    padding: 6em var(--default-padding) 0;
 }
 
 .project {
     position: relative;
-    padding: 3em;
+    padding: var(--default-padding);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -24,6 +24,7 @@
     flex-direction: column;
     gap: 1.5em;
     min-width: 50%;
+    width: 100%;
 }
 
 .title {
@@ -74,5 +75,6 @@
     .content {
         display: flex;
         justify-content: center;
+        width: auto;
     }
 }
