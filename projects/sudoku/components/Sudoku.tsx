@@ -15,7 +15,7 @@ import Grid from "./Grid";
 import Cell from "./Cell";
 import { checkValidity, getFreeCells, loop, visitDeps } from "../sudokuGenerator";
 import styles from "../styles/Sudoku.module.css";
-import EndPopup from "./EndPopup";
+import EndPopup from "../../common/popup/EndPopup";
 import { useStopwatch } from "react-timer-hook";
 
 const HINT_PENALTY_SECONDS = 30;
@@ -374,7 +374,9 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
           </ActionButton>
         </div>
       </section>
-      <EndPopup onExit={onExit} isComplete={isComplete} timer={timerDisplay}/>
+      <EndPopup onExit={onExit} exitCta={"Menu"} isComplete={isComplete}>
+        {`Completed in ${timerDisplay}!`}
+      </EndPopup>
     </div>
   );
 }
