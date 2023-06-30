@@ -3,7 +3,8 @@ import {Cell, CellState} from "./Cell";
 import Keyboard, {KeyboardReactInterface} from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
 import styles from "../styles/Parodle.module.css";
-import EndPopup from "../../common/popup/EndPopup";
+import {ButtonCTA} from "../../common/button/ButtonCTA";
+import {useConfetti} from "../../common/confetti/useConfetti";
 
 const MAX_GUESSES = 6;
 const MAX_WORD_LENGTH = 5;
@@ -15,6 +16,8 @@ interface ParodleProps {
 type GameState = "RUNNING" | "SUCCESS" | "FAILED";
 
 export function Parodle({words}: ParodleProps) {
+  const throwConfetti = useConfetti();
+
   const wordsSet = useMemo<Set<string>>(() => {
     return new Set(words)
   }, [words]);
@@ -40,6 +43,12 @@ export function Parodle({words}: ParodleProps) {
     }
   }, [guesses]);
 
+  useEffect(() => {
+    if (gameState === "SUCCESS") {
+      throwConfetti();
+    }
+  }, [gameState]);
+
   const resetBoard = useCallback(() => {
     setGameState("RUNNING");
     setGuesses([]);
@@ -57,14 +66,22 @@ export function Parodle({words}: ParodleProps) {
   }, []);
 
   const keyboard = useRef<KeyboardReactInterface | null>(null);
+
   const onKeyReleased = useCallback((button: string) => {
-    const isCorrectLength = keyboard.current?.getInput().length === MAX_WORD_LENGTH;
-    const isValidWord = wordsSet.has(keyboard.current?.getInput() || "__invalid__");
-    if (button === "{enter}" && isCorrectLength && isValidWord) {
-      keyboard.current?.clearInput();
-      setGuesses(prev => [...prev, ""]);
+    if (button === "{enter}") {
+      const isCorrectLength = keyboard.current?.getInput().length === MAX_WORD_LENGTH;
+      const isValidWord = wordsSet.has(keyboard.current?.getInput() || "__invalid__");
+
+      if (isCorrectLength && isValidWord) {
+        keyboard.current?.clearInput();
+        setGuesses(prev => [...prev, ""]);
+      }
+
+      if (gameState === "SUCCESS") {
+        throwConfetti();
+      }
     }
-  }, []);
+  }, [gameState]);
 
   useEffect(() => {
     function keyPress(event: KeyboardEvent) {
@@ -163,6 +180,12 @@ export function Parodle({words}: ParodleProps) {
       <div className={styles.cells}>
         {cells}
       </div>
+      <ButtonCTA
+        className={`${styles.playAgain} ${gameState !== "RUNNING" && styles.toggled}`}
+        onClick={resetBoard}
+      >
+        {"Gioca ancora"}
+      </ButtonCTA>
       <Keyboard
         keyboardRef={r => keyboard.current = r}
         onChange={onInputChange}
@@ -181,15 +204,15 @@ export function Parodle({words}: ParodleProps) {
         }}
         buttonTheme={buttonThemes}
       />
-      <EndPopup
-        onExit={resetBoard}
-        isComplete={gameState !== "RUNNING"}
-        exitCta={"Gioca Ancora"}
-        withConfetti={gameState === "SUCCESS"}
-      >
-        {gameState === "SUCCESS" && `Completato in ${guesses.length - 1} tentativi!`}
-        {gameState === "FAILED" && `Hai finito i tentativi. La parola corretta era ${currentWord}`}
-      </EndPopup>
+      {/*<EndPopup*/}
+      {/*  onExit={resetBoard}*/}
+      {/*  isVisible={gameState !== "RUNNING"}*/}
+      {/*  exitCta={"Gioca Ancora"}*/}
+      {/*  withConfetti={gameState === "SUCCESS"}*/}
+      {/*>*/}
+      {/*  {gameState === "SUCCESS" && `Completato in ${guesses.length - 1} tentativi!`}*/}
+      {/*  {gameState === "FAILED" && `Hai finito i tentativi. La parola corretta era ${currentWord}`}*/}
+      {/*</EndPopup>*/}
     </main>
   )
 }

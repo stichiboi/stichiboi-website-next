@@ -374,7 +374,7 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
           </ActionButton>
         </div>
       </section>
-      <EndPopup onExit={onExit} exitCta={"Menu"} isComplete={isComplete}>
+      <EndPopup onExit={onExit} exitCta={"Menu"} isVisible={isComplete}>
         {`Completed in ${timerDisplay}!`}
       </EndPopup>
     </div>
