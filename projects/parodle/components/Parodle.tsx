@@ -17,6 +17,8 @@ type GameState = "RUNNING" | "SUCCESS" | "FAILED";
 
 export function Parodle({words}: ParodleProps) {
   const throwConfetti = useConfetti();
+  const keyboard = useRef<KeyboardReactInterface | null>(null);
+  const [usedLetters, setUsedLetters] = useState<Map<string, CellState>>(new Map());
 
   const wordsSet = useMemo<Set<string>>(() => {
     return new Set(words)
@@ -29,10 +31,47 @@ export function Parodle({words}: ParodleProps) {
   }, [words]);
 
   const [currentWord, setCurrentWord] = useState(getWord());
-
   const [guesses, setGuesses] = useState<string[]>([]);
-
   const [gameState, setGameState] = useState<GameState>("RUNNING");
+
+  const rows = useMemo(() => {
+    return Array.from({length: MAX_GUESSES}).map((_, i) => {
+      let tempCurrWord = Array.from(currentWord);
+      const cells = Array.from({length: MAX_WORD_LENGTH}).map((_, j) => {
+        let value = "";
+        try {
+          value = guesses[i][j];
+        } catch (e) {
+          // value stays empty
+        }
+        let state: CellState = "EMPTY";
+        const valueIndex = tempCurrWord.indexOf(value)
+        if (guesses.length > i + 1) {
+          // validate only on previous guesses, not the current one
+          if (value === tempCurrWord[j]) {
+            state = "EXACT";
+            tempCurrWord[j] = "_";
+          } else if (valueIndex !== -1) {
+            state = "ALMOST";
+            tempCurrWord[valueIndex] = "_";
+          } else {
+            state = "WRONG";
+          }
+          setUsedLetters(prev => {
+            const next = new Map(prev);
+            if (next.get(value) !== "EXACT") {
+              // the "EXACT" cell should not be overwritten by an "ALMOST"
+              next.set(value, state);
+            }
+            return next;
+          });
+        }
+        return <Cell key={`${i}-${j}`} value={value} state={state} columnIndex={j}/>
+      });
+      return <div className={styles.row}>{cells}</div>
+    })
+  }, [guesses]);
+
 
   useEffect(() => {
     const lastEnteredGuess = guesses.at(-2);
@@ -65,7 +104,6 @@ export function Parodle({words}: ParodleProps) {
     });
   }, []);
 
-  const keyboard = useRef<KeyboardReactInterface | null>(null);
 
   const onKeyReleased = useCallback((button: string) => {
     if (button === "{enter}") {
@@ -75,13 +113,15 @@ export function Parodle({words}: ParodleProps) {
       if (isCorrectLength && isValidWord) {
         keyboard.current?.clearInput();
         setGuesses(prev => [...prev, ""]);
+      } else {
+        // rows[guesses.length - 1].props.className += styles.isInvalid;
       }
 
       if (gameState === "SUCCESS") {
         throwConfetti();
       }
     }
-  }, [gameState]);
+  }, [gameState, rows, guesses]);
 
   useEffect(() => {
     function keyPress(event: KeyboardEvent) {
@@ -109,44 +149,6 @@ export function Parodle({words}: ParodleProps) {
     return () => document.removeEventListener("keyup", keyPress)
   }, [keyboard.current]);
 
-  const [usedLetters, setUsedLetters] = useState<Map<string, CellState>>(new Map());
-
-  const cells = useMemo(() => {
-    return Array.from({length: MAX_GUESSES}).map((_, i) => {
-      let tempCurrWord = Array.from(currentWord);
-      return Array.from({length: MAX_WORD_LENGTH}).map((_, j) => {
-        let value = "";
-        try {
-          value = guesses[i][j];
-        } catch (e) {
-          // value stays empty
-        }
-        let state: CellState = "EMPTY";
-        const valueIndex = tempCurrWord.indexOf(value)
-        if (guesses.length > i + 1) {
-          // validate only on previous guesses, not the current one
-          if (value === tempCurrWord[j]) {
-            state = "EXACT";
-            tempCurrWord[j] = "_";
-          } else if (valueIndex !== -1) {
-            state = "ALMOST";
-            tempCurrWord[valueIndex] = "_";
-          } else {
-            state = "WRONG";
-          }
-          setUsedLetters(prev => {
-            const next = new Map(prev);
-            if (next.get(value) !== "EXACT") {
-              // the "EXACT" cell should not be overwritten by an "ALMOST"
-              next.set(value, state);
-            }
-            return next;
-          });
-        }
-        return <Cell key={`${i}-${j}`} value={value} state={state} columnIndex={j}/>
-      })
-    })
-  }, [guesses]);
 
   const buttonThemes = useMemo(() => {
     const entries = Array.from(usedLetters.entries());
@@ -177,8 +179,8 @@ export function Parodle({words}: ParodleProps) {
 
   return (
     <main className={styles.container}>
-      <div className={styles.cells}>
-        {cells}
+      <div className={styles.rows}>
+        {rows}
       </div>
       <div className={`${styles.playAgain} ${gameState !== "RUNNING" && styles.toggled}`}>
         {gameState === "FAILED" && <p className={styles.failed}>{currentWord}</p>}

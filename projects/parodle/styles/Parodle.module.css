@@ -10,11 +10,19 @@
     --color-exact: #00916E99;
 }
 
-.cells {
+.rows {
     display: grid;
-    grid-template-rows: repeat(6, max-content);
-    grid-template-columns: repeat(5, max-content);
-    gap: .5em;
+    --gap: .5em;
+    gap: var(--gap);
+}
+
+.row {
+    display: flex;
+    gap: var(--gap);
+}
+
+.isInvalid {
+    animation: .2s isInvalid;
 }
 
 .playAgain {
@@ -61,4 +69,20 @@
 
 .keyExact {
     background-color: var(--color-exact) !important;
+}
+
+
+@keyframes isInvalid {
+    from, to {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(10%);
+    }
+    50% {
+        transform: translateX(-10%);
+    }
+    75% {
+        transform: translateX(10%);
+    }
 }

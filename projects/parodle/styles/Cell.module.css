@@ -15,31 +15,11 @@
     animation: .2s hasValue;
 }
 
-.isInvalid {
-    animation: .2s isInvalid;
-}
-
 @keyframes hasValue {
     from, to {
         transform: scale(1);
     }
     50% {
         transform: scale(1.05);
-    }
-}
-
-
-@keyframes isInvalid {
-    from, to {
-        transform: translateX(0);
-    }
-    25% {
-        transform: translateX(10%);
-    }
-    50% {
-        transform: translateX(-10%);
-    }
-    75% {
-        transform: translateX(10%);
     }
 }
