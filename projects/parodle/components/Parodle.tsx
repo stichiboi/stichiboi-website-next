@@ -38,12 +38,7 @@ export function Parodle({words}: ParodleProps) {
     return Array.from({length: MAX_GUESSES}).map((_, i) => {
       let tempCurrWord = Array.from(currentWord);
       const cells = Array.from({length: MAX_WORD_LENGTH}).map((_, j) => {
-        let value = "";
-        try {
-          value = guesses[i][j];
-        } catch (e) {
-          // value stays empty
-        }
+        let value = guesses.at(i)?.at(j) || "";
         let state: CellState = "EMPTY";
         const valueIndex = tempCurrWord.indexOf(value)
         if (guesses.length > i + 1) {
@@ -53,7 +48,12 @@ export function Parodle({words}: ParodleProps) {
             tempCurrWord[j] = "_";
           } else if (valueIndex !== -1) {
             state = "ALMOST";
-            tempCurrWord[valueIndex] = "_";
+            // before unsetting, check if that character is not an EXACT match
+            if (tempCurrWord[valueIndex] === guesses.at(i)?.at(valueIndex)) {
+              state = "WRONG";
+            } else {
+              tempCurrWord[valueIndex] = "_";
+            }
           } else {
             state = "WRONG";
           }
