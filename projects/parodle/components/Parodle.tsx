@@ -83,9 +83,11 @@ export function Parodle({words}: ParodleProps) {
       }
 
       const key = normalize(event.key.toUpperCase());
-
       if (keyboard.current) {
         keyboard.current?.handleButtonClicked(key);
+      }
+      if (key === "{enter}") {
+        onKeyReleased(key);
       }
     }
 
