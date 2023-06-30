@@ -39,28 +39,28 @@ export function Parodle({words}: ParodleProps) {
       let tempCurrWord = Array.from(currentWord);
       const cells = Array.from({length: MAX_WORD_LENGTH}).map((_, j) => {
         let value = guesses.at(i)?.at(j) || "";
-        let state: CellState = "EMPTY";
+        let state: CellState = CellState.EMPTY;
         const valueIndex = tempCurrWord.indexOf(value)
         if (guesses.length > i + 1) {
           // validate only on previous guesses, not the current one
           if (value === tempCurrWord[j]) {
-            state = "EXACT";
+            state = CellState.EXACT;
             tempCurrWord[j] = "_";
           } else if (valueIndex !== -1) {
-            state = "ALMOST";
+            state = CellState.ALMOST;
             // before unsetting, check if that character is not an EXACT match
             if (tempCurrWord[valueIndex] === guesses.at(i)?.at(valueIndex)) {
-              state = "WRONG";
+              state = CellState.WRONG;
             } else {
               tempCurrWord[valueIndex] = "_";
             }
           } else {
-            state = "WRONG";
+            state = CellState.WRONG;
           }
           setUsedLetters(prev => {
             const next = new Map(prev);
-            if (next.get(value) !== "EXACT") {
-              // the "EXACT" cell should not be overwritten by an "ALMOST"
+            // the state can only increase (wrong -> almost -> exact)
+            if (state > (next.get(value) || 0)) {
               next.set(value, state);
             }
             return next;
@@ -163,15 +163,15 @@ export function Parodle({words}: ParodleProps) {
     const themes = [
       {
         class: styles.keyWrong,
-        buttons: getButtons("WRONG")
+        buttons: getButtons(CellState.WRONG)
       },
       {
         class: styles.keyAlmost,
-        buttons: getButtons("ALMOST")
+        buttons: getButtons(CellState.ALMOST)
       },
       {
         class: styles.keyExact,
-        buttons: getButtons("EXACT")
+        buttons: getButtons(CellState.EXACT)
       }
     ];
     return themes.filter(({buttons}) => buttons.length);
