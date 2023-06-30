@@ -1,0 +1,29 @@
+.app {
+    display: grid;
+    grid-template-rows: max-content;
+    justify-content: center;
+    padding: 1em;
+    gap: 1em;
+    height: 100vh;
+    max-height: -webkit-fill-available;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header > * {
+    font-size: 24px;
+}
+
+.header > a {
+    width: 1em;
+    height: 1em;
+}
+
+.title {
+    text-transform: lowercase;
+    font-family: "Comfortaa", sans-serif;
+}

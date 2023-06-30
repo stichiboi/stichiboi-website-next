@@ -141,7 +141,7 @@ export function Parodle({words}: ParodleProps) {
         .join(" ");
     }
 
-    return [
+    const themes = [
       {
         class: styles.keyWrong,
         buttons: getButtons("WRONG")
@@ -154,7 +154,8 @@ export function Parodle({words}: ParodleProps) {
         class: styles.keyExact,
         buttons: getButtons("EXACT")
       }
-    ]
+    ];
+    return themes.filter(({buttons}) => buttons.length);
   }, [usedLetters]);
 
   return (
