@@ -18,7 +18,7 @@ export default function EndPopup({onExit, exitCta, isComplete, children, withCon
     if (withConfetti) {
       _setTriggerConfetti(prev => ++prev);
     }
-  }, []);
+  }, [withConfetti]);
 
   // confetti
   useEffect(() => {
