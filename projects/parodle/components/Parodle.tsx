@@ -35,10 +35,7 @@ export function Parodle({words}: ParodleProps) {
     const lastEnteredGuess = guesses.at(-2);
     if (lastEnteredGuess === currentWord) {
       setGameState("SUCCESS");
-    }
-  }, [guesses]);
-  useEffect(() => {
-    if (guesses.length === MAX_GUESSES + 1) {
+    } else if (guesses.length === MAX_GUESSES + 1) {
       setGameState("FAILED");
     }
   }, [guesses]);
