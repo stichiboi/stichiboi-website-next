@@ -3,7 +3,7 @@ import path from 'path';
 import {promises as fs} from 'fs';
 
 type WordData = {
-    words: string[]
+  words: string[]
 }
 
 export default async function handler(
