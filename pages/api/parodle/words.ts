@@ -7,13 +7,13 @@ type WordData = {
 }
 
 export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse<WordData>
+  req: NextApiRequest,
+  res: NextApiResponse<WordData>
 ) {
-    //Find the absolute path of the json directory
-    const wordsDirectory = path.join(process.cwd(), "static", "parodle");
+  //Find the absolute path of the json directory
+  const wordsDirectory = path.join(process.cwd(), "static", "parodle");
 
-    const fileContents = await fs.readFile(wordsDirectory + "/ita_5.txt", 'utf8');
-    const words = fileContents.split("\n")
-    res.status(200).json({words});
+  const fileContents = await fs.readFile(wordsDirectory + "/ita_5.txt", 'utf8');
+  const words = fileContents.split("\n")
+  res.status(200).json({words});
 }
