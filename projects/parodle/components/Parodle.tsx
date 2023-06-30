@@ -108,14 +108,15 @@ export function Parodle({words}: ParodleProps) {
           // value stays empty
         }
         let state: CellState = "EMPTY";
+        const valueIndex = tempCurrWord.indexOf(value)
         if (guesses.length > i + 1) {
           // validate only on previous guesses, not the current one
           if (value === tempCurrWord[j]) {
             state = "EXACT";
             tempCurrWord[j] = "_";
-          } else if (tempCurrWord.indexOf(value) !== -1) {
+          } else if (valueIndex !== -1) {
             state = "ALMOST";
-            tempCurrWord[j] = "_";
+            tempCurrWord[valueIndex] = "_";
           } else {
             state = "WRONG";
           }
