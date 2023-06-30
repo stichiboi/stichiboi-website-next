@@ -8,6 +8,7 @@
     transition-property: background-color, border-color, transform;
     width: 2em;
     height: 2em;
+    border-radius: 4px;
 }
 
 .hasValue {
