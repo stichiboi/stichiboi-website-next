@@ -1,0 +1,44 @@
+.cell {
+    border: 1px solid var(--color-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: .5s ease;
+    transition-property: background-color, border-color, transform;
+    width: 2em;
+    height: 2em;
+}
+
+.hasValue {
+    animation: .2s hasValue;
+}
+
+.isInvalid {
+    animation: .2s isInvalid;
+}
+
+@keyframes hasValue {
+    from, to {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+
+@keyframes isInvalid {
+    from, to {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(10%);
+    }
+    50% {
+        transform: translateX(-10%);
+    }
+    75% {
+        transform: translateX(10%);
+    }
+}
