@@ -1,8 +1,9 @@
 .app {
     display: grid;
     grid-template-rows: max-content;
-    justify-content: center;
-    padding: 1em;
+    /* set as variable since it's used in media query to calculate width */
+    --padding: 1em;
+    padding: var(--padding);
     gap: 1em;
     height: 100vh;
     max-height: -webkit-fill-available;
@@ -26,4 +27,15 @@
 .title {
     text-transform: lowercase;
     font-family: "Comfortaa", sans-serif;
+}
+
+@media (min-width: 600px) {
+    .app {
+        justify-content: center;
+    }
+
+    .app > * {
+        /* 1em is the padding */
+        width: calc(600px - var(--padding) * 2);
+    }
 }

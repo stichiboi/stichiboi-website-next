@@ -2,9 +2,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 30em;
+    justify-content: space-around;
     gap: 1em;
-
 
     --color-wrong: #00002233;
     --color-almost: #E2841399;
