@@ -180,12 +180,12 @@ export function Parodle({words}: ParodleProps) {
       <div className={styles.cells}>
         {cells}
       </div>
-      <ButtonCTA
-        className={`${styles.playAgain} ${gameState !== "RUNNING" && styles.toggled}`}
-        onClick={resetBoard}
-      >
-        {"Gioca ancora"}
-      </ButtonCTA>
+      <div className={`${styles.playAgain} ${gameState !== "RUNNING" && styles.toggled}`}>
+        {gameState === "FAILED" && <p className={styles.failed}>{currentWord}</p>}
+        <ButtonCTA onClick={resetBoard}>
+          {"Gioca ancora"}
+        </ButtonCTA>
+      </div>
       <Keyboard
         keyboardRef={r => keyboard.current = r}
         onChange={onInputChange}
@@ -204,15 +204,6 @@ export function Parodle({words}: ParodleProps) {
         }}
         buttonTheme={buttonThemes}
       />
-      {/*<EndPopup*/}
-      {/*  onExit={resetBoard}*/}
-      {/*  isVisible={gameState !== "RUNNING"}*/}
-      {/*  exitCta={"Gioca Ancora"}*/}
-      {/*  withConfetti={gameState === "SUCCESS"}*/}
-      {/*>*/}
-      {/*  {gameState === "SUCCESS" && `Completato in ${guesses.length - 1} tentativi!`}*/}
-      {/*  {gameState === "FAILED" && `Hai finito i tentativi. La parola corretta era ${currentWord}`}*/}
-      {/*</EndPopup>*/}
     </main>
   )
 }

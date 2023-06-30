@@ -1,4 +1,5 @@
 .container {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,15 +18,37 @@
 }
 
 .playAgain {
-    transition: .3s ease;
-    transition-property: opacity, visibility;
+    bottom: 130px;
+    position: absolute;
     visibility: hidden;
     opacity: 0;
+    display: grid;
+    gap: .5em;
+    justify-content: center;
+    transform: translateY(50%);
+}
+
+.playAgain,
+.playAgain + div {
+    transition: .3s ease;
+    transition-property: opacity, visibility;
 }
 
 .playAgain.toggled {
     opacity: 1;
     visibility: visible;
+    z-index: 1;
+}
+
+.playAgain.toggled + div {
+    z-index: 0;
+    opacity: .2;
+}
+
+.failed {
+    background-color: var(--color-light);
+    padding: 1em;
+    text-align: center;
 }
 
 .keyWrong {
