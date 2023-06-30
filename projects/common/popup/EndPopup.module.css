@@ -22,7 +22,8 @@
 
 .text {
     font-family: var(--font-family);
-    color: var(--color-dark)
+    color: var(--color-dark);
+    text-align: center;
 }
 
 .popup.toggled {

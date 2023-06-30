@@ -184,7 +184,9 @@ export function Parodle({words}: ParodleProps) {
       <EndPopup
         onExit={resetBoard}
         isComplete={gameState !== "RUNNING"}
-        exitCta={"Gioca Ancora"}>
+        exitCta={"Gioca Ancora"}
+        withConfetti={gameState === "SUCCESS"}
+      >
         {gameState === "SUCCESS" && `Completato in ${guesses.length - 1} tentativi!`}
         {gameState === "FAILED" && `Hai finito i tentativi. La parola corretta era ${currentWord}`}
       </EndPopup>
