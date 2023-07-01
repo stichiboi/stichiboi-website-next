@@ -5,6 +5,8 @@ import 'react-simple-keyboard/build/css/index.css';
 import styles from "../styles/Parodle.module.css";
 import {ButtonCTA} from "../../common/button/ButtonCTA";
 import {useConfetti} from "../../common/confetti/useConfetti";
+import Link from "next/link";
+import {QuestionMark} from "iconoir-react"
 
 const MAX_GUESSES = 6;
 const MAX_WORD_LENGTH = 5;
@@ -197,9 +199,19 @@ export function Parodle({words}: ParodleProps) {
       </div>
       <div className={`${styles.playAgain} ${gameState !== "RUNNING" && styles.toggled}`}>
         {gameState === "FAILED" && <p className={styles.failed}>{currentWord}</p>}
-        <ButtonCTA onClick={resetBoard}>
-          {"Gioca ancora"}
-        </ButtonCTA>
+        <div className={styles.endGameButtons}>
+          <ButtonCTA onClick={resetBoard}>
+            {"Gioca ancora"}
+          </ButtonCTA>
+          <Link
+            title={"Ma che significa?"}
+            target={"_blank"}
+            href={`https://www.google.com/search?q=${currentWord}+dizionario+significato`}
+            className={styles.questionMark}
+          >
+            <QuestionMark/>
+          </Link>
+        </div>
       </div>
       <Keyboard
         keyboardRef={r => keyboard.current = r}
