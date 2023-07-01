@@ -32,6 +32,7 @@ export function Parodle({words}: ParodleProps) {
 
   const [currentWord, setCurrentWord] = useState(getWord());
   const [guesses, setGuesses] = useState<string[]>([]);
+  const [invalidGuess, setInvalidGuess] = useState(false);
   const [gameState, setGameState] = useState<GameState>("RUNNING");
 
   const rows = useMemo(() => {
@@ -66,11 +67,19 @@ export function Parodle({words}: ParodleProps) {
             return next;
           });
         }
-        return <Cell key={`${i}-${j}`} value={value} state={state} columnIndex={j}/>
+        return <Cell key={`${value}-${j}`} value={value} state={state} columnIndex={j}/>
       });
-      return <div className={styles.row}>{cells}</div>
+      const isLastRow = i === guesses.length - 1;
+      return (
+        <div
+          key={i}
+          className={`${styles.row} ${isLastRow && invalidGuess ? styles.isInvalid : ""}`}
+        >
+          {cells}
+        </div>
+      );
     })
-  }, [guesses]);
+  }, [guesses, invalidGuess]);
 
 
   useEffect(() => {
@@ -110,15 +119,19 @@ export function Parodle({words}: ParodleProps) {
       const isCorrectLength = keyboard.current?.getInput().length === MAX_WORD_LENGTH;
       const isValidWord = wordsSet.has(keyboard.current?.getInput() || "__invalid__");
 
-      if (isCorrectLength && isValidWord) {
+      if (gameState === "SUCCESS") {
+        throwConfetti();
+      } else if (isCorrectLength && isValidWord) {
         keyboard.current?.clearInput();
         setGuesses(prev => [...prev, ""]);
       } else {
-        // rows[guesses.length - 1].props.className += styles.isInvalid;
-      }
-
-      if (gameState === "SUCCESS") {
-        throwConfetti();
+        setInvalidGuess(prev => {
+          if (!prev) {
+            // if multiple calls are triggered, the animation should not be stopped midway
+            setTimeout(() => setInvalidGuess(false), 200);
+          }
+          return true;
+        });
       }
     }
   }, [gameState, rows, guesses]);

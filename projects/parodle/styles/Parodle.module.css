@@ -77,12 +77,12 @@
         transform: translateX(0);
     }
     25% {
-        transform: translateX(10%);
+        transform: translateX(1%);
     }
     50% {
-        transform: translateX(-10%);
+        transform: translateX(-1%);
     }
     75% {
-        transform: translateX(10%);
+        transform: translateX(1%);
     }
 }
