@@ -81,6 +81,13 @@
     text-align: center;
 }
 
+.key {
+    background: var(--color-light) !important;
+    border-radius: 4px !important;
+    height: 48px !important;
+    padding: 4px !important;
+}
+
 .keyWrong {
     background-color: var(--color-wrong) !important;
 }
@@ -95,13 +102,6 @@
 
 .keyboard {
     background-color: var(--color-light);
-}
-
-.key {
-    background: var(--color-light) !important;
-    border-radius: 4px !important;
-    height: 48px !important;
-    padding: 4px !important;
 }
 
 @keyframes isInvalid {
