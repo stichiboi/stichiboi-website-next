@@ -30,7 +30,7 @@ export function Parodle({words}: ParodleProps) {
     const arr = Array.from(wordsSet);
     const index = Math.floor(Math.random() * arr.length);
     return arr[index].toUpperCase();
-  }, [words]);
+  }, [wordsSet]);
 
   const [currentWord, setCurrentWord] = useState(getWord());
   const [guesses, setGuesses] = useState<string[]>([]);
@@ -81,7 +81,7 @@ export function Parodle({words}: ParodleProps) {
         </div>
       );
     })
-  }, [guesses, invalidGuess]);
+  }, [currentWord, guesses, invalidGuess]);
 
 
   useEffect(() => {
@@ -91,20 +91,20 @@ export function Parodle({words}: ParodleProps) {
     } else if (guesses.length === MAX_GUESSES + 1) {
       setGameState("FAILED");
     }
-  }, [guesses]);
+  }, [currentWord, guesses]);
 
   useEffect(() => {
     if (gameState === "SUCCESS") {
       throwConfetti();
     }
-  }, [gameState]);
+  }, [gameState, throwConfetti]);
 
   const resetBoard = useCallback(() => {
     setGameState("RUNNING");
     setGuesses([]);
     setCurrentWord(getWord());
     setUsedLetters(new Map());
-  }, []);
+  }, [getWord]);
 
   const onInputChange = useCallback((input: string) => {
     setGuesses(prev => {
@@ -136,18 +136,18 @@ export function Parodle({words}: ParodleProps) {
         });
       }
     }
-  }, [gameState, rows, guesses]);
+  }, [wordsSet, gameState, throwConfetti]);
 
   useEffect(() => {
     function keyPress(event: KeyboardEvent) {
       function normalize(key: string) {
         switch (key) {
-          case "ENTER":
-            return "{enter}";
-          case "BACKSPACE":
-            return "{backspace}"
-          default:
-            return key;
+        case "ENTER":
+          return "{enter}";
+        case "BACKSPACE":
+          return "{backspace}"
+        default:
+          return key;
         }
       }
 
@@ -162,7 +162,7 @@ export function Parodle({words}: ParodleProps) {
 
     document.addEventListener("keyup", keyPress);
     return () => document.removeEventListener("keyup", keyPress)
-  }, [keyboard.current]);
+  }, [onKeyReleased]);
 
 
   const buttonThemes = useMemo(() => {
@@ -207,6 +207,7 @@ export function Parodle({words}: ParodleProps) {
             title={"Ma che significa?"}
             target={"_blank"}
             href={`https://www.google.com/search?q=${currentWord}+dizionario+significato`}
+            passHref
             className={styles.questionMark}
           >
             <QuestionMark/>
