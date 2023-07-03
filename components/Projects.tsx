@@ -26,6 +26,14 @@ export default function Projects(): JSX.Element {
       />
       <ProjectCard
         index={2}
+        target={"/parodle"}
+        title={t("projects.parodle.title")}
+        description={t("projects.parodle.description")}
+        imageSrc={"/parodle-hero.png"}
+        imageAlt={t("projects.parodle.alt")}
+      />
+      <ProjectCard
+        index={3}
         target={"/silenciometer"}
         title={t("projects.silenciometer.title")}
         description={t("projects.silenciometer.description")}
@@ -33,7 +41,7 @@ export default function Projects(): JSX.Element {
         imageAlt={t("projects.silenciometer.alt")}
       />
       <ProjectCard
-        index={3}
+        index={4}
         target={"/reflexo"}
         title={t("projects.reflexo.title")}
         description={t("projects.reflexo.description")}
