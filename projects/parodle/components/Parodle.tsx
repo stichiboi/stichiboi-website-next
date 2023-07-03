@@ -1,15 +1,21 @@
-import {useCallback, useEffect, useMemo, useRef, useState} from "react";
-import {Cell, CellState} from "./Cell";
-import Keyboard, {KeyboardReactInterface} from 'react-simple-keyboard';
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Cell, CellState } from "./Cell";
+import Keyboard, { KeyboardReactInterface } from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
 import styles from "../styles/Parodle.module.css";
-import {ButtonCTA} from "../../common/button/ButtonCTA";
-import {useConfetti} from "../../common/confetti/useConfetti";
+import { ButtonCTA } from "../../common/button/ButtonCTA";
+import { useConfetti } from "../../common/confetti/useConfetti";
 import Link from "next/link";
-import {QuestionMark} from "iconoir-react"
+import { QuestionMark } from "iconoir-react"
 
 const MAX_GUESSES = 6;
 const MAX_WORD_LENGTH = 5;
+
+const DEFAULT_LAYOUT = [
+  "Q W E R T Y U I O P",
+  "A S D F G H J K L",
+  "{enter} Z X C V B N M {backspace}",
+];
 
 interface ParodleProps {
   words: string[]
@@ -17,7 +23,7 @@ interface ParodleProps {
 
 type GameState = "RUNNING" | "SUCCESS" | "FAILED";
 
-export function Parodle({words}: ParodleProps) {
+export function Parodle({ words }: ParodleProps) {
   const throwConfetti = useConfetti();
   const keyboard = useRef<KeyboardReactInterface | null>(null);
   const [usedLetters, setUsedLetters] = useState<Map<string, CellState>>(new Map());
@@ -38,9 +44,9 @@ export function Parodle({words}: ParodleProps) {
   const [gameState, setGameState] = useState<GameState>("RUNNING");
 
   const rows = useMemo(() => {
-    return Array.from({length: MAX_GUESSES}).map((_, i) => {
+    return Array.from({ length: MAX_GUESSES }).map((_, i) => {
       let tempCurrWord = Array.from(currentWord);
-      const cells = Array.from({length: MAX_WORD_LENGTH}).map((_, j) => {
+      const cells = Array.from({ length: MAX_WORD_LENGTH }).map((_, j) => {
         let value = guesses.at(i)?.at(j) || "";
         let state: CellState = CellState.EMPTY;
         const valueIndex = tempCurrWord.indexOf(value)
@@ -177,6 +183,10 @@ export function Parodle({words}: ParodleProps) {
 
     const themes = [
       {
+        class: styles.key,
+        buttons: DEFAULT_LAYOUT.join(" ")
+      },
+      {
         class: styles.keyWrong,
         buttons: getButtons(CellState.WRONG)
       },
@@ -189,7 +199,7 @@ export function Parodle({words}: ParodleProps) {
         buttons: getButtons(CellState.EXACT)
       }
     ];
-    return themes.filter(({buttons}) => buttons.length);
+    return themes.filter(({ buttons }) => buttons.length);
   }, [usedLetters]);
 
   return (
@@ -220,17 +230,14 @@ export function Parodle({words}: ParodleProps) {
         onKeyReleased={onKeyReleased}
         maxLength={MAX_WORD_LENGTH}
         layout={{
-          default: [
-            "Q W E R T Y U I O P",
-            "A S D F G H J K L",
-            "{enter} Z X C V B N M {backspace}",
-          ]
+          default: DEFAULT_LAYOUT
         }}
         display={{
           "{enter}": "GO",
           "{backspace}": "⌫"
         }}
         buttonTheme={buttonThemes}
+        theme={`hg-theme-default ${styles.keyboard}`}
       />
     </main>
   )
