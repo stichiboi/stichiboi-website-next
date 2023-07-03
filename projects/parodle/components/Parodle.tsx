@@ -29,7 +29,7 @@ export function Parodle({ words }: ParodleProps) {
   const [usedLetters, setUsedLetters] = useState<Map<string, CellState>>(new Map());
 
   const wordsSet = useMemo<Set<string>>(() => {
-    return new Set(words)
+    return new Set(words);
   }, [words]);
 
   const getWord = useCallback(() => {
@@ -123,10 +123,11 @@ export function Parodle({ words }: ParodleProps) {
 
 
   const onKeyReleased = useCallback((button: string) => {
-    if (button === "{enter}") {
-      const isCorrectLength = keyboard.current?.getInput().length === MAX_WORD_LENGTH;
-      const isValidWord = wordsSet.has(keyboard.current?.getInput() || "__invalid__");
-
+    const input = keyboard.current?.getInput();
+    if (button === "{enter}" && input) {
+      const isCorrectLength = input.length === MAX_WORD_LENGTH;
+      const isValidWord = wordsSet.has(input);
+      console.log({ isCorrectLength, isValidWord, input });
       if (gameState === "SUCCESS") {
         throwConfetti();
       } else if (isCorrectLength && isValidWord) {
