@@ -33,7 +33,9 @@
     },
     "parodle": {
       "title": "Parodle",
-      "description": "Unlimited* wordle in italian 🍝. *: from a human point of view.",
+      "with_sup": "Unlimited",
+      "description": "wordle in italian 🍝.",
+      "disclaimer": "from a human point of view.",
       "alt": "Wordle in italian. Play as much as you like."
     },
     "silenciometer": {

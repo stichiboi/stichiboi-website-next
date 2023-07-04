@@ -1,7 +1,7 @@
 import styles from "../styles/Projects.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBroomBall } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
+import React, { ReactNode } from "react";
 import { useTranslation } from "next-export-i18n";
 import ButtonLink from "./generic/ButtonLink";
 import Link from "next/link";
@@ -12,13 +12,13 @@ import { Title } from "./generic/Title";
 interface ProjectCardProps {
   index: number,
   title: string,
-  description: string,
+  children: ReactNode,
   imageSrc: string,
   imageAlt: string,
   target: string
 }
 
-export function ProjectCard({ index, title, description, imageSrc, imageAlt, target }: ProjectCardProps): JSX.Element {
+export function ProjectCard({ index, title, children, imageSrc, imageAlt, target }: ProjectCardProps): JSX.Element {
   const { t } = useTranslation();
   const cardId = `image_${title}`;
 
@@ -31,7 +31,7 @@ export function ProjectCard({ index, title, description, imageSrc, imageAlt, tar
           <p>0{index}</p>
         </div>
         <Title text={title} className={styles.title} />
-        <p className={styles.description}>{description}</p>
+        <p className={styles.description}>{children}</p>
         <ButtonLink
           label={t("projects.cta")}
           icon={<FontAwesomeIcon icon={faBroomBall} />}

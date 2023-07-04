@@ -20,34 +20,42 @@ export default function Projects(): JSX.Element {
         index={1}
         target={"/sudoku"}
         title={t("projects.sudoku.title")}
-        description={t("projects.sudoku.description")}
         imageSrc={"/sudoku-hero.png"}
         imageAlt={t("projects.sudoku.alt")}
-      />
+      >
+        {t("projects.sudoku.description")}
+      </ProjectCard>
       <ProjectCard
         index={2}
         target={"/parodle"}
         title={t("projects.parodle.title")}
-        description={t("projects.parodle.description")}
         imageSrc={"/parodle-hero.png"}
         imageAlt={t("projects.parodle.alt")}
-      />
+      >
+        {t("projects.parodle.with_sup")}
+        <sup>*</sup>
+        {t("projects.parodle.description")}
+        <br/>
+        <em><sup>*</sup>{t("projects.parodle.disclaimer")}</em>
+      </ProjectCard>
       <ProjectCard
         index={3}
         target={"/silenciometer"}
         title={t("projects.silenciometer.title")}
-        description={t("projects.silenciometer.description")}
         imageSrc={"/silenciometer-hero.png"}
         imageAlt={t("projects.silenciometer.alt")}
-      />
+      >
+        {t("projects.silenciometer.description")}
+      </ProjectCard>
       <ProjectCard
         index={4}
         target={"/reflexo"}
         title={t("projects.reflexo.title")}
-        description={t("projects.reflexo.description")}
         imageSrc={"/reflexo-hero.png"}
         imageAlt={t("projects.reflexo.alt")}
-      />
+      >
+        {t("projects.reflexo.description")}
+      </ProjectCard>
     </section>
   );
 }
