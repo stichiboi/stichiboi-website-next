@@ -1,0 +1,29 @@
+.container {
+    display: grid;
+    background-color: var(--color-light);
+    padding: 1em;
+    position: relative;
+    gap: 2em;
+}
+
+.count {
+    text-align: center;
+    display: grid;
+    gap: .5em;
+}
+
+.count > h2 {
+    font-size: 32px;
+    margin-bottom: 0;
+}
+
+.frequentWords {
+    width: 10em;
+    gap: .5em;
+    display: grid;
+}
+
+.frequency {
+    display: flex;
+    justify-content: space-between;
+}

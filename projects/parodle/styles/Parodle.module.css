@@ -40,7 +40,6 @@
     justify-content: center;
     transition: background-color .3s ease;
     background-color: var(--color-quiet);
-    /*border: 2px solid var(--color-almost);*/
 }
 
 .questionMark:hover {
@@ -48,7 +47,7 @@
 }
 
 .playAgain {
-    bottom: 130px;
+    bottom: 200px;
     position: absolute;
     visibility: hidden;
     opacity: 0;

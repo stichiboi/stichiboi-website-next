@@ -15,11 +15,14 @@
     align-items: center;
 }
 
-.header > * {
-    font-size: 24px;
+.parodleLinks {
+    display: flex;
+    align-items: center;
+    gap: 1em;
 }
 
 .header > a {
+    font-size: 24px;
     width: 1em;
     height: 1em;
 }
@@ -27,6 +30,7 @@
 .title {
     text-transform: lowercase;
     font-family: "Comfortaa", sans-serif;
+    font-size: 24px;
 }
 
 @media (min-width: 600px) {
