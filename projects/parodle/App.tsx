@@ -12,10 +12,8 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export function App() {
   const {data, error} = useSWR<{ words: string[] }>('/api/parodle/words', fetcher);
-  const {stats} = useStats();
+  const {stats, onWord, onGameEnd} = useStats();
   const [isRunning, setIsRunning] = useState(true);
-
-  if (error) return <div>Failed to load</div>;
 
   if (data) {
     return (
@@ -31,10 +29,22 @@ export function App() {
             <Logo/>
           </Link>
         </header>
-        <Parodle
+        {data && !error && <Parodle
           words={data.words}
-          onGameStateChange={(gameState) => setIsRunning(gameState === "RUNNING")}
-        />
+          onWord={onWord}
+          onGameStateChange={(gameState) => {
+            setIsRunning(gameState === "RUNNING");
+            if (gameState !== "RUNNING") {
+              onGameEnd(gameState === "SUCCESS");
+            }
+          }}
+        />}
+        {error &&
+          <div>
+            <p>{"Failed to load"}</p>
+            {error}
+          </div>}
+
       </div>
     );
   }

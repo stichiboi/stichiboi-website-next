@@ -7,7 +7,6 @@ import {ButtonCTA} from "../../common/button/ButtonCTA";
 import {useConfetti} from "../../common/confetti/useConfetti";
 import Link from "next/link";
 import {QuestionMark} from "iconoir-react"
-import {useStats} from "../useStats";
 
 const MAX_GUESSES = 6;
 const MAX_WORD_LENGTH = 5;
@@ -20,15 +19,14 @@ const DEFAULT_LAYOUT = [
 
 interface ParodleProps {
   words: string[],
-  onGameStateChange: (gameState: GameState) => unknown
+  onGameStateChange: (gameState: GameState) => unknown,
+  onWord: (word: string) => unknown
 }
 
 type GameState = "RUNNING" | "SUCCESS" | "FAILED";
 
-export function Parodle({words, onGameStateChange}: ParodleProps) {
+export function Parodle({words, onWord, onGameStateChange}: ParodleProps) {
   const throwConfetti = useConfetti();
-
-  const {onWord, onGameEnd} = useStats();
 
   const keyboard = useRef<KeyboardReactInterface | null>(null);
   const [usedLetters, setUsedLetters] = useState<Map<string, CellState>>(new Map());
@@ -111,10 +109,6 @@ export function Parodle({words, onGameStateChange}: ParodleProps) {
   }, [gameState, throwConfetti]);
 
   useEffect(() => {
-    if (gameState !== "RUNNING") {
-      const isSuccess = gameState === "SUCCESS"
-      onGameEnd(isSuccess);
-    }
     onGameStateChange(gameState);
   }, [gameState]);
 

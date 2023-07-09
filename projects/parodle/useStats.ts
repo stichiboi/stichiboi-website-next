@@ -27,8 +27,7 @@ export function useStats() {
   useEffect(() => {
     const statsAsString = window.localStorage.getItem(STATS_KEY);
     if (statsAsString) {
-      const stats = JSON.parse(statsAsString) as Stats;
-      console.log(stats);
+      const stats: Stats = JSON.parse(statsAsString) as Stats;
       stats.wordFrequency = new Map(Object.entries(stats.wordFrequency));
       setStats(stats);
     }
@@ -65,7 +64,6 @@ export function useStats() {
       }
     });
   }, []);
-
 
   return {
     stats, onWord, onGameEnd
