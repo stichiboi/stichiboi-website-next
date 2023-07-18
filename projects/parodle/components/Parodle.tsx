@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Cell, CellState } from "./Cell";
-import Keyboard, { KeyboardReactInterface } from 'react-simple-keyboard';
+import {useCallback, useEffect, useMemo, useRef, useState} from "react";
+import {Cell, CellState} from "./Cell";
+import Keyboard, {KeyboardReactInterface} from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
 import styles from "../styles/Parodle.module.css";
-import { ButtonCTA } from "../../common/button/ButtonCTA";
-import { useConfetti } from "../../common/confetti/useConfetti";
+import {ButtonCTA} from "../../common/button/ButtonCTA";
+import {useConfetti} from "../../common/confetti/useConfetti";
 import Link from "next/link";
-import { QuestionMark } from "iconoir-react"
+import {QuestionMark} from "iconoir-react"
 
 const MAX_GUESSES = 6;
 const MAX_WORD_LENGTH = 5;
@@ -18,13 +18,16 @@ const DEFAULT_LAYOUT = [
 ];
 
 interface ParodleProps {
-  words: string[]
+  words: string[],
+  onGameStateChange: (gameState: GameState) => unknown,
+  onWord: (word: string) => unknown
 }
 
 type GameState = "RUNNING" | "SUCCESS" | "FAILED";
 
-export function Parodle({ words }: ParodleProps) {
+export function Parodle({words, onWord, onGameStateChange}: ParodleProps) {
   const throwConfetti = useConfetti();
+
   const keyboard = useRef<KeyboardReactInterface | null>(null);
   const [usedLetters, setUsedLetters] = useState<Map<string, CellState>>(new Map());
 
@@ -44,9 +47,9 @@ export function Parodle({ words }: ParodleProps) {
   const [gameState, setGameState] = useState<GameState>("RUNNING");
 
   const rows = useMemo(() => {
-    return Array.from({ length: MAX_GUESSES }).map((_, i) => {
+    return Array.from({length: MAX_GUESSES}).map((_, i) => {
       let tempCurrWord = Array.from(currentWord);
-      const cells = Array.from({ length: MAX_WORD_LENGTH }).map((_, j) => {
+      const cells = Array.from({length: MAX_WORD_LENGTH}).map((_, j) => {
         let value = guesses.at(i)?.at(j) || "";
         let state: CellState = CellState.EMPTY;
         const valueIndex = tempCurrWord.indexOf(value)
@@ -105,6 +108,10 @@ export function Parodle({ words }: ParodleProps) {
     }
   }, [gameState, throwConfetti]);
 
+  useEffect(() => {
+    onGameStateChange(gameState);
+  }, [gameState]);
+
   const resetBoard = useCallback(() => {
     setGameState("RUNNING");
     setGuesses([]);
@@ -127,11 +134,11 @@ export function Parodle({ words }: ParodleProps) {
     if (button === "{enter}" && input) {
       const isCorrectLength = input.length === MAX_WORD_LENGTH;
       const isValidWord = wordsSet.has(input);
-      console.log({ isCorrectLength, isValidWord, input });
       if (gameState === "SUCCESS") {
         throwConfetti();
       } else if (isCorrectLength && isValidWord) {
         keyboard.current?.clearInput();
+        onWord(input);
         setGuesses(prev => [...prev, ""]);
       } else {
         setInvalidGuess(prev => {
@@ -149,12 +156,12 @@ export function Parodle({ words }: ParodleProps) {
     function keyPress(event: KeyboardEvent) {
       function normalize(key: string) {
         switch (key) {
-        case "ENTER":
-          return "{enter}";
-        case "BACKSPACE":
-          return "{backspace}"
-        default:
-          return key;
+          case "ENTER":
+            return "{enter}";
+          case "BACKSPACE":
+            return "{backspace}"
+          default:
+            return key;
         }
       }
 
@@ -200,7 +207,7 @@ export function Parodle({ words }: ParodleProps) {
         buttons: getButtons(CellState.EXACT)
       }
     ];
-    return themes.filter(({ buttons }) => buttons.length);
+    return themes.filter(({buttons}) => buttons.length);
   }, [usedLetters]);
 
   return (
@@ -209,7 +216,6 @@ export function Parodle({ words }: ParodleProps) {
         {rows}
       </div>
       <div className={`${styles.playAgain} ${gameState !== "RUNNING" && styles.toggled}`}>
-        {gameState === "FAILED" && <p className={styles.failed}>{currentWord}</p>}
         <div className={styles.endGameButtons}>
           <ButtonCTA onClick={resetBoard}>
             {"Gioca ancora"}
@@ -224,6 +230,9 @@ export function Parodle({ words }: ParodleProps) {
             <QuestionMark/>
           </Link>
         </div>
+        {gameState === "FAILED" && <p className={styles.failed}>
+          {currentWord}
+        </p>}
       </div>
       <Keyboard
         keyboardRef={r => keyboard.current = r}

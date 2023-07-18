@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode, useEffect, useState } from "react";
+import {CSSProperties, ReactNode, useEffect, useState} from "react";
 import {
   autoUpdate,
   Middleware,
@@ -11,7 +11,7 @@ import {
 } from "@floating-ui/react";
 
 interface PopupProps {
-  label: ReactNode,
+  label?: ReactNode,
   labelClassName?: string,
   labelStyle?: CSSProperties,
   labelTooltip?: string,
@@ -19,6 +19,7 @@ interface PopupProps {
   containerClassName?: string,
   onToggle?: (toggled: boolean) => unknown,
   triggerClose?: unknown,
+  triggerOpen?: unknown,
   placement?: Placement,
   floatingPortalParent?: HTMLElement | null,
   middleware?: Middleware[],
@@ -27,29 +28,30 @@ interface PopupProps {
 }
 
 export function Popup({
-  label,
-  labelClassName,
-  labelStyle,
-  labelTooltip,
-  children,
-  containerClassName,
-  onToggle,
-  triggerClose,
-  placement,
-  floatingPortalParent,
-  middleware,
-  useAutoUpdate,
-  offsetOptions,
-}: PopupProps): JSX.Element {
+                        label,
+                        labelClassName,
+                        labelStyle,
+                        labelTooltip,
+                        children,
+                        containerClassName,
+                        onToggle,
+                        triggerClose,
+                        triggerOpen,
+                        placement,
+                        floatingPortalParent,
+                        middleware,
+                        useAutoUpdate,
+                        offsetOptions,
+                      }: PopupProps): JSX.Element {
 
   const [open, setOpen] = useState(false);
-  const { x, y, strategy, refs, context } = useFloating({
+  const {x, y, strategy, refs, context} = useFloating({
     whileElementsMounted: useAutoUpdate ? autoUpdate : undefined,
     strategy: "absolute",
     open, onOpenChange: setOpen,
     placement: placement || "bottom-start",
     middleware: middleware ?? [
-      offset(offsetOptions || 30),
+      offset(offsetOptions === undefined ? 30 : offsetOptions),
       shift({
         crossAxis: true,
       }),
@@ -58,9 +60,9 @@ export function Popup({
   const click = useClick(context, {
     toggle: true,
   });
-  const dismiss = useDismiss(context, { outsidePress: true });
+  const dismiss = useDismiss(context, {outsidePress: true});
 
-  const { isMounted, styles } = useTransitionStyles(context, {
+  const {isMounted, styles} = useTransitionStyles(context, {
     duration: 200,
     initial: {
       opacity: 0,
@@ -72,7 +74,7 @@ export function Popup({
     },
   });
 
-  const { getReferenceProps, getFloatingProps } = useInteractions([
+  const {getReferenceProps, getFloatingProps} = useInteractions([
     click, dismiss,
   ]);
 
@@ -85,6 +87,11 @@ export function Popup({
   useEffect(() => {
     setOpen(false);
   }, [triggerClose]);
+
+  useEffect(() => {
+    setOpen(true);
+  }, [triggerOpen]);
+
   return (
     <>
       <button
@@ -98,20 +105,20 @@ export function Popup({
       </button>
       <FloatingPortal root={floatingPortalParent}>
         {isMounted &&
-            <div
-              ref={refs.setFloating}
-              className={containerClassName}
-              style={{
-                position: strategy,
-                top: y ?? 0,
-                left: x ?? 0,
-                width: "max-content",
-                ...styles,
-              }}
-              {...getFloatingProps()}
-            >
-              {children}
-            </div>
+          <div
+            ref={refs.setFloating}
+            className={containerClassName}
+            style={{
+              position: strategy,
+              top: y ?? 0,
+              left: x ?? 0,
+              width: "max-content",
+              ...styles,
+            }}
+            {...getFloatingProps()}
+          >
+            {children}
+          </div>
         }
       </FloatingPortal>
     </>
