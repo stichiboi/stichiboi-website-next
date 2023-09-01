@@ -202,11 +202,11 @@ export function Parodle({words, onWord, onGameEnd, onGameStateChange}: ParodlePr
       },
       {
         class: styles.keyAlmost,
-        buttons: getButtons(CellState.ALMOST)
+        buttons: getButtons(CellState.ALMOST) + "{backspace}"
       },
       {
         class: styles.keyExact,
-        buttons: getButtons(CellState.EXACT)
+        buttons: getButtons(CellState.EXACT) + "{enter}"
       }
     ];
     return themes.filter(({buttons}) => buttons.length);
