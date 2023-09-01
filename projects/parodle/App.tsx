@@ -32,11 +32,9 @@ export function App() {
         {data && !error && <Parodle
           words={data.words}
           onWord={onWord}
+          onGameEnd={onGameEnd}
           onGameStateChange={(gameState) => {
             setIsRunning(gameState === "RUNNING");
-            if (gameState !== "RUNNING") {
-              onGameEnd(gameState === "SUCCESS");
-            }
           }}
         />}
         {error &&

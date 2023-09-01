@@ -3,6 +3,7 @@ import {useCallback, useEffect, useState} from "react";
 export interface Stats {
   totalPlays: number,
   totalSuccess: number,
+  successAttempts: number[],
   wordFrequency: Map<string, number>
 }
 
@@ -21,6 +22,7 @@ export function useStats() {
   const [stats, setStats] = useState<Stats>({
     totalPlays: 0,
     totalSuccess: 0,
+    successAttempts: Array.from({length: 6}).map((_) => 0),
     wordFrequency: new Map()
   });
 
@@ -44,10 +46,15 @@ export function useStats() {
     });
   }, [stats]);
 
-  const onGameEnd = useCallback((isSuccess: boolean) => {
+  const onGameEnd = useCallback((isSuccess: boolean, guessesCount: number) => {
     setStats(prev => {
+      const successAttempts = [...prev.successAttempts];
+      if (isSuccess) {
+        successAttempts[guessesCount]++;
+      }
       return {
         ...prev,
+        successAttempts,
         totalSuccess: prev.totalSuccess + (isSuccess ? 1 : 0),
         totalPlays: prev.totalPlays + 1
       }

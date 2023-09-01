@@ -2,6 +2,7 @@ import {Popup} from "../../common/popup/Popup";
 import {ReactNode, useEffect, useMemo, useState} from "react";
 import {Stats} from "../useStats";
 import styles from "../styles/StatsPopup.module.css";
+import {StatNumber} from "./StatNumber";
 
 interface StatsPopupProps {
   stats: Stats,
@@ -22,6 +23,22 @@ export function StatsPopup({stats, isOpen, label}: StatsPopupProps) {
     }
   }, [isOpen]);
 
+  const attempts = useMemo(() => {
+    return (
+      <section className={styles.frequentWords}>
+        <em>{"Numero di tentativi"}</em>
+        {stats.successAttempts.map((attemptCount, index) => {
+          return (
+            <div className={styles.frequency}>
+              <p>{index + 1}</p>
+              <p className={styles.counter}>{attemptCount}</p>
+            </div>
+          )
+        })}
+      </section>
+    );
+  }, [stats.successAttempts]);
+
   const frequentWords = useMemo(() => {
     const asList = Array
       .from(stats.wordFrequency.entries())
@@ -30,14 +47,14 @@ export function StatsPopup({stats, isOpen, label}: StatsPopupProps) {
     return (
       <section className={styles.frequentWords}>
         <em>{"Parole piu frequenti"}</em>
-        {best.map(([word, count]) => {
+        {best.length ? best.map(([word, count]) => {
           return (
             <div key={word} className={styles.frequency}>
               <p>{word}</p>
-              <p>{count}</p>
+              <p className={styles.counter}>{count}</p>
             </div>
           )
-        })}
+        }) : <p>{"Ancora nessun tentativo"}</p>}
       </section>
     )
   }, [stats.wordFrequency]);
@@ -52,11 +69,17 @@ export function StatsPopup({stats, isOpen, label}: StatsPopupProps) {
       containerClassName={styles.container}
     >
       <div className={styles.count}>
-        <h2>
-          {stats.totalSuccess} / {stats.totalPlays}
-        </h2>
-        <em>{"Volte giocate"}</em>
+        <div className={styles.stats}>
+          <StatNumber label={"Partite"} value={stats.totalPlays}/>
+          <StatNumber
+            label={"Vittorie"}
+            value={
+              `${parseFloat((stats.totalSuccess / stats.totalPlays).toFixed(2)) * 100}%`
+            }
+          />
+        </div>
       </div>
+      {attempts}
       {frequentWords}
     </Popup>
   )
