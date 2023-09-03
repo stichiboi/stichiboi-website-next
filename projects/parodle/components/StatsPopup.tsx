@@ -74,7 +74,7 @@ export function StatsPopup({stats, isOpen, label}: StatsPopupProps) {
           <StatNumber
             label={"Vittorie"}
             value={
-              `${parseFloat((stats.totalSuccess / stats.totalPlays).toFixed(2)) * 100}%`
+              `${parseFloat((stats.totalSuccess / stats.totalPlays * 100).toFixed())}%`
             }
           />
         </div>
