@@ -50,7 +50,7 @@ export function useStats() {
     setStats(prev => {
       const successAttempts = [...prev.successAttempts];
       if (isSuccess) {
-        successAttempts[guessesCount]++;
+        successAttempts[guessesCount - 1]++;
       }
       return {
         ...prev,
