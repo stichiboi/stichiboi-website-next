@@ -1,28 +1,15 @@
 import {Popup} from "../../common/popup/Popup";
-import {ReactNode, useEffect, useMemo, useState} from "react";
+import {useMemo} from "react";
 import {Stats} from "../useStats";
 import styles from "../styles/StatsPopup.module.css";
 import {StatNumber} from "./StatNumber";
+import {GraphUp} from "iconoir-react";
 
 interface StatsPopupProps {
   stats: Stats,
-  isOpen: boolean,
-  label: ReactNode
 }
 
-export function StatsPopup({stats, isOpen, label}: StatsPopupProps) {
-
-  const [triggerOpen, setTriggerOpen] = useState(0);
-  const [triggerClose, setTriggerClose] = useState(0);
-
-  useEffect(() => {
-    if (isOpen) {
-      setTriggerOpen(prev => prev + 1);
-    } else {
-      setTriggerClose(prev => prev + 1);
-    }
-  }, [isOpen]);
-
+export function StatsPopup({stats}: StatsPopupProps) {
   const attempts = useMemo(() => {
     return (
       <section className={styles.frequentWords}>
@@ -61,11 +48,10 @@ export function StatsPopup({stats, isOpen, label}: StatsPopupProps) {
 
   return (
     <Popup
-      label={label}
+      label={<GraphUp/>}
       labelTooltip={"Statistiche"}
-      triggerOpen={triggerOpen}
-      triggerClose={triggerClose}
       placement={"bottom-start"}
+      offsetOptions={0}
       containerClassName={styles.container}
     >
       <div className={styles.count}>

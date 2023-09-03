@@ -6,24 +6,20 @@ import Logo from "../../public/stichiboi-logo.svg";
 import Link from "next/link";
 import {StatsPopup} from "./components/StatsPopup";
 import {useStats} from "./useStats";
-import {useState} from "react";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export function App() {
   const {data, error} = useSWR<{ words: string[] }>('/api/parodle/words', fetcher);
   const {stats, onWord, onGameEnd} = useStats();
-  const [isRunning, setIsRunning] = useState(true);
 
   if (data) {
     return (
       <div className={styles.app}>
         <header className={styles.header}>
           <div className={styles.parodleLinks}>
-            <StatsPopup
-              label={<h1 className={styles.title}>{"Parodle"}</h1>}
-              stats={stats}
-              isOpen={!isRunning}/>
+            <h1 className={styles.title}>{"Parodle"}</h1>
+            <StatsPopup stats={stats}/>
           </div>
           <Link href={"/"} passHref>
             <Logo/>
@@ -33,9 +29,6 @@ export function App() {
           words={data.words}
           onWord={onWord}
           onGameEnd={onGameEnd}
-          onGameStateChange={(gameState) => {
-            setIsRunning(gameState === "RUNNING");
-          }}
         />}
         {error &&
           <div>

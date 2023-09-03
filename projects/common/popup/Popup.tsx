@@ -85,12 +85,12 @@ export function Popup({
   }, [onToggle, open]);
 
   useEffect(() => {
-    setOpen(false);
-  }, [triggerClose]);
-
-  useEffect(() => {
     setOpen(true);
   }, [triggerOpen]);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [triggerClose]);
 
   return (
     <>
