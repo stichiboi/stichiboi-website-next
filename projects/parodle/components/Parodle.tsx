@@ -19,14 +19,13 @@ const DEFAULT_LAYOUT = [
 
 interface ParodleProps {
   words: string[],
-  onGameStateChange: (gameState: GameState) => unknown,
   onGameEnd: (isSuccess: boolean, guessesCount: number) => unknown,
   onWord: (word: string) => unknown
 }
 
 type GameState = "RUNNING" | "SUCCESS" | "FAILED";
 
-export function Parodle({words, onWord, onGameEnd, onGameStateChange}: ParodleProps) {
+export function Parodle({words, onWord, onGameEnd}: ParodleProps) {
   const throwConfetti = useConfetti();
 
   const keyboard = useRef<KeyboardReactInterface | null>(null);
@@ -111,7 +110,6 @@ export function Parodle({words, onWord, onGameEnd, onGameStateChange}: ParodlePr
 
   useEffect(() => {
     onGameEnd(gameState === "SUCCESS", guesses.length - 1);
-    onGameStateChange(gameState);
   }, [gameState]);
 
   const resetBoard = useCallback(() => {
