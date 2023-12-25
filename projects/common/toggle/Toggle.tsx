@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import styles from "../styles/Toggle.module.css"; // Import the CSS module
+import styles from "./Toggle.module.css"; // Import the CSS module
 
 interface ToggleProps {
   saveKey: string;
