@@ -13,11 +13,11 @@ interface ControlsProps {
 }
 
 export function Controls({
-                           onRunningToggle,
+  onRunningToggle,
   setNoiseMargin,
-                           setMemoryDuration,
-                           setChartMode
-                         }: ControlsProps): JSX.Element {
+  setMemoryDuration,
+  setChartMode
+}: ControlsProps): JSX.Element {
   const [isRunning, setIsRunning] = useState(true);
 
   useEffect(() => {
