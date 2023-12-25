@@ -1,6 +1,6 @@
 import { Stepper } from "../../common/stepper/Stepper";
 import { DIFFICULTY } from "../types";
-import { Toggle } from "./Toggle";
+import { Toggle } from "../../common/toggle/Toggle";
 import { HalfMoon, NavArrowLeft, NavArrowRight, SunLight } from "iconoir-react";
 import styles from "../styles/Menu.module.css";
 import { ButtonCTA } from "../../common/button/ButtonCTA";
