@@ -17,7 +17,7 @@ export function Chart({ data, draw }: ChartProps): JSX.Element {
 
   const animatePoints = useCallback((ctx: CanvasRenderingContext2D) => {
     const { width, height } = ctx.canvas;
-    const marginY = Math.min(height * 0.2, 200);
+    const marginY = Math.min(height * 0.2, 0);
     const marginX = Math.min(height * 0.04, 200);
     ctx.clearRect(
       0, 0,
@@ -26,7 +26,7 @@ export function Chart({ data, draw }: ChartProps): JSX.Element {
     );
 
     ctx.beginPath();
-    ctx.lineWidth = 2
+    ctx.lineWidth = 2;
     const gradient = ctx.createLinearGradient(marginX, 0, width - marginX, 0);
     gradient.addColorStop(0, "rgba(0, 0, 0, 0)");
     gradient.addColorStop(0.05, "rgba(0, 0, 0, .5)");
