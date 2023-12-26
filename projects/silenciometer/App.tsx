@@ -4,11 +4,6 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useAnalyser } from "./useAnalyser";
 import { Controls } from "./components/Controls";
 
-// the delta between amplitude and average will be raised to this power
-// note: the value will always be < 1 -> power needs to be fractional to accentuate the delta.
-// otherwise, you can put a value > 1 to dampen it
-const NOISE_POWER = 1 / 1.5;
-
 
 export function App(): JSX.Element {
 
@@ -16,6 +11,7 @@ export function App(): JSX.Element {
   // useful to remove background noise
   const [noiseMargin, setNoiseMargin] = useState(10);
   const [memoryDuration, setMemoryDuration] = useState(60);
+  const [chartMode, setChartMode] = useState(0);
 
   // lower is better
   const [noise, setNoise] = useState(0);
@@ -28,19 +24,8 @@ export function App(): JSX.Element {
   const analyser = useAnalyser();
 
   useEffect(() => {
-    const totalAmplitude = amplitude.reduce((prev, curr) => prev + curr, 0);
-    const average = totalAmplitude / amplitude.length;
-    const margin = average * noiseMargin / 10;
-    const noise = amplitude.reduce((prev, curr) => {
-      const delta = curr - average;
-      if (delta < average + margin) {
-        return prev;
-      }
-      if (delta > 0) {
-        return prev + Math.pow(delta, NOISE_POWER);
-      }
-      return prev + delta;
-    }, 0);
+    const scaledMargin = noiseMargin / 100;
+    const noise = amplitude.filter(curr => curr > scaledMargin).reduce((prev, curr) => prev + curr, 0);
     setNoise(noise);
   }, [amplitude, noiseMargin]);
 
@@ -89,14 +74,21 @@ export function App(): JSX.Element {
 
   return (
     <main className={styles.main}>
-      <p className={styles.score}>{noise.toFixed(2)}</p>
       <Controls
         onRunningToggle={value => isRunningRef.current = value}
         setNoiseMargin={setNoiseMargin}
         setMemoryDuration={setMemoryDuration}
+        setChartMode={setChartMode}
       />
-      <Chart data={amplitude} draw={drawAmplitude}/>
-      <Chart data={frequency} draw={drawFrequency}/>
+      {chartMode ?
+        <Chart data={frequency} draw={drawFrequency}/>
+        :
+        <>
+          <p className={styles.score}>{noise.toFixed(2)}</p>
+          <hr className={styles.threshold} style={{bottom: `${noiseMargin}%`}}/>
+          <Chart data={amplitude} draw={drawAmplitude}/>
+        </>
+      }
     </main>
   );
 }

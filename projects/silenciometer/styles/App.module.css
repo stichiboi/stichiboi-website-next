@@ -12,3 +12,11 @@
 .score {
     font-size: 48px;
 }
+
+.threshold {
+    height: 3px;
+    background: red;
+    color: red;
+    width: 100%;
+    position: absolute;
+}
