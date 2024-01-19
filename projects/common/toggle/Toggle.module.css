@@ -4,6 +4,8 @@
     --active-color: var(--color-dark);
     color: var(--active-color);
     --de-active-color: var(--color-quiet);
+    padding: 0;
+    gap: .8em;
 }
 
 .container:not(.toggled) > *:last-child {
