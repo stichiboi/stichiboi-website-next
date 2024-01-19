@@ -31,6 +31,9 @@ export function useStats() {
     if (statsAsString) {
       const stats: Stats = JSON.parse(statsAsString) as Stats;
       stats.wordFrequency = new Map(Object.entries(stats.wordFrequency));
+      if (!Object.hasOwn(stats, "successAttempts")) {
+        stats["successAttempts"] = Array.from({length: 6}).map((_) => 0);
+      }
       setStats(stats);
     }
   }, []);
