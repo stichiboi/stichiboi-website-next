@@ -36,9 +36,17 @@ button {
     border: none;
 }
 
+.mouseTrail {
+    display: none;
+}
+
 @media (min-width: 600px) {
     body {
         --title-size: 48px;
         --default-padding: 3em;
+    }
+
+    .mouseTrail {
+        display: block;
     }
 }

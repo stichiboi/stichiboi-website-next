@@ -1,15 +1,15 @@
 import '../styles/globals.css'
-import type { AppProps } from 'next/app'
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import type {AppProps} from 'next/app'
+import {useEffect, useState} from "react";
+import {useRouter} from "next/router";
 import LoadingScreen from "../components/LoadingScreen";
-import { MouseTrail } from "@stichiboi/react-elegant-mouse-trail";
-import { IconoirProvider } from "iconoir-react";
+import {MouseTrail} from "@stichiboi/react-elegant-mouse-trail";
+import {IconoirProvider} from "iconoir-react";
 
 const MIN_LOAD_TIME = 1000;
 
 
-function RootApp({ Component, pageProps }: AppProps) {
+function RootApp({Component, pageProps}: AppProps) {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
@@ -52,7 +52,7 @@ function RootApp({ Component, pageProps }: AppProps) {
       }}>
       <LoadingScreen isLoading={isLoading}/>
       <Component {...pageProps} isLoading={isLoading}/>
-      <MouseTrail/>
+      <MouseTrail className={"mouseTrail"}/>
     </IconoirProvider>
   )
 }
