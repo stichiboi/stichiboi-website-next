@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import styles from "./Toggle.module.css"; // Import the CSS module
 
 interface ToggleProps {
@@ -10,12 +10,12 @@ interface ToggleProps {
 }
 
 export function Toggle({
-  saveKey,
-  onToggle,
-  leftIcon,
-  rightIcon,
-  className
-}: ToggleProps): JSX.Element {
+                         saveKey,
+                         onToggle,
+                         leftIcon,
+                         rightIcon,
+                         className
+                       }: ToggleProps): JSX.Element {
   const getValue = useCallback(() => {
     return localStorage.getItem(saveKey) === "true";
   }, [saveKey]);
@@ -27,8 +27,14 @@ export function Toggle({
   }, [getValue, saveKey]);
 
   useEffect(() => {
-    localStorage.setItem(saveKey, value.toString());
     onToggle(value);
+  }, [onToggle, saveKey, value]);
+
+  useEffect(() => {
+    setValue(prev => {
+      localStorage.setItem(saveKey, prev.toString());
+      return prev;
+    });
   }, [onToggle, saveKey, value]);
 
   return (

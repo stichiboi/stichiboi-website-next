@@ -4,10 +4,10 @@ import styles from "../styles/Chart.module.css"
 
 interface ChartProps {
   data: number[],
-  draw: () => unknown
+  plot: () => unknown
 }
 
-export function Chart({ data, draw }: ChartProps): JSX.Element {
+export function Chart({ data, plot }: ChartProps): JSX.Element {
 
   const dataRef = useRef<number[]>([]);
 
@@ -15,7 +15,7 @@ export function Chart({ data, draw }: ChartProps): JSX.Element {
     dataRef.current = data;
   }, [data]);
 
-  const animatePoints = useCallback((ctx: CanvasRenderingContext2D) => {
+  const draw = useCallback((ctx: CanvasRenderingContext2D) => {
     const { width, height } = ctx.canvas;
     const marginY = Math.min(height * 0.2, 0);
     const marginX = Math.min(height * 0.04, 200);
@@ -58,8 +58,8 @@ export function Chart({ data, draw }: ChartProps): JSX.Element {
   return (
     <CanvasAnimation
       className={styles.chart}
+      move={plot}
       draw={draw}
-      animatePoints={animatePoints}
     />
   );
 }

@@ -1,0 +1,14 @@
+.checkbox {
+    margin: 0;
+    color: var(--color-dark);
+    font-family: var(--font-family);
+    display: flex;
+    align-items: center;
+    gap: .8em;
+    height: 2em;
+}
+
+.checkbox > input {
+    width: 1.2em;
+    height: 1.2em;
+}

@@ -1,23 +1,26 @@
 import styles from "../styles/Controls.module.css";
-import { Pause, Play, Settings, Barcode, SineWave } from "iconoir-react";
-import { useEffect, useMemo, useState } from "react";
-import { Stepper } from "../../common/stepper/Stepper";
-import { Popup } from "../../common/popup/Popup";
-import { Toggle } from "../../common/toggle/Toggle";
+import {Pause, Play, Settings, Barcode, SineWave} from "iconoir-react";
+import {useEffect, useMemo, useState} from "react";
+import {Stepper} from "../../common/stepper/Stepper";
+import {Popup} from "../../common/popup/Popup";
+import {Toggle} from "../../common/toggle/Toggle";
+import {Checkbox} from "../../common/checkbox/Checkbox";
 
 interface ControlsProps {
   onRunningToggle: (v: boolean) => unknown,
   setNoiseMargin: (v: number) => unknown,
   setMemoryDuration: (v: number) => unknown,
-  setChartMode: (v: number) => unknown
+  setChartMode: (v: number) => unknown,
+  setBackgroundOnSilence: (v: boolean) => unknown,
 }
 
 export function Controls({
-  onRunningToggle,
-  setNoiseMargin,
-  setMemoryDuration,
-  setChartMode
-}: ControlsProps): JSX.Element {
+                           onRunningToggle,
+                           setNoiseMargin,
+                           setMemoryDuration,
+                           setChartMode,
+                           setBackgroundOnSilence
+                         }: ControlsProps): JSX.Element {
   const [isRunning, setIsRunning] = useState(true);
 
   useEffect(() => {
@@ -53,6 +56,11 @@ export function Controls({
           saveKey={"silenciometer-graph-mode"}
           onToggle={value => setChartMode(value ? 1 : 0)}
           leftIcon={<Barcode/>} rightIcon={<SineWave/>}
+        />
+        <Checkbox
+          saveKey={"silenciometer-background-on-silence"}
+          onToggle={setBackgroundOnSilence}
+          label={"Show background when silent"}
         />
       </>
     );

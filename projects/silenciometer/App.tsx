@@ -1,8 +1,9 @@
 import styles from "./styles/App.module.css";
-import { Chart } from "./components/Chart";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useAnalyser } from "./useAnalyser";
-import { Controls } from "./components/Controls";
+import {Chart} from "./components/Chart";
+import React, {useCallback, useEffect, useRef, useState} from "react";
+import {useAnalyser} from "./useAnalyser";
+import {Controls} from "./components/Controls";
+import {ChromoBackground} from "./components/ChromoBackground";
 
 
 export function App(): JSX.Element {
@@ -12,6 +13,7 @@ export function App(): JSX.Element {
   const [noiseMargin, setNoiseMargin] = useState(10);
   const [memoryDuration, setMemoryDuration] = useState(60);
   const [chartMode, setChartMode] = useState(0);
+  const [backgroundOnSilence, setBackgroundOnSilence] = useState(true);
 
   // lower is better
   const [noise, setNoise] = useState(0);
@@ -79,14 +81,16 @@ export function App(): JSX.Element {
         setNoiseMargin={setNoiseMargin}
         setMemoryDuration={setMemoryDuration}
         setChartMode={setChartMode}
+        setBackgroundOnSilence={setBackgroundOnSilence}
       />
       {chartMode ?
-        <Chart data={frequency} draw={drawFrequency}/>
+        <Chart data={frequency} plot={drawFrequency}/>
         :
         <>
           <p className={styles.score}>{noise.toFixed(2)}</p>
           <hr className={styles.threshold} style={{bottom: `${noiseMargin}%`}}/>
-          <Chart data={amplitude} draw={drawAmplitude}/>
+          <Chart data={amplitude} plot={drawAmplitude}/>
+          {backgroundOnSilence ? <ChromoBackground noise={noise}/> : null}
         </>
       }
     </main>
