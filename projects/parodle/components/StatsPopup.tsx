@@ -49,6 +49,7 @@ export function StatsPopup({stats}: StatsPopupProps) {
   return (
     <Popup
       label={<GraphUp/>}
+      labelClassName={styles.popover}
       labelTooltip={"Statistiche"}
       placement={"bottom-start"}
       offsetOptions={0}

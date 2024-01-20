@@ -52,3 +52,10 @@
 .length {
     color: var(--color-quiet);
 }
+
+.popover {
+    padding: 0;
+    color: var(--color-dark);
+    display: flex;
+    align-items: center;
+}
