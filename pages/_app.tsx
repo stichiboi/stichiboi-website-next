@@ -1,16 +1,21 @@
 import '../styles/globals.css'
 import type {AppProps} from 'next/app'
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useRouter} from "next/router";
 import LoadingScreen from "../components/LoadingScreen";
 import {IconoirProvider} from "iconoir-react";
 
 const MIN_LOAD_TIME = 1000;
 
+export interface RootAppComponentProps {
+  isLoading: boolean,
+  lockLoading: (v: boolean) => unknown
+}
 
 function RootApp({Component, pageProps}: AppProps) {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+  const isLoadingLockedRef = useRef(false);
 
   useEffect(() => {
     setTimeout(() => setIsLoading(false), MIN_LOAD_TIME);
@@ -24,7 +29,7 @@ function RootApp({Component, pageProps}: AppProps) {
       setTimeout(() => recentSwitch = false, MIN_LOAD_TIME);
     }
     const handleStop = () => {
-      if (!recentSwitch) {
+      if (!recentSwitch && !isLoadingLockedRef.current) {
         setIsLoading(false);
       } else {
         // check at intervals
@@ -41,7 +46,7 @@ function RootApp({Component, pageProps}: AppProps) {
       router.events.off('routeChangeComplete', handleStop)
       router.events.off('routeChangeError', handleStop)
     }
-  }, [router]);
+  }, [router, isLoadingLockedRef]);
 
   return (
     <IconoirProvider
@@ -50,7 +55,7 @@ function RootApp({Component, pageProps}: AppProps) {
         color: "currentColor"
       }}>
       <LoadingScreen isLoading={isLoading}/>
-      <Component {...pageProps} isLoading={isLoading}/>
+      <Component {...pageProps} isLoading={isLoading} lockLoading={(v: boolean) => isLoadingLockedRef.current = v}/>
     </IconoirProvider>
   )
 }

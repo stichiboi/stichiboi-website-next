@@ -6,6 +6,7 @@ import Projects from "../components/Projects";
 import { useCallback, useEffect, useState } from "react";
 import { Footer } from "../components/Footer";
 import {MouseTrail} from "@stichiboi/react-elegant-mouse-trail";
+import {RootAppComponentProps} from "./_app";
 
 const colorLight = "#FFFAFA";
 const colorDark = "#05080c";
@@ -17,11 +18,7 @@ const SECTION_COLORS = [
   colorDark, // footer
 ].reverse(); // reverse so it matches the search order
 
-interface HomeProps {
-  isLoading: boolean
-}
-
-const Home: NextPage<HomeProps> = ({ isLoading }) => {
+const Home: NextPage<RootAppComponentProps> = ({ isLoading }) => {
 
   const [sections, setSections] = useState<(HTMLElement | null)[]>([])
 

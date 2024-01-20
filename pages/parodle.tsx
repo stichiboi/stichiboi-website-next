@@ -1,10 +1,12 @@
 import {App} from "../projects/parodle/App";
 import Head from "next/head";
 import {Lato} from "next/font/google";
+import {NextPage} from "next";
+import {RootAppComponentProps} from "./_app";
 
 const lato = Lato({subsets: ["latin"], weight: ["100", "400", "700"]});
 
-export default function ParodlePage() {
+const ParodlePage: NextPage<RootAppComponentProps> = ({lockLoading}) => {
   return (
     <main className={lato.className}>
       <Head>
@@ -14,7 +16,9 @@ export default function ParodlePage() {
         <link rel="apple-touch-icon" sizes="180x180" href="/icons/parodle-apple-touch-icon.png"/>
         <link rel="icon" href={"/parodle-favicon.ico"}/>
       </Head>
-      <App/>
+      <App lockLoading={lockLoading}/>
     </main>
   );
 }
+
+export default ParodlePage;
