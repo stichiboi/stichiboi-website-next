@@ -5,6 +5,7 @@ import Intro from "../components/Intro";
 import Projects from "../components/Projects";
 import { useCallback, useEffect, useState } from "react";
 import { Footer } from "../components/Footer";
+import {MouseTrail} from "@stichiboi/react-elegant-mouse-trail";
 
 const colorLight = "#FFFAFA";
 const colorDark = "#05080c";
@@ -73,6 +74,7 @@ const Home: NextPage<HomeProps> = ({ isLoading }) => {
       <Intro />
       <Projects />
       <Footer />
+      <MouseTrail className={"mouseTrail"}/>
     </main>
   )
 }
