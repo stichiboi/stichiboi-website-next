@@ -1,20 +1,30 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { getLocalScore, LOCAL_SCORE_KEY } from "./Menu";
-import { ResultType } from "../types";
+import React, {useCallback, useEffect, useState} from "react";
+import {getLocalScore, LOCAL_SCORE_KEY} from "./Menu";
+import {ResultType} from "../types";
 import menuStyles from "../styles/Menu.module.css";
 import styles from "../styles/Results.module.css";
 
-export default function Results({ results }: { results: ResultType[] }) {
+export default function Results({results}: { results: ResultType[] }) {
 
   const calculateAverage = useCallback(() => {
-    if (results.length === 0) return 0;
-    let tot = 0;
-    for (let r of results) {
-      if (typeof r === 'number') tot += r;
-      //If there's an invalid result, then the average is invalid
-      else return 0;
+    if (!results) {
+      return 0;
     }
-    return Math.round(tot / results.length);
+    const hasInvalid = results.find(r => typeof r !== 'number');
+    if (hasInvalid) {
+      return;
+    }
+
+    const total: ResultType = results.reduce((prev, curr) => {
+      if (typeof prev === 'number' && typeof curr === 'number') {
+        return prev + curr;
+      }
+      return prev;
+    }, 0);
+
+    if (typeof total === 'number') {
+      return Math.round(total / results.length);
+    }
   }, [results]);
 
   const [average, setAverage] = useState(calculateAverage());
