@@ -3,6 +3,12 @@
     height: 100vh;
     z-index: -1;
     position: absolute;
-    filter: blur(250px);
     transition: opacity .5s ease;
+    overflow: hidden;
+}
+
+.container > * {
+    /* scale up to avoid having blurring the edges */
+    transform: scale(1.22);
+    filter: blur(250px);
 }

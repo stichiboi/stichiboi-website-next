@@ -17,7 +17,9 @@
 }
 
 .panel {
-    background: var(--color-light);
+    background: #FFFAFAdd;
+    margin: -1em;
+    padding: 1em;
     max-width: calc(100vw - 4em);
 }
 
