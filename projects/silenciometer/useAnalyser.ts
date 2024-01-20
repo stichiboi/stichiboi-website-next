@@ -4,7 +4,7 @@ export function useAnalyser() {
   const [analyser, setAnalyser] = useState<AnalyserNode>();
   useEffect(() => {
     navigator.mediaDevices
-      .getUserMedia({
+      ?.getUserMedia({
         video: false,
         audio: {
           suppressLocalAudioPlayback: false,

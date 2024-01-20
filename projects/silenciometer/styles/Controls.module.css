@@ -10,10 +10,23 @@
     color: var(--color-dark);
 }
 
-.popover {
+.navigation{
     position: absolute;
     top: 2em;
-    left: 2em;
+    color: var(--color-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    left: 0;
+    right: 0;
+    padding: 0 1em;
+}
+
+.popover {
+    color: var(--color-dark);
+    padding: 0;
+    display: flex;
+    align-items: center;
 }
 
 .panel {
@@ -23,11 +36,16 @@
     max-width: calc(100vw - 4em);
 }
 
+.logo {
+    font-size: 24px;
+    width: 1em;
+    height: 1em;
+}
+
 @media (min-width: 600px) {
-    .popover {
-        top: 3em;
+    .navigation {
+        top: 2em;
         left: 3em;
-        /* otherwise it would stretch across the whole screen*/
-        right: auto;
+        right: 3em;
     }
 }

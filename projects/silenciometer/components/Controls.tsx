@@ -5,6 +5,8 @@ import {Stepper} from "../../common/stepper/Stepper";
 import {Popup} from "../../common/popup/Popup";
 import {Toggle} from "../../common/toggle/Toggle";
 import {Checkbox} from "../../common/checkbox/Checkbox";
+import Logo from "../../../public/stichiboi-logo.svg";
+import Link from "next/link";
 
 interface ControlsProps {
   onRunningToggle: (v: boolean) => unknown,
@@ -74,13 +76,18 @@ export function Controls({
       >
         {isRunning ? <Pause width={72} height={72}/> : <Play width={72} height={72}/>}
       </button>
-      <Popup
-        label={<Settings/>}
-        labelClassName={styles.popover}
-        containerClassName={styles.panel}
-      >
-        {settings}
-      </Popup>
+      <div className={styles.navigation}>
+        <Popup
+          label={<Settings/>}
+          labelClassName={styles.popover}
+          containerClassName={styles.panel}
+        >
+          {settings}
+        </Popup>
+        <Link className={styles.logo} href={"/"} passHref>
+          <Logo/>
+        </Link>
+      </div>
     </div>
   )
 }
