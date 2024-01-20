@@ -57,3 +57,9 @@
     padding: 0 24px;
     align-items: flex-end;
 }
+
+.footer > a {
+    font-size: 24px;
+    width: 1em;
+    height: 1em;
+}

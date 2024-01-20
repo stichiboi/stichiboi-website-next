@@ -1,11 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Play } from 'iconoir-react';
-import { ResultType } from "../types";
+import React, {useContext, useEffect, useState} from "react";
+import {Play} from 'iconoir-react';
+import {ResultType} from "../types";
 import SettingsContainer from "./SettingsContainer";
 import Results from "./Results";
-import Info from "./Info";
-import { SettingsContext } from "./SettingsContext";
+import {SettingsContext} from "./SettingsContext";
 import styles from "../styles/Menu.module.css";
+import Link from "next/link";
+import Logo from "../../../public/stichiboi-logo.svg";
 
 export const LOCAL_SCORE_KEY = 'reflexo-best-score';
 
@@ -23,13 +24,13 @@ interface MenuProps {
 }
 
 export function Menu({
-  isRunning,
-  onStart,
-  results
-}: MenuProps) {
+                       isRunning,
+                       onStart,
+                       results
+                     }: MenuProps) {
 
   const [localScore, setLocalScore] = useState<number>();
-  const { numberOfTries } = useContext(SettingsContext);
+  const {numberOfTries} = useContext(SettingsContext);
 
   useEffect(() => {
     const score = getLocalScore();
@@ -65,7 +66,9 @@ export function Menu({
             setLocalScore(undefined);
           }}
         />
-        <Info/>
+        <Link href={"/"} passHref>
+          <Logo/>
+        </Link>
       </footer>
     </div>
   )
