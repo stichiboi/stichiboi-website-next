@@ -54,6 +54,7 @@ export function Controls({
           max={180}
           displayValue={value => `${value}s`}
         />
+        <hr/>
         <Toggle
           saveKey={"silenciometer-graph-mode"}
           onToggle={value => setChartMode(value ? 1 : 0)}

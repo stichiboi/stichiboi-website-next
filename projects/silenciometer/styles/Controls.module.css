@@ -34,6 +34,8 @@
     margin: -1em;
     padding: 1em;
     max-width: calc(100vw - 4em);
+    display: grid;
+    gap: 1em;
 }
 
 .logo {
