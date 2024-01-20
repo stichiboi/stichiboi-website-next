@@ -25,6 +25,20 @@ export function Controls({
                          }: ControlsProps): JSX.Element {
   const [isRunning, setIsRunning] = useState(true);
 
+  // firstRender and secondRender are used to trigger and open-close of the popup, which loads the initial settings
+  const [firstRender, setFirstRender] = useState(true);
+  const [secondRender, setSecondRender] = useState(false);
+
+  useEffect(() => {
+    setFirstRender(false);
+  }, []);
+
+  useEffect(() => {
+    if (!firstRender) {
+      setSecondRender(true);
+    }
+  }, [firstRender]);
+
   useEffect(() => {
     onRunningToggle(isRunning);
   }, [isRunning, onRunningToggle]);
@@ -82,6 +96,8 @@ export function Controls({
           label={<Settings/>}
           labelClassName={styles.popover}
           containerClassName={styles.panel}
+          triggerOpen={firstRender}
+          triggerClose={secondRender}
         >
           {settings}
         </Popup>
