@@ -22,7 +22,7 @@ export function App({lockLoading}: AppProps) {
     } else {
       lockLoading(true);
     }
-  }, []);
+  }, [data, lockLoading]);
 
   if (data) {
     return (
