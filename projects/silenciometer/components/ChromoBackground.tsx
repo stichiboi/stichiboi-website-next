@@ -9,8 +9,8 @@ interface ChromoBackgroundProps {
 const BORDER = 0.2;
 const CENTER_FORCE = 0.0009;
 const ALPHA = Math.round(0.85 * 255).toString(16);
-const RADIUS_MARGIN_LOW = 0.2;
-const RADIUS_MARGIN_HIGH = 0.5;
+const RADIUS_MARGIN_LOW = 0.4;
+const RADIUS_MARGIN_HIGH = 0.8;
 
 const PALETTES = [
   ["abe188", "f7ef99", "f1bb87", "f78e69"],
@@ -32,7 +32,7 @@ class Blob {
   constructor(color: string) {
     this.x = Math.random();
     this.y = Math.random();
-    this.radius = Math.random();
+    this.radius = Math.random() * (RADIUS_MARGIN_HIGH - RADIUS_MARGIN_LOW) + RADIUS_MARGIN_LOW;
     this.fillStyle = `#${color}${ALPHA}`;
   }
 
