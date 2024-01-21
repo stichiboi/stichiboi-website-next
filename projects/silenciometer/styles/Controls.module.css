@@ -5,12 +5,14 @@
 
 .start {
     padding: 0;
-    display: flex;
-    align-items: center;
     color: var(--color-dark);
 }
 
-.navigation{
+.start > svg {
+    font-size: 24px;
+}
+
+.navigation {
     position: absolute;
     top: 2em;
     color: var(--color-dark);
@@ -49,5 +51,9 @@
         top: 2em;
         left: 3em;
         right: 3em;
+    }
+
+    .start > svg {
+        font-size: 72px;
     }
 }

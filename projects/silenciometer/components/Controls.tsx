@@ -84,13 +84,6 @@ export function Controls({
   }, [setChartMode, setMemoryDuration, setNoiseMargin]);
   return (
     <div className={styles.controls}>
-      <button
-        className={styles.start}
-        onClick={() => setIsRunning(prev => !prev)}
-        title={isRunning ? "Pause" : "Start"}
-      >
-        {isRunning ? <Pause width={72} height={72}/> : <Play width={72} height={72}/>}
-      </button>
       <div className={styles.navigation}>
         <Popup
           label={<Settings/>}
@@ -101,6 +94,13 @@ export function Controls({
         >
           {settings}
         </Popup>
+        <button
+          className={styles.start}
+          onClick={() => setIsRunning(prev => !prev)}
+          title={isRunning ? "Pause" : "Start"}
+        >
+          {isRunning ? <Pause/> : <Play/>}
+        </button>
         <Link className={styles.logo} href={"/"} passHref>
           <Logo/>
         </Link>
