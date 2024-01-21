@@ -14,7 +14,7 @@
 
 .navigation {
     position: absolute;
-    top: 2em;
+    bottom: 2em;
     color: var(--color-dark);
     display: flex;
     justify-content: space-between;
@@ -48,7 +48,6 @@
 
 @media (min-width: 600px) {
     .navigation {
-        top: 2em;
         left: 3em;
         right: 3em;
     }

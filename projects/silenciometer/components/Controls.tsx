@@ -91,6 +91,7 @@ export function Controls({
           containerClassName={styles.panel}
           triggerOpen={firstRender}
           triggerClose={secondRender}
+          placement={'top-start'}
         >
           {settings}
         </Popup>
