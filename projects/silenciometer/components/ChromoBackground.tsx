@@ -26,7 +26,7 @@ class Blob {
   private dx: number = 0;
   private dy: number = 0;
   private dr: number = 0;
-  readonly speed = 0.00004;
+  readonly speed = 0.00002;
   readonly fillStyle: string;
 
   constructor(color: string) {
