@@ -90,9 +90,9 @@ export function App(): JSX.Element {
           <p className={styles.score}>{noise.toFixed(2)}</p>
           <hr className={styles.threshold} style={{bottom: `${noiseMargin}%`}}/>
           <Chart data={amplitude} plot={drawAmplitude}/>
-          {backgroundOnSilence ? <ChromoBackground noise={noise}/> : null}
         </>
       }
+      {backgroundOnSilence ? <ChromoBackground noise={noise}/> : null}
     </main>
   );
 }
