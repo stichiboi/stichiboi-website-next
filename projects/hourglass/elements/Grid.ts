@@ -1,5 +1,6 @@
 import {isElement} from "./utils";
 import {Element} from "./Element";
+import {Movable} from "./Movable";
 
 export const GRID_WIDTH = 300;
 export const GRID_HEIGHT = 150;
@@ -30,6 +31,9 @@ export class Grid {
             return false;
         }
         if (x < 0 || x >= this.cells[y].length) {
+            return false;
+        }
+        if (this.cells[y][x]) {
             return false;
         }
         this.cells[y][x] = cell;
@@ -65,10 +69,20 @@ export class Grid {
             row.forEach((cell, x) => {
                 if (isElement(cell)) {
                     cell.update(this, nextGrid, x, y);
+                    cell.postUpdate();
                 }
             });
         });
         return nextGrid;
+    }
+
+    interact() {
+        this.loop((cell, x, y) => {
+            if (cell instanceof Movable) {
+                cell.interact(this, x, y);
+            }
+        }, () => {
+        });
     }
 
     draw(ctx: CanvasRenderingContext2D) {
