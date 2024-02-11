@@ -1,6 +1,7 @@
 import {CanvasAnimation} from "@stichiboi/react-elegant-mouse-trail/lib/CanvasAnimation";
 import {useCallback, useEffect, useRef, useState} from "react";
 import styles from "./app.module.css";
+import {Simulation} from "./Simulation";
 
 const CELL_SIZE = 2;
 const WIDTH = 200;
@@ -18,14 +19,31 @@ function getRandomElement<T>(arr: T[]): T {
     return arr[Math.floor(Math.random() * arr.length)];
 }
 
-class Grain {
+
+class Element {
+    fillStyle: string = "";
+
+    draw(ctx: CanvasRenderingContext2D, x: number, y: number) {
+        return;
+    }
+
+    update(grid: Grid, previous_grid: Grid, x: number, y: number) {
+        return;
+    }
+
+    interact(grid: Grid, x: number, y: number) {
+        return;
+    }
+}
+
+class Grain extends Element {
     speed: number = INITIAL_SPEED;
-    private readonly fillStyle: string;
     isFreeFalling: boolean = true;
     inertialResistance: number = 0.1;
     fallDirection: number = getRandomElement([-1, 1])
 
     constructor() {
+        super();
         this.fillStyle = `#${getRandomElement(COLORS)}`
     }
 
@@ -39,6 +57,85 @@ class Grain {
         ctx.rect(posX, posY, wx, wy)
         ctx.fillStyle = this.fillStyle;
         ctx.fill();
+    }
+
+    update(grid: Grid, previous_grid: Grid, x: number, y: number) {
+        super.update(grid, previous_grid, x, y);
+        const {get} = previous_grid.locate(this, x, y);
+        const {set} = grid.locate(this, x, y);
+        if (!get(0, 1)) {
+            set(0, 1);
+        } else if (!get(this.fallDirection, 1)) {
+            set(this.fallDirection, -1);
+        } else if (!get(-this.fallDirection, 1)) {
+            set(-this.fallDirection, 1);
+        } else {
+            set(0, 0);
+        }
+    }
+}
+
+class Grid {
+    cells: (Element | unknown)[][];
+    dirtyRows: (unknown | true)[];
+
+    constructor() {
+        this.cells = Array.from({length: HEIGHT}).map(() => {
+            return Array.from({length: WIDTH});
+        });
+        this.dirtyRows = Array.from({length: HEIGHT})
+    }
+
+    get(x: number, y: number): Element | unknown {
+        if (y < 0 || y >= this.cells.length) {
+            return new Element();
+        }
+        if (x < 0 || x >= this.cells[y].length) {
+            return new Element();
+        }
+        return this.cells[y][x];
+    }
+
+    set(cell: Element | unknown, x: number, y: number): boolean {
+        if (y < 0 || y >= this.cells.length) {
+            return false;
+        }
+        if (x < 0 || x >= this.cells[y].length) {
+            return false;
+        }
+        this.cells[y][x] = cell;
+        this.dirtyRows[y] = true;
+        return true;
+    }
+
+    locate(cell: Element, x: number, y: number): {
+        get: (x: number, y: number) => Element | unknown,
+        set: (x: number, y: number) => boolean
+    } {
+        return {
+            get: (dx: number, dy: number) => {
+                return this.get(x + dx, y + dy)
+            },
+            set: (dx: number, dy: number) => {
+                return this.set(cell, x + dx, y + dy)
+            }
+        }
+    }
+
+    draw(ctx: CanvasRenderingContext2D) {
+        const {width, height} = ctx.canvas;
+        const rowHeight = height / HEIGHT;
+        this.cells.forEach((row, y) => {
+            if (!this.dirtyRows[y]) {
+                return;
+            }
+            ctx.clearRect(0, rowHeight * y, width, rowHeight);
+            row.forEach((cell, x) => {
+                if (isGrain(cell)) {
+                    cell.draw(ctx, x, y);
+                }
+            })
+        })
     }
 }
 
@@ -211,42 +308,9 @@ export function App(): JSX.Element {
         });
     }, [hourglass]);
 
-    useEffect(() => {
-        function togglePause(event: KeyboardEvent) {
-            if (event.key === ' ') {
-                setIsPaused(prev => !prev);
-            }
-        }
-
-        function onMouseMove(event: MouseEvent) {
-            mouse.current.x = event.x;
-            mouse.current.y = event.y;
-        }
-
-        function onMouseDown() {
-            mouse.current.active = !mouse.current.active
-        }
-
-        window.addEventListener('mousemove', onMouseMove);
-        window.addEventListener('mousedown', onMouseDown);
-        window.addEventListener('keydown', togglePause);
-        return () => {
-            window.removeEventListener('mousemove', onMouseMove);
-            window.removeEventListener('mousedown', onMouseDown);
-            window.removeEventListener('keydown', togglePause);
-        }
-    }, []);
-
     return (
-        <div style={{
-            width: `${CELL_SIZE * WIDTH}px`,
-            height: `${CELL_SIZE * HEIGHT}px`
-        }}>
-            <CanvasAnimation
-                move={move}
-                draw={draw}
-                className={styles.main}
-            />
+        <div>
+            <Simulation/>
         </div>
     )
 }
