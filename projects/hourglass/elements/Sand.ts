@@ -55,13 +55,11 @@ export class Sand extends Movable {
     }
 
     sink(grid: Grid, x: number, y: number) {
-        const {get} = grid.centerAt(x, y);
+        const {get, set} = grid.centerAt(x, y);
         const below = get(0, 1);
         if (below instanceof Water) {
-            grid.cells[y][x] = below;
-            grid.cells[y + 1][x] = this;
-            grid.dirtyRows[y] = true;
-            grid.dirtyRows[y + 1] = true;
+            set(below, 0, 0, true);
+            set(this, 0, 1, true);
         }
     }
 }

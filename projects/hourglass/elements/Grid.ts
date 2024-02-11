@@ -26,14 +26,14 @@ export class Grid {
         return this.cells[y][x];
     }
 
-    set(cell: Element | unknown, x: number, y: number, dirty = true): boolean {
+    set(cell: Element | unknown, x: number, y: number, dirty = true, force = false): boolean {
         if (y < 0 || y >= this.cells.length) {
             return false;
         }
         if (x < 0 || x >= this.cells[y].length) {
             return false;
         }
-        if (this.cells[y][x]) {
+        if (this.get(x, y) && !force) {
             return false;
         }
         this.cells[y][x] = cell;
@@ -45,15 +45,15 @@ export class Grid {
 
     centerAt(x: number, y: number): {
         get: (x: number, y: number) => Element | unknown,
-        set: (cell: Element | unknown, x: number, y: number) => boolean
+        set: (cell: Element | unknown, x: number, y: number, force?: boolean) => boolean
     } {
         return {
             get: (dx: number, dy: number) => {
                 return this.get(x + dx, y + dy);
             },
-            set: (cell: Element | unknown, dx: number, dy: number) => {
+            set: (cell: Element | unknown, dx: number, dy: number, force = false) => {
                 const dirty = Boolean(dy || dx);
-                if (this.set(cell, x + dx, y + dy, dirty)) {
+                if (this.set(cell, x + dx, y + dy, dirty, force)) {
                     // dirty the previous position (which is not always the row above)
                     this.dirtyRows[y] ||= dirty;
                     return true;
