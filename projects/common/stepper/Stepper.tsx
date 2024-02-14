@@ -1,84 +1,67 @@
-import React, { ReactNode, useCallback, useEffect, useState } from "react";
+import React, {ReactNode, useCallback, useEffect} from "react";
 import styles from "./Stepper.module.css";
-import { Minus, Plus } from "iconoir-react";
+import {Minus, Plus} from "iconoir-react";
+import {useStateLocalStorage} from "../hooks/useStateLocalStorage";
 
 interface StepperProps {
-  label?: string,
-  explanation?: string,
-  defaultValue: number,
-  saveKey: string,
-  onChange: (value: number) => void,
-  min?: number,
-  max?: number,
-  stepSize?: number,
-  leftIcon?: ReactNode,
-  rightIcon?: ReactNode,
-  displayValue?: (_: number) => string
+    label?: string,
+    explanation?: string,
+    defaultValue: number,
+    saveKey: string,
+    onChange: (value: number) => void,
+    min?: number,
+    max?: number,
+    stepSize?: number,
+    leftIcon?: ReactNode,
+    rightIcon?: ReactNode,
+    displayValue?: (_: number) => string
 }
 
 export function Stepper({
-  label,
-  explanation,
-  defaultValue,
-  saveKey,
-  onChange,
-  min = 0,
-  max = 10,
-  stepSize = 1,
-  leftIcon = <Minus/>,
-  rightIcon = <Plus/>,
-  displayValue
-}: StepperProps) {
+                            label,
+                            explanation,
+                            defaultValue,
+                            saveKey,
+                            onChange,
+                            min = 0,
+                            max = 10,
+                            stepSize = 1,
+                            leftIcon = <Minus/>,
+                            rightIcon = <Plus/>,
+                            displayValue
+                        }: StepperProps) {
 
-  const [value, setValue] = useState<number>(defaultValue);
+    const [value, setValue] = useStateLocalStorage(defaultValue, saveKey);
 
-  useEffect(() => {
-    const saved = localStorage.getItem(saveKey);
-    if (saved) {
-      const value = parseInt(saved);
-      if (!isNaN(value)) {
-        setValue(value);
-      }
-    }
-  }, [saveKey]);
+    useEffect(() => {
+        onChange(value);
+    }, [onChange, saveKey, value]);
 
-  useEffect(() => {
-    onChange(value);
-  }, [onChange, saveKey, value]);
+    const updateValue = useCallback((modifier: number) => {
+        setValue(prev => {
+            if (prev === undefined) {
+                // return middle between max and min
+                return (max + min) / 2;
+            }
+            const tempValue = prev + modifier;
+            // clip the value between max and min
+            return Math.min(max, Math.max(min, tempValue));
+        })
+    }, [max, min]);
 
-  useEffect(() => {
-    // call in setValue to ensure it's always the latest value
-    setValue(prev => {
-      localStorage.setItem(saveKey, prev.toString());
-      return prev;
-    });
-  }, [value, saveKey]);
-
-  const updateValue = useCallback((modifier: number) => {
-    setValue(prev => {
-      if (prev === undefined) {
-        // return middle between max and min
-        return (max + min) / 2;
-      }
-      const tempValue = prev + modifier;
-      // clip the value between max and min
-      return Math.min(max, Math.max(min, tempValue));
-    })
-  }, [max, min]);
-
-  return (
-    <div className={styles.container}>
-      {label ? <h3>{label}</h3> : null}
-      {explanation ? <em>{explanation}</em> : null}
-      <div className={styles.stepper}>
-        <button onClick={() => updateValue(-stepSize)}>
-          {leftIcon}
-        </button>
-        <p>{(displayValue && value !== undefined) ? displayValue(value) : value}</p>
-        <button onClick={() => updateValue(stepSize)}>
-          {rightIcon}
-        </button>
-      </div>
-    </div>
-  )
+    return (
+        <div className={styles.container}>
+            {label ? <h3>{label}</h3> : null}
+            {explanation ? <em>{explanation}</em> : null}
+            <div className={styles.stepper}>
+                <button onClick={() => updateValue(-stepSize)}>
+                    {leftIcon}
+                </button>
+                <p>{(displayValue && value !== undefined) ? displayValue(value) : value}</p>
+                <button onClick={() => updateValue(stepSize)}>
+                    {rightIcon}
+                </button>
+            </div>
+        </div>
+    )
 }
