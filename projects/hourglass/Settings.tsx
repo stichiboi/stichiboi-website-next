@@ -1,6 +1,5 @@
 import {Toggle} from "../common/toggle/Toggle";
 import {EditPencil, Erase, Settings as SettingsIcon} from "iconoir-react";
-import styles from "./settings.module.css";
 import {Popup} from "../common/popup/Popup";
 import {Slider} from "../common/slider/Slider";
 import {useEventListener} from "../common/hooks/useEventListener";
@@ -38,7 +37,7 @@ export function Settings({onBrushSizeChange, onIsEraseChange, onMaterialChange}:
 
 
     return (
-        <Popup label={<SettingsIcon/>} labelClassName={styles.container}>
+        <Popup label={<SettingsIcon/>}>
             <Toggle saveKey={"hourglass-erase"} onToggle={onIsEraseChange} leftIcon={<EditPencil/>}
                     rightIcon={<Erase/>}/>
             <Slider label={"Brush Size"}

@@ -1,9 +1,0 @@
-.container {
-    z-index: 1;
-    font-size: 12px;
-    position: absolute;
-    top: 2em;
-    left: 2em;
-    display: grid;
-    gap: 1em;
-}
