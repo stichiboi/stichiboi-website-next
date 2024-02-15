@@ -12,6 +12,6 @@ export class Wall extends Element {
 
     update(grid: Grid, nextGrid: Grid, x: number, y: number) {
         super.update(grid, nextGrid, x, y);
-        nextGrid.set(this, x, y);
+        nextGrid.set(this, x, y, false);
     }
 }

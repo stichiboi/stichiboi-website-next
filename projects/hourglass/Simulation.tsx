@@ -67,7 +67,8 @@ export function Simulation({brushRadius, isErase, material, pause}: SimulationPr
     }, [addElements, pause]);
 
     useEventListener("mousedown", (ev) => {
-        if ((ev.target as HTMLElement)?.tagName !== "BUTTON") {
+        const tagName = (ev.target as HTMLElement)?.tagName
+        if (tagName === "CANVAS" || tagName === "HEADER") {
             mouseDown.current = true;
         }
     });

@@ -7,7 +7,7 @@ import {Dispatch, SetStateAction} from "react";
 
 interface SettingsProps {
     onBrushSizeChange: Dispatch<SetStateAction<number>>,
-    onIsEraseChange: (v: boolean) => unknown,
+    onIsEraseChange: Dispatch<SetStateAction<boolean>>,
     onMaterialChange: (v: string) => unknown,
     onPause: Dispatch<SetStateAction<boolean>>
 }
@@ -28,10 +28,8 @@ export function Settings({onBrushSizeChange, onIsEraseChange, onMaterialChange, 
                 break;
             case "Backspace":
             case "Delete":
-                onIsEraseChange(true);
-                break;
             case "Enter":
-                onIsEraseChange(false);
+                onIsEraseChange(prev => !prev);
                 break;
             case " ":
                 onPause(prev => !prev);
@@ -44,9 +42,9 @@ export function Settings({onBrushSizeChange, onIsEraseChange, onMaterialChange, 
         onBrushSizeChange(prev => {
             let next = prev;
             if (deltaY > 0) {
-               next++;
+                next++;
             } else {
-               next--;
+                next--;
             }
             // clip between 10 and 1
             return Math.min(10, Math.max(1, next));
