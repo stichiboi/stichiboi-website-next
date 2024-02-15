@@ -6,6 +6,7 @@ import {Water} from "./elements/Water";
 import {useEventListener} from "../common/hooks/useEventListener";
 import styles from "./simulation.module.css";
 import {Erase} from "iconoir-react";
+import {Wall} from "./elements/Wall";
 
 interface SimulationProps {
     brushRadius: number,
@@ -27,6 +28,8 @@ export function Simulation({brushRadius, isErase, material}: SimulationProps) {
                 return new Sand();
             case "water":
                 return new Water();
+            case "wall":
+                return new Wall();
             default:
                 return;
         }
