@@ -117,9 +117,12 @@ export class Grid {
         const {set} = this.centerAt(x, y);
         for (let y = -radius; y < radius; y++) {
             for (let x = -radius; x < radius; x++) {
-                const cell = generator();
-                // force only if the cell is unknown, since it means we're erasing
-                set(cell, x, y, force);
+                const range = Math.sqrt(x * x + y * y);
+                if (range <= radius) {
+                    const cell = generator();
+                    // force only if the cell is unknown, since it means we're erasing
+                    set(cell, x, y, force);
+                }
             }
         }
     }
