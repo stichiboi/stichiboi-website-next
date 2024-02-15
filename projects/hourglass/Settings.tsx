@@ -14,7 +14,6 @@ export function Settings({onBrushSizeChange, onIsEraseChange, onMaterialChange}:
 
     useEventListener("keyup", (ev) => {
         const {key} = ev as KeyboardEvent;
-        console.log(key);
         switch (key) {
             case "s":
                 onMaterialChange("sand");
