@@ -1,26 +1,27 @@
-import {useCallback, useEffect, useRef} from "react";
+import {useCallback, useRef} from "react";
 import {CanvasAnimation} from "@stichiboi/react-elegant-mouse-trail/lib/CanvasAnimation";
 import styles from "./app.module.css";
 import {Grid, GRID_HEIGHT, GRID_WIDTH} from "./elements/Grid";
 import {Sand} from "./elements/Sand";
 import {Water} from "./elements/Water";
+import {useEventListener} from "../common/hooks/useEventListener";
 
 interface SimulationProps {
     brushRadius: number,
-    isErase: boolean
+    isErase: boolean,
+    material: string
 }
 
-export function Simulation({brushRadius, isErase}: SimulationProps) {
+export function Simulation({brushRadius, isErase, material}: SimulationProps) {
     const mouseDown = useRef(false);
     const mousePosition = useRef({x: 0, y: 0});
     const grid = useRef<Grid>(new Grid());
-    const spawnElement = useRef<"sand" | "water">("sand");
 
     const spawnGenerator = useCallback(() => {
         if (isErase) {
             return;
         }
-        switch (spawnElement.current) {
+        switch (material) {
             case "sand":
                 return new Sand();
             case "water":
@@ -28,7 +29,7 @@ export function Simulation({brushRadius, isErase}: SimulationProps) {
             default:
                 return;
         }
-    }, [spawnElement, isErase]);
+    }, [material, isErase]);
 
     const addElements = useCallback(() => {
         const {x: mouseX, y: mouseY} = mousePosition.current;
@@ -49,41 +50,20 @@ export function Simulation({brushRadius, isErase}: SimulationProps) {
         grid.current.interact();
     }, [addElements]);
 
-    useEffect(() => {
-        function onMouseDown(ev: MouseEvent) {
-            if ((ev.target as HTMLElement)?.tagName === "CANVAS") {
-                mouseDown.current = true;
-            }
+    useEventListener("mousedown", (ev) => {
+        if ((ev.target as HTMLElement)?.tagName === "CANVAS") {
+            mouseDown.current = true;
         }
+    });
 
-        function onMouseUp() {
-            mouseDown.current = false;
-        }
+    useEventListener("mouseup", (ev) => {
+        mouseDown.current = false;
+    });
 
-        function onMouseMove(ev: MouseEvent) {
-            mousePosition.current = {x: ev.x, y: ev.y}
-        }
-
-        function onKeyboard(ev: KeyboardEvent) {
-            if (ev.key === "w") {
-                spawnElement.current = "water";
-            }
-            if (ev.key === "s") {
-                spawnElement.current = "sand";
-            }
-        }
-
-        window.addEventListener('mousedown', onMouseDown);
-        window.addEventListener('mouseup', onMouseUp);
-        window.addEventListener('mousemove', onMouseMove);
-        window.addEventListener('keypress', onKeyboard);
-        return () => {
-            window.removeEventListener('mousedown', onMouseDown);
-            window.removeEventListener('mouseup', onMouseUp);
-            window.removeEventListener('mousemove', onMouseMove);
-            window.removeEventListener('keypress', onKeyboard);
-        }
-    }, []);
+    useEventListener("mousemove", (ev) => {
+        const {x, y} = ev as MouseEvent;
+        mousePosition.current = {x, y}
+    });
 
     return <CanvasAnimation draw={draw} move={move} className={styles.main}/>
 }

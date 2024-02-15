@@ -15,7 +15,6 @@ export function Slider({defaultValue, id, min, max, step, label, onChange}: Slid
     const [value, setValue] = useStateLocalStorage(defaultValue, id);
 
     useEffect(() => {
-        console.log(value);
         onChange(value);
     }, [onChange, value]);
 
