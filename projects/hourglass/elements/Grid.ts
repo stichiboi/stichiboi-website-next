@@ -113,15 +113,13 @@ export class Grid {
         });
     }
 
-    spawn(x: number, y: number, radius: number, generator: () => (Element | unknown), spawn_rate: number = 0.2) {
-        const {set, get} = this.centerAt(x, y);
+    spawn(x: number, y: number, radius: number, generator: () => (Element | unknown), force: boolean) {
+        const {set} = this.centerAt(x, y);
         for (let y = -radius; y < radius; y++) {
             for (let x = -radius; x < radius; x++) {
-                if (Math.random() < spawn_rate) {
-                    const cell = generator();
-                    // force only if the cell is unknown, since it means we're erasing
-                    set(cell, x, y, true);
-                }
+                const cell = generator();
+                // force only if the cell is unknown, since it means we're erasing
+                set(cell, x, y, force);
             }
         }
     }

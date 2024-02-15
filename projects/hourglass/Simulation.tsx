@@ -7,6 +7,8 @@ import {useEventListener} from "../common/hooks/useEventListener";
 import styles from "./simulation.module.css";
 import {Erase} from "iconoir-react";
 import {Wall} from "./elements/Wall";
+import {Element} from "./elements/Element";
+
 
 interface SimulationProps {
     brushRadius: number,
@@ -23,11 +25,17 @@ export function Simulation({brushRadius, isErase, material}: SimulationProps) {
         if (isErase) {
             return;
         }
+        const spawnRate = 0.2;
+        const withSpawnRate = (f: () => Element) => {
+            if (Math.random() < spawnRate) {
+                return f();
+            }
+        }
         switch (material) {
             case "sand":
-                return new Sand();
+                return withSpawnRate(() => new Sand());
             case "water":
-                return new Water();
+                return withSpawnRate(() => new Water());
             case "wall":
                 return new Wall();
             default:
@@ -39,8 +47,8 @@ export function Simulation({brushRadius, isErase, material}: SimulationProps) {
         const {x: mouseX, y: mouseY} = mouse;
         const rootX = Math.floor(mouseX / window.innerWidth * GRID_WIDTH);
         const rootY = Math.floor(mouseY / window.innerHeight * GRID_HEIGHT);
-        grid.current.spawn(rootX, rootY, brushRadius, spawnGenerator);
-    }, [spawnGenerator, brushRadius, mouse]);
+        grid.current.spawn(rootX, rootY, brushRadius, spawnGenerator, isErase);
+    }, [spawnGenerator, brushRadius, mouse, isErase]);
 
     const draw = useCallback((ctx: CanvasRenderingContext2D) => {
         grid.current.draw(ctx);
