@@ -10,17 +10,18 @@ export function App(): JSX.Element {
     const [brushRadius, setBrushRadius] = useState(3);
     const [isErase, setIsErase] = useState(false);
     const [material, setMaterial] = useState("sand");
+    const [pause, setPause] = useState(false);
 
     return (
         <div className={styles.main}>
             <header className={styles.header}>
                 <Settings onBrushSizeChange={setBrushRadius} onIsEraseChange={setIsErase}
-                          onMaterialChange={setMaterial}/>
+                          onMaterialChange={setMaterial} onPause={setPause}/>
                 <Link href={"/"} passHref>
                     <Logo/>
                 </Link>
             </header>
-            <Simulation isErase={isErase} brushRadius={brushRadius} material={material}/>
+            <Simulation isErase={isErase} brushRadius={brushRadius} material={material} pause={pause}/>
         </div>
     )
 }

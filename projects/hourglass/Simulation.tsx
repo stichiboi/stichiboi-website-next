@@ -5,7 +5,7 @@ import {Sand} from "./elements/Sand";
 import {Water} from "./elements/Water";
 import {useEventListener} from "../common/hooks/useEventListener";
 import styles from "./simulation.module.css";
-import {Erase} from "iconoir-react";
+import {Erase, Pause} from "iconoir-react";
 import {Wall} from "./elements/Wall";
 import {Element} from "./elements/Element";
 
@@ -13,11 +13,13 @@ import {Element} from "./elements/Element";
 interface SimulationProps {
     brushRadius: number,
     isErase: boolean,
-    material: string
+    material: string,
+    pause: boolean
 }
 
-export function Simulation({brushRadius, isErase, material}: SimulationProps) {
+export function Simulation({brushRadius, isErase, material, pause}: SimulationProps) {
     const mouseDown = useRef(false);
+
     // const mousePosition = useRef({x: 0, y: 0});
     const grid = useRef<Grid>(new Grid());
     const [mouse, setMouse] = useState({x: 0, y: 0});
@@ -58,9 +60,11 @@ export function Simulation({brushRadius, isErase, material}: SimulationProps) {
         if (mouseDown.current) {
             addElements();
         }
-        grid.current = grid.current.update();
-        grid.current.interact();
-    }, [addElements]);
+        if (!pause) {
+            grid.current = grid.current.update();
+            grid.current.interact();
+        }
+    }, [addElements, pause]);
 
     useEventListener("mousedown", (ev) => {
         if ((ev.target as HTMLElement)?.tagName !== "BUTTON") {
@@ -103,7 +107,7 @@ export function Simulation({brushRadius, isErase, material}: SimulationProps) {
                 top: `${mouse.y}px`,
                 left: `${mouse.x}px`,
             }} className={styles.pointer}>
-                {isErase && <Erase/>}
+                {isErase ? <Erase/> : pause ? <Pause/> : null}
             </div>
             <CanvasAnimation draw={draw} move={move}/>
         </div>
