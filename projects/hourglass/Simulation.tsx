@@ -17,7 +17,7 @@ export function Simulation({brushRadius, isErase, material}: SimulationProps) {
     // const mousePosition = useRef({x: 0, y: 0});
     const grid = useRef<Grid>(new Grid());
     const [mouse, setMouse] = useState({x: 0, y: 0});
-
+    const [cellSize, setCellSize] = useState(0);
     const spawnGenerator = useCallback(() => {
         if (isErase) {
             return;
@@ -67,15 +67,23 @@ export function Simulation({brushRadius, isErase, material}: SimulationProps) {
         // mousePosition.current = {x, y}
     });
 
+    useEventListener("resize", () => {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const cellWidth = width / GRID_WIDTH;
+        const cellHeight = height / GRID_HEIGHT;
+        setCellSize(Math.round(Math.min(cellHeight, cellWidth)));
+    });
+
     return (
         <div className={styles.main}>
             <div style={{
-                width: `${brushRadius * 8}px`,
-                height: `${brushRadius * 8}px`,
+                width: `${brushRadius * cellSize * 2}px`,
+                height: `${brushRadius * cellSize * 2}px`,
                 top: `${mouse.y}px`,
                 left: `${mouse.x}px`,
             }} className={styles.pointer}/>
-            <CanvasAnimation draw={draw} move={move} />
+            <CanvasAnimation draw={draw} move={move}/>
         </div>
     );
 }
