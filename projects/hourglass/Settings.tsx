@@ -6,7 +6,7 @@ import {useEventListener} from "../common/hooks/useEventListener";
 import {Dispatch, SetStateAction} from "react";
 
 interface SettingsProps {
-    onBrushSizeChange: (v: number) => unknown,
+    onBrushSizeChange: Dispatch<SetStateAction<number>>,
     onIsEraseChange: (v: boolean) => unknown,
     onMaterialChange: (v: string) => unknown,
     onPause: Dispatch<SetStateAction<boolean>>
@@ -39,6 +39,20 @@ export function Settings({onBrushSizeChange, onIsEraseChange, onMaterialChange, 
         }
     });
 
+    useEventListener("wheel", (ev) => {
+        const {deltaY} = ev as WheelEvent;
+        onBrushSizeChange(prev => {
+            let next = prev;
+            if (deltaY > 0) {
+               next++;
+            } else {
+               next--;
+            }
+            // clip between 10 and 1
+            return Math.min(10, Math.max(1, next));
+        })
+
+    })
 
     return (
         <Popup label={<SettingsIcon/>}>
