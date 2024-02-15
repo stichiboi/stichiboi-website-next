@@ -1,10 +1,11 @@
-import {useCallback, useRef, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import {CanvasAnimation} from "@stichiboi/react-elegant-mouse-trail/lib/CanvasAnimation";
 import {Grid, GRID_HEIGHT, GRID_WIDTH} from "./elements/Grid";
 import {Sand} from "./elements/Sand";
 import {Water} from "./elements/Water";
 import {useEventListener} from "../common/hooks/useEventListener";
 import styles from "./simulation.module.css";
+import {Erase} from "iconoir-react";
 
 interface SimulationProps {
     brushRadius: number,
@@ -17,7 +18,6 @@ export function Simulation({brushRadius, isErase, material}: SimulationProps) {
     // const mousePosition = useRef({x: 0, y: 0});
     const grid = useRef<Grid>(new Grid());
     const [mouse, setMouse] = useState({x: 0, y: 0});
-    const [cellSize, setCellSize] = useState(0);
     const spawnGenerator = useCallback(() => {
         if (isErase) {
             return;
@@ -67,12 +67,21 @@ export function Simulation({brushRadius, isErase, material}: SimulationProps) {
         // mousePosition.current = {x, y}
     });
 
-    useEventListener("resize", () => {
+    const [cellSize, setCellSize] = useState(0);
+    const calculateCellSize = useCallback(() => {
         const width = window.innerWidth;
         const height = window.innerHeight;
         const cellWidth = width / GRID_WIDTH;
         const cellHeight = height / GRID_HEIGHT;
         setCellSize(Math.round(Math.min(cellHeight, cellWidth)));
+    }, [setCellSize]);
+
+    useEffect(() => {
+        calculateCellSize();
+    }, [calculateCellSize]);
+
+    useEventListener("resize", () => {
+        calculateCellSize()
     });
 
     return (
@@ -82,7 +91,9 @@ export function Simulation({brushRadius, isErase, material}: SimulationProps) {
                 height: `${brushRadius * cellSize * 2}px`,
                 top: `${mouse.y}px`,
                 left: `${mouse.x}px`,
-            }} className={styles.pointer}/>
+            }} className={styles.pointer}>
+                {isErase && <Erase/>}
+            </div>
             <CanvasAnimation draw={draw} move={move}/>
         </div>
     );
