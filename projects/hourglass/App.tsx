@@ -12,7 +12,7 @@ export function App(): JSX.Element {
     const [material, setMaterial] = useState("sand");
 
     return (
-        <div>
+        <div className={styles.main}>
             <header className={styles.header}>
                 <Settings onBrushSizeChange={setBrushRadius} onIsEraseChange={setIsErase}
                           onMaterialChange={setMaterial}/>
