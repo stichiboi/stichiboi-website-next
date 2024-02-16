@@ -10,7 +10,7 @@ export type GridData = {
     height: number,
     name: string,
     creatorName: string,
-    _id?: string
+    id?: string
 }
 
 const DB_NAME = "stichisand";
@@ -32,7 +32,7 @@ export default async function handler(
             if (!id) {
                 return res.status(200);
             }
-            const _id = new ObjectId(id as string)
+            const _id = new ObjectId(id as string);
             const grid = await collection.findOne({_id});
             if (grid) {
                 return res.status(200).json(grid as unknown as GridData);
@@ -40,14 +40,15 @@ export default async function handler(
             return res.status(404);
         } else if (method === "POST") {
             const body = JSON.parse(req.body) as GridData;
-            let {_id, ...rawBody} = body;
-            if (_id) {
-                await collection.updateOne(["_id", "=", _id], body);
+            let {id, ...rawBody} = body;
+            if (id) {
+                const _id = new ObjectId(id);
+                await collection.updateOne({_id}, {"$set": {...rawBody, updated: new Date()}});
             } else {
-                const doc = await collection.insertOne({...rawBody, date: new Date()});
-                _id = doc.insertedId.toString();
+                const doc = await collection.insertOne({...rawBody, created: new Date()});
+                id = doc.insertedId.toString();
             }
-            return res.status(200).json({id: _id});
+            return res.status(200).json({id});
         }
         return res.status(405);
     } catch (e) {

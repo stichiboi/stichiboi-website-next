@@ -1,6 +1,6 @@
 import {Popup} from "../common/popup/Popup";
 import {useStateLocalStorage} from "../common/hooks/useStateLocalStorage";
-import {ShareIos} from "iconoir-react";
+import {ShareIos, Copy} from "iconoir-react";
 import {MutableRefObject, useCallback, useEffect, useState} from "react";
 import {GridData} from "../../pages/api/stichisand/grid";
 import {API_PATH} from "./App";
@@ -28,7 +28,7 @@ export function SaveForm({grid, name}: SaveFormProps) {
             return;
         }
         const body: GridData = {
-            _id: gridId,
+            id: gridId,
             grid: grid.current.encode(),
             name: gridName,
             creatorName,
@@ -59,14 +59,29 @@ export function SaveForm({grid, name}: SaveFormProps) {
             <Popup label={<ShareIos/>} containerClassName={styles.popup}>
                 <div className={styles.inputGroup}>
                     <label htmlFor={"creator-name"} className={styles.label}>{"Creator Name"}</label>
-                    <input id={"creator-name"} value={creatorName} className={styles.input} onChange={ev => setCreatorName(ev.target.value)}/>
+                    <input id={"creator-name"} value={creatorName} className={styles.input}
+                           onChange={ev => setCreatorName(ev.target.value)}/>
                 </div>
                 <ButtonCTA onClick={onShare}>
                     <div>
-                        <p>{"Share"}</p>
-                        {isLoading && "Loading"}
+                        <p>{isLoading ? "Saving..." : "Save & Share"}</p>
                     </div>
                 </ButtonCTA>
+                {gridId ?
+                    <div className={styles.shareContainer}>
+                        <p className={styles.shareLink}>{window.location.href}</p>
+                        <button
+                            title={"Copy to clipboard"}
+                            className={styles.shareButton}
+                            onClick={() => {
+                                navigator.clipboard.writeText(window.location.href);
+                            }}
+                        >
+                            <Copy/>
+                        </button>
+                    </div>
+                    : null
+                }
             </Popup>
             <h1>
                 <input className={[styles.title, styles.input].join(" ")} value={gridName}
