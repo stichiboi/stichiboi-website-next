@@ -10,7 +10,11 @@ import {GridData} from "../../pages/api/stichisand/grid";
 
 const API_PATH = "/api/stichisand/grid";
 
-export function App(): JSX.Element {
+interface AppProps {
+    lockLoading: (v: boolean) => unknown
+}
+
+export function App({lockLoading}: AppProps) {
 
     const [brushRadius, setBrushRadius] = useState(3);
     const [isErase, setIsErase] = useState(false);
@@ -26,11 +30,15 @@ export function App(): JSX.Element {
         if (!gridId) {
             return;
         }
+        lockLoading(true);
         setIsLoading(true);
         fetch(`${API_PATH}?id=${gridId}`)
             .then(res => res.json() as unknown as GridData)
             .then(data => grid.current.decode(data.grid, data.width, data.height))
-            .finally(() => setIsLoading(false));
+            .finally(() => {
+                setIsLoading(false);
+                lockLoading(false);
+            });
     }, []);
 
     const onShare = useCallback(async () => {

@@ -54,11 +54,11 @@ export function Settings({onBrushSizeChange, onIsEraseChange, onMaterialChange, 
 
     return (
         <Popup label={<SettingsIcon/>}>
-            <Toggle saveKey={"hourglass-erase"} onToggle={onIsEraseChange} leftIcon={<EditPencil/>}
+            <Toggle saveKey={"stichisand-erase"} onToggle={onIsEraseChange} leftIcon={<EditPencil/>}
                     rightIcon={<Erase/>}/>
             <Slider label={"Brush Size"}
                     defaultValue={3}
-                    id={"hourglass-brush-size"}
+                    id={"stichisand-brush-size"}
                     min={1}
                     max={6}
                     step={1}
