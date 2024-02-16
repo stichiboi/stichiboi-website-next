@@ -1,15 +1,15 @@
-import {Grid, GRID_HEIGHT, GRID_WIDTH} from "./Grid";
+import {Grid} from "./Grid";
 
 export class Element {
     fillStyle: string = "";
 
-    draw(ctx: CanvasRenderingContext2D, x: number, y: number) {
+    draw(ctx: CanvasRenderingContext2D, grid: Grid, x: number, y: number) {
         const {width, height} = ctx.canvas;
         ctx.beginPath();
-        const posX = x * width / GRID_WIDTH;
-        const posY = y * height / GRID_HEIGHT;
-        const wx = Math.max(1, width / GRID_WIDTH);
-        const wy = Math.max(1, height / GRID_HEIGHT);
+        const posX = x * width / grid.width;
+        const posY = y * height / grid.height;
+        const wx = Math.max(1, width / grid.width);
+        const wy = Math.max(1, height / grid.height);
         ctx.rect(posX, posY, wx, wy)
         ctx.fillStyle = this.fillStyle;
         ctx.fill();

@@ -1,19 +1,24 @@
 import {isElement} from "./utils";
 import {Element} from "./Element";
 import {Movable} from "./Movable";
+import {Sand} from "./Sand";
+import {Water} from "./Water";
+import {Wall} from "./Wall";
 
-export const GRID_WIDTH = 300;
-export const GRID_HEIGHT = 150;
+const GRID_WIDTH = 300;
+const GRID_HEIGHT = 150;
 
 export class Grid {
+    height = GRID_HEIGHT;
+    width = GRID_WIDTH;
     cells: (Element | unknown)[][];
     dirtyRows: (unknown | true)[];
 
     constructor() {
-        this.cells = Array.from({length: GRID_HEIGHT}).map(() => {
-            return Array.from({length: GRID_WIDTH});
+        this.cells = Array.from({length: this.height}).map(() => {
+            return Array.from({length: this.width});
         });
-        this.dirtyRows = Array.from({length: GRID_HEIGHT});
+        this.dirtyRows = Array.from({length: this.height});
     }
 
     get(x: number, y: number): Element | unknown {
@@ -52,7 +57,7 @@ export class Grid {
                 return this.get(x + dx, y + dy);
             },
             set: (cell: Element | unknown, dx: number, dy: number, force = false) => {
-                const dirty = Boolean(dy || dx);
+                const dirty = Boolean(dy || dx) || force;
                 if (this.set(cell, x + dx, y + dy, dirty, force)) {
                     // dirty the previous position (which is not always the row above)
                     this.dirtyRows[y] ||= dirty;
@@ -90,7 +95,7 @@ export class Grid {
         const rowHeight = height / GRID_HEIGHT;
         const roundedRowHeight = Math.round(rowHeight);
         this.loop((cell, x, y) => {
-            cell.draw(ctx, x, y);
+            cell.draw(ctx, this, x, y);
         }, (_, y, isDirty) => {
             if (isDirty) {
                 ctx.clearRect(0, rowHeight * y, width, roundedRowHeight);
@@ -125,5 +130,31 @@ export class Grid {
                 }
             }
         }
+    }
+
+    encode(): string {
+        let encoded = "";
+        this.cells.forEach(row => {
+            const rowEncoded = row.map(cell => {
+                if (cell instanceof Sand) {
+                    return "s";
+                } else if (cell instanceof Water) {
+                    return "w";
+                } else if (cell instanceof Wall) {
+                    return "t";
+                }
+                return "_";
+            });
+            encoded += rowEncoded.join();
+        });
+        return encoded;
+    }
+
+    decode(encoded: string, width: number, height: number) {
+        const cells = []
+    }
+
+    dirtyAll(){
+        this.dirtyRows = this.dirtyRows.map(() => true);
     }
 }

@@ -18,3 +18,9 @@
     width: 1em;
     height: 1em;
 }
+
+.buttonGroup{
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}

@@ -1,7 +1,6 @@
 import {getRandomItem, pathUntil} from "./utils";
 import {Element} from "./Element";
 import {Grid} from "./Grid";
-import {Water} from "./Water";
 
 const INITIAL_SPEED = 0.1;
 const TERMINAL_VELOCITY = 5;

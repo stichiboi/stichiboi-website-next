@@ -1,6 +1,6 @@
-import {useCallback, useEffect, useRef, useState} from "react";
+import {MutableRefObject, useCallback, useEffect, useRef, useState} from "react";
 import {CanvasAnimation} from "@stichiboi/react-elegant-mouse-trail/lib/CanvasAnimation";
-import {Grid, GRID_HEIGHT, GRID_WIDTH} from "./elements/Grid";
+import {Grid} from "./elements/Grid";
 import {Sand} from "./elements/Sand";
 import {Water} from "./elements/Water";
 import {useEventListener} from "../common/hooks/useEventListener";
@@ -14,14 +14,15 @@ interface SimulationProps {
     brushRadius: number,
     isErase: boolean,
     material: string,
-    pause: boolean
+    pause: boolean,
+    grid: MutableRefObject<Grid>
 }
 
-export function Simulation({brushRadius, isErase, material, pause}: SimulationProps) {
+export function Simulation({brushRadius, isErase, material, pause, grid}: SimulationProps) {
     const mouseDown = useRef(false);
 
     // const mousePosition = useRef({x: 0, y: 0});
-    const grid = useRef<Grid>(new Grid());
+    // const grid = useRef<Grid>(new Grid());
     const [mouse, setMouse] = useState({x: 0, y: 0});
     const spawnGenerator = useCallback(() => {
         if (isErase) {
@@ -47,8 +48,8 @@ export function Simulation({brushRadius, isErase, material, pause}: SimulationPr
 
     const addElements = useCallback(() => {
         const {x: mouseX, y: mouseY} = mouse;
-        const rootX = Math.floor(mouseX / window.innerWidth * GRID_WIDTH);
-        const rootY = Math.floor(mouseY / window.innerHeight * GRID_HEIGHT);
+        const rootX = Math.floor(mouseX / window.innerWidth * grid.current.width);
+        const rootY = Math.floor(mouseY / window.innerHeight * grid.current.height);
         grid.current.spawn(rootX, rootY, brushRadius, spawnGenerator, isErase);
     }, [spawnGenerator, brushRadius, mouse, isErase]);
 
@@ -87,8 +88,8 @@ export function Simulation({brushRadius, isErase, material, pause}: SimulationPr
     const calculateCellSize = useCallback(() => {
         const width = window.innerWidth;
         const height = window.innerHeight;
-        const cellWidth = width / GRID_WIDTH;
-        const cellHeight = height / GRID_HEIGHT;
+        const cellWidth = width / grid.current.width;
+        const cellHeight = height / grid.current.height;
         setCellSize(Math.round(Math.min(cellHeight, cellWidth)));
     }, [setCellSize]);
 
@@ -97,7 +98,8 @@ export function Simulation({brushRadius, isErase, material, pause}: SimulationPr
     }, [calculateCellSize]);
 
     useEventListener("resize", () => {
-        calculateCellSize()
+        calculateCellSize();
+        grid.current.dirtyAll();
     });
 
     return (
