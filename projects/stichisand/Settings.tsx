@@ -71,6 +71,7 @@ export function Settings({onBrushSizeChange, onIsEraseChange, onMaterialChange, 
                     onToggle={onIsEraseChange}
                     leftIcon={<EditPencil/>}
                     rightIcon={<Erase/>}
+                    tooltip={"Shortcut: Enter / Delete / Backspace"}
             />
             <Slider label={<label className={styles.label}>{"Brush Size"}</label>}
                     defaultValue={4}
@@ -80,6 +81,7 @@ export function Settings({onBrushSizeChange, onIsEraseChange, onMaterialChange, 
                     step={1}
                     onChange={onBrushSizeChange}
                     showValue
+                    tooltip={"Shortcut: Scroll Wheel"}
             />
         </Popup>
     );

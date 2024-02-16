@@ -10,10 +10,11 @@ interface SliderProps {
     label: ReactNode,
     onChange: (v: number) => unknown,
     defaultValue: number,
-    showValue?: boolean
+    showValue?: boolean,
+    tooltip?: string
 }
 
-export function Slider({defaultValue, id, min, max, step, label, onChange, showValue}: SliderProps) {
+export function Slider({defaultValue, id, min, max, step, label, onChange, showValue, tooltip}: SliderProps) {
     const [value, setValue] = useStateLocalStorage(defaultValue, id);
 
     useEffect(() => {
@@ -21,7 +22,7 @@ export function Slider({defaultValue, id, min, max, step, label, onChange, showV
     }, [onChange, value]);
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} title={tooltip}>
             {label}
             <div className={styles.content}>
                 <input

@@ -1,52 +1,41 @@
-import React, {useCallback, useEffect, useState} from "react";
-import styles from "./Toggle.module.css"; // Import the CSS module
+import React, {useEffect} from "react";
+import styles from "./Toggle.module.css";
+import {useStateLocalStorage} from "../hooks/useStateLocalStorage"; // Import the CSS module
 
 interface ToggleProps {
-  saveKey: string;
-  onToggle: (value: boolean) => void;
-  leftIcon: JSX.Element;
-  rightIcon: JSX.Element;
-  className?: string;
+    saveKey: string;
+    onToggle: (value: boolean) => void;
+    leftIcon: JSX.Element;
+    rightIcon: JSX.Element;
+    className?: string;
+    tooltip?: string;
 }
 
 export function Toggle({
-                         saveKey,
-                         onToggle,
-                         leftIcon,
-                         rightIcon,
-                         className
+                           saveKey,
+                           onToggle,
+                           leftIcon,
+                           rightIcon,
+                           className,
+                           tooltip
                        }: ToggleProps): JSX.Element {
-  const getValue = useCallback(() => {
-    return localStorage.getItem(saveKey) === "true";
-  }, [saveKey]);
+    const [value, setValue] = useStateLocalStorage<boolean>(false, saveKey);
 
-  const [value, setValue] = useState(false);
+    useEffect(() => {
+        onToggle(value);
+    }, [value, onToggle]);
 
-  useEffect(() => {
-    setValue(getValue());
-  }, [getValue, saveKey]);
-
-  useEffect(() => {
-    onToggle(value);
-  }, [onToggle, saveKey, value]);
-
-  useEffect(() => {
-    setValue(prev => {
-      localStorage.setItem(saveKey, prev.toString());
-      return prev;
-    });
-  }, [onToggle, saveKey, value]);
-
-  return (
-    <button
-      className={`${styles.container} ${value ? styles.toggled : ""} ${className || ""}`}
-      onClick={() => setValue((prev) => !prev)}
-    >
-      {leftIcon}
-      <div className={styles.toggle}>
-        <span className={styles.slider}/>
-      </div>
-      {rightIcon}
-    </button>
-  );
+    return (
+        <button
+            title={tooltip}
+            className={`${styles.container} ${value ? styles.toggled : ""} ${className || ""}`}
+            onClick={() => setValue((prev) => !prev)}
+        >
+            {leftIcon}
+            <div className={styles.toggle}>
+                <span className={styles.slider}/>
+            </div>
+            {rightIcon}
+        </button>
+    );
 }

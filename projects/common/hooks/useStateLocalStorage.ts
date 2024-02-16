@@ -1,17 +1,22 @@
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
 
-export function useStateLocalStorage<T extends (number | string)>(defaultValue: T, id: string): [T, Dispatch<SetStateAction<T>>] {
+export function useStateLocalStorage<T extends (number | string | boolean)>(defaultValue: T, id: string): [T, Dispatch<SetStateAction<T>>] {
     const [value, setValue] = useState(defaultValue);
 
     useEffect(() => {
         const saved = localStorage.getItem(id);
         if (saved) {
-            if (typeof defaultValue === 'number') {
-                const savedNumber = parseInt(saved);
-                if (!isNaN(savedNumber)) {
-                    setValue(savedNumber as T);
+            try {
+                const value = JSON.parse(saved) as T;
+                setValue(value);
+            } catch (e) {
+                // legacy code, try old method
+                const asNumber = parseInt(saved);
+                if (!isNaN(asNumber)) {
+                    setValue(asNumber as T);
+                } else if (saved === "false" || saved === "true") {
+                    setValue((saved === "true") as T);
                 }
-            } else {
                 setValue(saved as T);
             }
         }
@@ -20,7 +25,7 @@ export function useStateLocalStorage<T extends (number | string)>(defaultValue: 
     useEffect(() => {
         // call in setValue to ensure it's always the latest value
         setValue(prev => {
-            localStorage.setItem(id, prev.toString());
+            localStorage.setItem(id, JSON.stringify(prev));
             return prev;
         });
     }, [value, id]);
