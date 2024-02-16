@@ -56,8 +56,8 @@ export function App({lockLoading}: AppProps) {
         <div className={styles.main}>
             <header className={styles.header}>
                 <div className={styles.buttonGroup}>
-                    <Settings onBrushSizeChange={setBrushRadius} onIsEraseChange={setIsErase}
-                              onMaterialChange={setMaterial} onPause={setPause}/>
+                    <Settings brushSize={brushRadius} onBrushSizeChange={setBrushRadius} onIsEraseChange={setIsErase}
+                              material={material} onMaterialChange={setMaterial} onPause={setPause}/>
                     <SaveForm grid={grid} name={name}/>
                 </div>
                 <Link href={"/"} passHref>

@@ -60,3 +60,22 @@
 .shareButton:active {
     transform: scale(0.95);
 }
+
+.materials{
+    display: grid;
+    gap: .2em;
+}
+
+.radioContainer {
+    display: flex;
+    gap: .2em;
+    align-items: center;
+}
+
+.radioContainer > label {
+    text-transform: capitalize;
+}
+
+.radioContainer > input{
+    margin: 0;
+}

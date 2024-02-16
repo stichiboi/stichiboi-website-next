@@ -3,12 +3,14 @@ import {EditPencil, Erase, Settings as SettingsIcon} from "iconoir-react";
 import {Popup} from "../common/popup/Popup";
 import {Slider} from "../common/slider/Slider";
 import {useEventListener} from "../common/hooks/useEventListener";
-import {Dispatch, SetStateAction, useCallback} from "react";
+import {Dispatch, SetStateAction, useCallback, useMemo} from "react";
 import styles from "./saveForm.module.css";
 
 interface SettingsProps {
+    brushSize: number,
     onBrushSizeChange: Dispatch<SetStateAction<number>>,
     onIsEraseChange: Dispatch<SetStateAction<boolean>>,
+    material: string,
     onMaterialChange: (v: string) => unknown,
     onPause: Dispatch<SetStateAction<boolean>>
 }
@@ -16,7 +18,14 @@ interface SettingsProps {
 const MAX_BRUSH_SIZE = 9;
 const MIN_BRUSH_SIZE = 1;
 
-export function Settings({onBrushSizeChange, onIsEraseChange, onMaterialChange, onPause}: SettingsProps) {
+export function Settings({
+                             brushSize,
+                             onBrushSizeChange,
+                             onIsEraseChange,
+                             material,
+                             onMaterialChange,
+                             onPause
+                         }: SettingsProps) {
 
 
     // use a wrapper so it also toggles the eraser off
@@ -26,11 +35,12 @@ export function Settings({onBrushSizeChange, onIsEraseChange, onMaterialChange, 
     }, []);
 
     useEventListener("keyup", (ev) => {
-        if ((ev.target as HTMLElement).tagName === "INPUT") {
+        const target = ev.target as HTMLInputElement
+        if (target.tagName === "INPUT" && target.type === "text") {
             return;
         }
         const {key} = ev as KeyboardEvent;
-        switch (key) {
+        switch (key.toLowerCase()) {
             case "s":
                 changeMaterial("sand");
                 break;
@@ -40,9 +50,9 @@ export function Settings({onBrushSizeChange, onIsEraseChange, onMaterialChange, 
             case "t":
                 changeMaterial("wall");
                 break;
-            case "Backspace":
-            case "Delete":
-            case "Enter":
+            case "backspace":
+            case "delete":
+            case "enter":
                 onIsEraseChange(prev => !prev);
                 break;
             case " ":
@@ -62,8 +72,27 @@ export function Settings({onBrushSizeChange, onIsEraseChange, onMaterialChange, 
             }
             return Math.min(MAX_BRUSH_SIZE, Math.max(MIN_BRUSH_SIZE, next));
         })
+    });
 
-    })
+    const radioButtons = useMemo(() => {
+        const materials = [["sand", "s"], ["water", "w"], ["wall", "t"]];
+        return materials.map(([name, shortcut]) => {
+            const id = `element-${name}`
+            return (
+                <div key={name} className={styles.radioContainer} title={`Shortcut: ${shortcut}`}>
+                    <input
+                        type={"radio"}
+                        name={"stichisand-element"}
+                        value={name}
+                        id={id}
+                        checked={material === name}
+                        onChange={() => changeMaterial(name)}
+                    />
+                    <label htmlFor={id}>{name}</label>
+                </div>
+            )
+        })
+    }, [material]);
 
     return (
         <Popup label={<SettingsIcon/>} containerClassName={styles.popup}>
@@ -74,7 +103,7 @@ export function Settings({onBrushSizeChange, onIsEraseChange, onMaterialChange, 
                     tooltip={"Shortcut: Enter / Delete / Backspace"}
             />
             <Slider label={<label className={styles.label}>{"Brush Size"}</label>}
-                    defaultValue={4}
+                    defaultValue={brushSize}
                     id={"stichisand-brush-size"}
                     min={MIN_BRUSH_SIZE}
                     max={MAX_BRUSH_SIZE}
@@ -83,6 +112,9 @@ export function Settings({onBrushSizeChange, onIsEraseChange, onMaterialChange, 
                     showValue
                     tooltip={"Shortcut: Scroll Wheel"}
             />
+            <div className={styles.materials}>
+                {radioButtons}
+            </div>
         </Popup>
     );
 }
