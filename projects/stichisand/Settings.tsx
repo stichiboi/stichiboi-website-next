@@ -3,7 +3,8 @@ import {EditPencil, Erase, Settings as SettingsIcon} from "iconoir-react";
 import {Popup} from "../common/popup/Popup";
 import {Slider} from "../common/slider/Slider";
 import {useEventListener} from "../common/hooks/useEventListener";
-import {Dispatch, SetStateAction} from "react";
+import {Dispatch, SetStateAction, useCallback} from "react";
+import styles from "./saveForm.module.css";
 
 interface SettingsProps {
     onBrushSizeChange: Dispatch<SetStateAction<number>>,
@@ -12,19 +13,29 @@ interface SettingsProps {
     onPause: Dispatch<SetStateAction<boolean>>
 }
 
+const MAX_BRUSH_SIZE = 9;
+const MIN_BRUSH_SIZE = 1;
+
 export function Settings({onBrushSizeChange, onIsEraseChange, onMaterialChange, onPause}: SettingsProps) {
+
+
+    // use a wrapper so it also toggles the eraser off
+    const changeMaterial = useCallback((material: string) => {
+        onMaterialChange(material);
+        onIsEraseChange(false);
+    }, []);
 
     useEventListener("keyup", (ev) => {
         const {key} = ev as KeyboardEvent;
         switch (key) {
             case "s":
-                onMaterialChange("sand");
+                changeMaterial("sand");
                 break;
             case "w":
-                onMaterialChange("water");
+                changeMaterial("water");
                 break;
             case "t":
-                onMaterialChange("wall");
+                changeMaterial("wall");
                 break;
             case "Backspace":
             case "Delete":
@@ -46,23 +57,27 @@ export function Settings({onBrushSizeChange, onIsEraseChange, onMaterialChange, 
             } else {
                 next--;
             }
-            // clip between 10 and 1
-            return Math.min(10, Math.max(1, next));
+            return Math.min(MAX_BRUSH_SIZE, Math.max(MIN_BRUSH_SIZE, next));
         })
 
     })
 
     return (
-        <Popup label={<SettingsIcon/>}>
-            <Toggle saveKey={"stichisand-erase"} onToggle={onIsEraseChange} leftIcon={<EditPencil/>}
-                    rightIcon={<Erase/>}/>
-            <Slider label={"Brush Size"}
-                    defaultValue={3}
+        <Popup label={<SettingsIcon/>} containerClassName={styles.popup}>
+            <Toggle saveKey={"stichisand-erase"}
+                    onToggle={onIsEraseChange}
+                    leftIcon={<EditPencil/>}
+                    rightIcon={<Erase/>}
+            />
+            <Slider label={<label className={styles.label}>{"Brush Size"}</label>}
+                    defaultValue={4}
                     id={"stichisand-brush-size"}
-                    min={1}
-                    max={6}
+                    min={MIN_BRUSH_SIZE}
+                    max={MAX_BRUSH_SIZE}
                     step={1}
-                    onChange={onBrushSizeChange}/>
+                    onChange={onBrushSizeChange}
+                    showValue
+            />
         </Popup>
     );
 }

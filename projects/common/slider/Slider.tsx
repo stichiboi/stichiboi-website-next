@@ -1,17 +1,19 @@
 import {useStateLocalStorage} from "../hooks/useStateLocalStorage";
-import {useEffect} from "react";
+import {ReactNode, useEffect} from "react";
+import styles from "./slider.module.css";
 
 interface SliderProps {
     id: string,
     min: number,
     max: number,
     step: number,
-    label: string,
+    label: ReactNode,
     onChange: (v: number) => unknown,
-    defaultValue: number
+    defaultValue: number,
+    showValue?: boolean
 }
 
-export function Slider({defaultValue, id, min, max, step, label, onChange}: SliderProps) {
+export function Slider({defaultValue, id, min, max, step, label, onChange, showValue}: SliderProps) {
     const [value, setValue] = useStateLocalStorage(defaultValue, id);
 
     useEffect(() => {
@@ -19,9 +21,21 @@ export function Slider({defaultValue, id, min, max, step, label, onChange}: Slid
     }, [onChange, value]);
 
     return (
-        <div>
-            <label>{label}</label>
-            <input type={"range"} min={min} max={max} step={step} onChange={ev => setValue(parseInt(ev.target.value))}/>
+        <div className={styles.container}>
+            {label}
+            <div className={styles.content}>
+                <input
+                    id={id}
+                    className={styles.slider}
+                    type={"range"}
+                    min={min}
+                    max={max}
+                    step={step}
+                    value={value}
+                    onChange={ev => setValue(parseInt(ev.target.value))}
+                />
+                {showValue && <p>{value}</p>}
+            </div>
         </div>
     )
 }

@@ -9,6 +9,7 @@ import {
   useClick,
   useDismiss, useTransitionStyles, useInteractions, FloatingPortal
 } from "@floating-ui/react";
+import buttonStyles from "../button/ButtonCTA.module.css";
 
 interface PopupProps {
   label?: ReactNode,
@@ -96,7 +97,7 @@ export function Popup({
     <>
       <button
         ref={refs.setReference}
-        className={labelClassName}
+        className={labelClassName || buttonStyles.buttonCta}
         style={labelStyle}
         {...getReferenceProps()}
         title={labelTooltip}

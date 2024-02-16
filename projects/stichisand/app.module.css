@@ -6,11 +6,12 @@
     z-index: 1;
     font-size: 24px;
     position: absolute;
-    top: 2em;
-    left: 2em;
-    right: 2em;
+    top: 1em;
+    left: 1em;
+    right: 1em;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .header > a {

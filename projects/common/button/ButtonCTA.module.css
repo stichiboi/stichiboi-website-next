@@ -8,6 +8,8 @@
     font-family: var(--font-family);
     transition: .2s ease;
     transition-property: background-color, border-color, color;
+    display: flex;
+    justify-content: center;
 }
 
 .buttonCta:hover {

@@ -1,14 +1,14 @@
-import {useCallback, useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {Simulation} from "./Simulation";
 import {Settings} from "./Settings";
 import Link from "next/link";
 import Logo from "../../public/stichiboi-logo.svg";
 import styles from "./app.module.css";
 import {Grid} from "./elements/Grid";
-import {ShareIos} from "iconoir-react";
 import {GridData} from "../../pages/api/stichisand/grid";
+import {SaveForm} from "./SaveForm";
 
-const API_PATH = "/api/stichisand/grid";
+export const API_PATH = "/api/stichisand/grid";
 
 interface AppProps {
     lockLoading: (v: boolean) => unknown
@@ -20,9 +20,10 @@ export function App({lockLoading}: AppProps) {
     const [isErase, setIsErase] = useState(false);
     const [material, setMaterial] = useState("sand");
     const [pause, setPause] = useState(false);
-    const [gridId, setGridId] = useState("");
     const grid = useRef<Grid>(new Grid());
     const [isLoading, setIsLoading] = useState(false);
+    const [name, setName] = useState<string>("Untitled");
+
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -34,37 +35,16 @@ export function App({lockLoading}: AppProps) {
         setIsLoading(true);
         fetch(`${API_PATH}?id=${gridId}`)
             .then(res => res.json() as unknown as GridData)
-            .then(data => grid.current.decode(data.grid, data.width, data.height))
+            .then(data => {
+                grid.current.decode(data.grid, data.width, data.height);
+                setName(data.name);
+            })
             .finally(() => {
                 setIsLoading(false);
                 lockLoading(false);
             });
     }, []);
 
-    const onShare = useCallback(async () => {
-        const body: GridData = {
-            _id: gridId,
-            grid: grid.current.encode(),
-            name: "My beautiful design",
-            creatorName: "Stichiboi",
-            version: "0.0.1",
-            width: grid.current.width,
-            height: grid.current.height,
-        }
-        const res: { id: string } = await fetch(API_PATH, {
-            method: "POST",
-            body: JSON.stringify(body)
-        }).then(res => res.json());
-        setGridId(res.id);
-    }, [gridId, setGridId]);
-
-    useEffect(() => {
-        if (gridId) {
-            const url = new URL(window.location.href);
-            url.searchParams.set("id", gridId);
-            window.history.replaceState({}, '', url.href);
-        }
-    }, [gridId]);
 
     if (isLoading) {
         return <p>Loading</p>
@@ -76,9 +56,7 @@ export function App({lockLoading}: AppProps) {
                 <div className={styles.buttonGroup}>
                     <Settings onBrushSizeChange={setBrushRadius} onIsEraseChange={setIsErase}
                               onMaterialChange={setMaterial} onPause={setPause}/>
-                    <button onClick={onShare}>
-                        <ShareIos/>
-                    </button>
+                    <SaveForm grid={grid} name={name}/>
                 </div>
                 <Link href={"/"} passHref>
                     <Logo/>

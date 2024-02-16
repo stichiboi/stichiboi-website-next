@@ -2,7 +2,7 @@ import {ReactNode} from "react";
 import styles from "./ButtonCTA.module.css";
 
 interface ButtonCTAProps {
-  onClick: () => unknown,
+  onClick?: () => unknown,
   className?: string,
   children: ReactNode
 }
