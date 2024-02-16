@@ -43,6 +43,11 @@
       "description": "Measure the noise around you. Used to gamify quietness in a classroom. Or to see how consistent is my whistling.",
       "alt": "How quiet is your environment?"
     },
+    "stichisand": {
+      "title": "Stichisand",
+      "description": "Cute sand game. Remember to share your designs!",
+      "alt": "Draw with falling sand, since paint is too simple to use"
+    },
     "reflexo": {
       "title": "Reflexo",
       "description": "Top-level gamers require top-level reflexes. Try to measure them, and see if you can improve.",
