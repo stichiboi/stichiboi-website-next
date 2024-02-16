@@ -23,6 +23,12 @@ export function SaveForm({grid, name}: SaveFormProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [gridName, setGridName] = useState(name);
 
+    useEffect(() => {
+        if (gridName !== "Untitled") {
+            document.title = `${gridName} - Stichisand`
+        }
+    }, [gridName]);
+
     const onShare = useCallback(() => {
         if (isLoading) {
             return;
