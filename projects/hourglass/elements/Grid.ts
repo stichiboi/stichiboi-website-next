@@ -159,11 +159,10 @@ export class Grid {
     decode(encoded: string, width: number, height: number) {
         for (let y = 0; y < height; y++) {
             for (let x = 0; x < width; x++) {
-                const letter = encoded[y * height + x];
+                const index = y * width + x;
+                const letter = encoded[index];
                 const cell = MATERIAL_MAPPING.get(letter);
-                if (cell) {
-                    this.set(new cell(), x, y, true, true)
-                }
+                this.set(cell ? new cell() : undefined, x, y, true, true)
             }
         }
     }
