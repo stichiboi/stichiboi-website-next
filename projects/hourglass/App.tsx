@@ -7,7 +7,6 @@ import styles from "./app.module.css";
 import {Grid} from "./elements/Grid";
 import {ShareIos} from "iconoir-react";
 import {GridData} from "../../pages/api/stichisand/grid";
-import useSWR from "swr";
 
 const API_PATH = "/api/stichisand/grid";
 
@@ -30,7 +29,7 @@ export function App(): JSX.Element {
         setIsLoading(true);
         fetch(`${API_PATH}?id=${gridId}`)
             .then(res => res.json() as unknown as GridData)
-            .then(console.log)
+            .then(data => grid.current.decode(data.grid, data.width, data.height))
             .finally(() => setIsLoading(false));
     }, []);
 

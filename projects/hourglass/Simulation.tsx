@@ -55,15 +55,15 @@ export function Simulation({brushRadius, isErase, material, pause, grid}: Simula
 
     const draw = useCallback((ctx: CanvasRenderingContext2D) => {
         grid.current.draw(ctx);
-    }, []);
+        if (!pause) {
+            grid.current = grid.current.update();
+            grid.current.interact();
+        }
+    }, [addElements]);
 
     const move = useCallback(() => {
         if (mouseDown.current) {
             addElements();
-        }
-        if (!pause) {
-            grid.current = grid.current.update();
-            grid.current.interact();
         }
     }, [addElements, pause]);
 

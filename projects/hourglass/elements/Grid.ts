@@ -8,6 +8,12 @@ import {Wall} from "./Wall";
 const GRID_WIDTH = 300;
 const GRID_HEIGHT = 150;
 
+
+const MATERIAL_MAPPING: Map<string, { new(): Element }> = new Map()
+MATERIAL_MAPPING.set("w", Water);
+MATERIAL_MAPPING.set("s", Sand);
+MATERIAL_MAPPING.set("t", Wall);
+
 export class Grid {
     height = GRID_HEIGHT;
     width = GRID_WIDTH;
@@ -135,26 +141,34 @@ export class Grid {
     encode(): string {
         let encoded = "";
         this.cells.forEach(row => {
-            const rowEncoded = row.map(cell => {
+            row.forEach(cell => {
                 if (cell instanceof Sand) {
-                    return "s";
+                    encoded += "s";
                 } else if (cell instanceof Water) {
-                    return "w";
+                    encoded += "w";
                 } else if (cell instanceof Wall) {
-                    return "t";
+                    encoded += "t";
+                } else {
+                    encoded += "_";
                 }
-                return "_";
             });
-            encoded += rowEncoded.join();
         });
         return encoded;
     }
 
     decode(encoded: string, width: number, height: number) {
-        const cells = []
+        for (let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
+                const letter = encoded[y * height + x];
+                const cell = MATERIAL_MAPPING.get(letter);
+                if (cell) {
+                    this.set(new cell(), x, y, true, true)
+                }
+            }
+        }
     }
 
-    dirtyAll(){
-        this.dirtyRows = this.dirtyRows.map(() => true);
+    dirtyAll() {
+        this.dirtyRows.forEach((_, i) => this.dirtyRows[i] = true);
     }
 }
