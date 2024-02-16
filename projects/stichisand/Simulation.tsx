@@ -59,13 +59,13 @@ export function Simulation({brushRadius, isErase, material, pause, grid}: Simula
             grid.current = grid.current.update();
             grid.current.interact();
         }
-    }, [addElements]);
+    }, [pause]);
 
     const move = useCallback(() => {
         if (mouseDown.current) {
             addElements();
         }
-    }, [addElements, pause]);
+    }, [addElements]);
 
     useEventListener("mousedown", (ev) => {
         const tagName = (ev.target as HTMLElement)?.tagName

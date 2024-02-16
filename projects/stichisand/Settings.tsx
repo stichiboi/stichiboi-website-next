@@ -26,6 +26,9 @@ export function Settings({onBrushSizeChange, onIsEraseChange, onMaterialChange, 
     }, []);
 
     useEventListener("keyup", (ev) => {
+        if ((ev.target as HTMLElement).tagName === "INPUT") {
+            return;
+        }
         const {key} = ev as KeyboardEvent;
         switch (key) {
             case "s":
