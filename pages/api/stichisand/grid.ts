@@ -44,7 +44,7 @@ export default async function handler(
             if (_id) {
                 await collection.updateOne(["_id", "=", _id], body);
             } else {
-                const doc = await collection.insertOne(rawBody);
+                const doc = await collection.insertOne({...rawBody, date: new Date()});
                 _id = doc.insertedId.toString();
             }
             return res.status(200).json({id: _id});
