@@ -37,6 +37,8 @@ export function App({lockLoading}: AppProps) {
             .then(res => res.json() as unknown as GridData)
             .then(data => {
                 grid.current.decode(data.grid, data.width, data.height);
+                // pause by default when loading
+                setPause(true);
                 setName(data.name);
             })
             .finally(() => {
