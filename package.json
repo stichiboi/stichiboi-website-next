@@ -17,6 +17,7 @@
     "@headlessui/react": "^1.7.15",
     "@stichiboi/react-elegant-mouse-trail": "^1.0.1",
     "@svgr/webpack": "^6.2.1",
+    "@vercel/og": "^0.6.2",
     "canvas-confetti": "^1.6.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "iconoir-react": "^6.8.0",
