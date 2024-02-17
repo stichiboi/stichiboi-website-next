@@ -81,7 +81,7 @@ export function Controls({
         />
       </>
     );
-  }, [setChartMode, setMemoryDuration, setNoiseMargin]);
+  }, [setChartMode, setMemoryDuration, setNoiseMargin, setBackgroundOnSilence]);
   return (
     <div className={styles.controls}>
       <div className={styles.navigation}>

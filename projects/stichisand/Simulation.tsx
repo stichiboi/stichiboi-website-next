@@ -51,7 +51,7 @@ export function Simulation({brushRadius, isErase, material, pause, grid}: Simula
     const rootX = Math.floor(mouseX / window.innerWidth * grid.current.width);
     const rootY = Math.floor(mouseY / window.innerHeight * grid.current.height);
     grid.current.spawn(rootX, rootY, brushRadius, spawnGenerator, isErase);
-  }, [spawnGenerator, brushRadius, mouse, isErase]);
+  }, [spawnGenerator, brushRadius, mouse, isErase, grid]);
 
   const draw = useCallback((ctx: CanvasRenderingContext2D) => {
     grid.current.draw(ctx);
@@ -59,7 +59,7 @@ export function Simulation({brushRadius, isErase, material, pause, grid}: Simula
       grid.current = grid.current.update();
       grid.current.interact();
     }
-  }, [pause]);
+  }, [pause, grid]);
 
   const move = useCallback(() => {
     if (mouseDown.current) {
@@ -91,7 +91,7 @@ export function Simulation({brushRadius, isErase, material, pause, grid}: Simula
     const cellWidth = width / grid.current.width;
     const cellHeight = height / grid.current.height;
     setCellSize(Math.round(Math.min(cellHeight, cellWidth)));
-  }, [setCellSize]);
+  }, [setCellSize, grid]);
 
   useEffect(() => {
     calculateCellSize();

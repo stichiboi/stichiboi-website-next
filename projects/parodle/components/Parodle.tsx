@@ -110,7 +110,7 @@ export function Parodle({words, onWord, onGameEnd}: ParodleProps) {
 
   useEffect(() => {
     onGameEnd(gameState === "SUCCESS", guesses.length - 1);
-  }, [gameState]);
+  }, [gameState, onGameEnd, guesses.length]);
 
   const resetBoard = useCallback(() => {
     setGameState("RUNNING");
@@ -150,7 +150,7 @@ export function Parodle({words, onWord, onGameEnd}: ParodleProps) {
         });
       }
     }
-  }, [wordsSet, gameState, throwConfetti]);
+  }, [wordsSet, gameState, throwConfetti, onWord]);
 
   useEffect(() => {
     function keyPress(event: KeyboardEvent) {

@@ -50,7 +50,7 @@ export function SaveForm({grid, name}: SaveFormProps) {
       .then(res => res.json())
       .then(res => setGridId(res.id))
       .finally(() => setIsLoading(false));
-  }, [gridId, setGridId, isLoading, gridName, creatorName]);
+  }, [gridId, setGridId, isLoading, gridName, creatorName, grid]);
 
   useEffect(() => {
     if (gridId) {
@@ -80,7 +80,7 @@ export function SaveForm({grid, name}: SaveFormProps) {
               title={"Copy to clipboard"}
               className={styles.shareButton}
               onClick={() => {
-                navigator.clipboard.writeText(window.location.href);
+                navigator.clipboard.writeText(window.location.href).then();
               }}
             >
               <Copy/>

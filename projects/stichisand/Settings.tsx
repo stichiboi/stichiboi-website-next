@@ -32,7 +32,7 @@ export function Settings({
   const changeMaterial = useCallback((material: string) => {
     onMaterialChange(material);
     onIsEraseChange(false);
-  }, []);
+  }, [onIsEraseChange, onMaterialChange]);
 
   useEventListener("keyup", (ev) => {
     const target = ev.target as HTMLInputElement
@@ -92,7 +92,7 @@ export function Settings({
         </div>
       )
     })
-  }, [material]);
+  }, [material, changeMaterial]);
 
   return (
     <Popup label={<SettingsIcon/>} containerClassName={styles.popup}>

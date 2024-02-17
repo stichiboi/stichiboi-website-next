@@ -15,7 +15,7 @@ export class Element {
     ctx.fill();
   }
 
-  update(grid: Grid, nextGrid: Grid, x: number, y: number) {
+  update(_: Grid, __: Grid, ___: number, ____: number) {
     return;
   }
 

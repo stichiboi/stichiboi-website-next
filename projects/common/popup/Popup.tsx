@@ -16,7 +16,7 @@ interface PopupProps {
   labelClassName?: string,
   labelStyle?: CSSProperties,
   labelTooltip?: string,
-  children?: React.ReactNode,
+  children?: ReactNode,
   containerClassName?: string,
   onToggle?: (toggled: boolean) => unknown,
   triggerClose?: unknown,

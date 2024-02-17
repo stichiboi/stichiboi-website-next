@@ -47,7 +47,7 @@ export function Stepper({
       // clip the value between max and min
       return Math.min(max, Math.max(min, tempValue));
     })
-  }, [max, min]);
+  }, [max, min, setValue]);
 
   return (
     <div className={styles.container}>

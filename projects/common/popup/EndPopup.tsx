@@ -18,7 +18,7 @@ export default function EndPopup({onExit, exitCta, isVisible, children, withConf
     if (isVisible && withConfetti) {
       throwConfetti();
     }
-  }, [isVisible, throwConfetti]);
+  }, [isVisible, throwConfetti, withConfetti]);
 
   return (
     <div

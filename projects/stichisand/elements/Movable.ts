@@ -35,7 +35,7 @@ export class Movable extends Element {
     return false;
   }
 
-  interact(grid: Grid, x: number, y: number) {
+  interact(_: Grid, __: number, ___: number) {
     return;
   }
 }

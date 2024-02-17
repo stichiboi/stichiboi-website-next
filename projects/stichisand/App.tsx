@@ -45,7 +45,7 @@ export function App({lockLoading}: AppProps) {
         setIsLoading(false);
         lockLoading(false);
       });
-  }, []);
+  }, [lockLoading]);
 
 
   if (isLoading) {
