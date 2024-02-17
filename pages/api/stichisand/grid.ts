@@ -35,6 +35,7 @@ export function getGrid(id: string | string[] | undefined | null) {
     });
 }
 
+
 export function GET(
   req: NextApiRequest,
   res: NextApiResponse<GridData>
@@ -66,5 +67,17 @@ export function POST(
     }).then(id => {
       return res.status(200).json({ id });
     });
+}
 
+export default function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<GridData | { id: string }>
+) {
+  const method = req.method;
+  if (method === "GET") {
+    return GET(req, res);
+  } else if (method === "POST") {
+    return POST(req, res);
+  }
+  return res.status(405);
 }
