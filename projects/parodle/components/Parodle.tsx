@@ -156,12 +156,12 @@ export function Parodle({words, onWord, onGameEnd}: ParodleProps) {
     function keyPress(event: KeyboardEvent) {
       function normalize(key: string) {
         switch (key) {
-          case "ENTER":
-            return "{enter}";
-          case "BACKSPACE":
-            return "{backspace}"
-          default:
-            return key;
+        case "ENTER":
+          return "{enter}";
+        case "BACKSPACE":
+          return "{backspace}"
+        default:
+          return key;
         }
       }
 

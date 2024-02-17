@@ -24,10 +24,10 @@ interface MenuProps {
 }
 
 export function Menu({
-                       isRunning,
-                       onStart,
-                       results
-                     }: MenuProps) {
+  isRunning,
+  onStart,
+  results
+}: MenuProps) {
 
   const [localScore, setLocalScore] = useState<number>();
   const {numberOfTries} = useContext(SettingsContext);
