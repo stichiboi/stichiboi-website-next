@@ -19,53 +19,53 @@ interface SimulationProps {
 }
 
 export function Simulation({brushRadius, isErase, material, pause, grid}: SimulationProps) {
-    const mouseDown = useRef(false);
+  const mouseDown = useRef(false);
 
-    // const mousePosition = useRef({x: 0, y: 0});
-    // const grid = useRef<Grid>(new Grid());
-    const [mouse, setMouse] = useState({x: 0, y: 0});
-    const spawnGenerator = useCallback(() => {
-        if (isErase) {
-            return;
-        }
-        const spawnRate = 0.2;
-        const withSpawnRate = (f: () => Element) => {
-            if (Math.random() < spawnRate) {
-                return f();
-            }
-        }
-        switch (material) {
-            case "sand":
-                return withSpawnRate(() => new Sand());
-            case "water":
-                return withSpawnRate(() => new Water());
-            case "wall":
-                return new Wall();
-            default:
-                return;
-        }
-    }, [material, isErase]);
+  // const mousePosition = useRef({x: 0, y: 0});
+  // const grid = useRef<Grid>(new Grid());
+  const [mouse, setMouse] = useState({x: 0, y: 0});
+  const spawnGenerator = useCallback(() => {
+    if (isErase) {
+      return;
+    }
+    const spawnRate = 0.2;
+    const withSpawnRate = (f: () => Element) => {
+      if (Math.random() < spawnRate) {
+        return f();
+      }
+    }
+    switch (material) {
+    case "sand":
+      return withSpawnRate(() => new Sand());
+    case "water":
+      return withSpawnRate(() => new Water());
+    case "wall":
+      return new Wall();
+    default:
+      return;
+    }
+  }, [material, isErase]);
 
-    const addElements = useCallback(() => {
-        const {x: mouseX, y: mouseY} = mouse;
-        const rootX = Math.floor(mouseX / window.innerWidth * grid.current.width);
-        const rootY = Math.floor(mouseY / window.innerHeight * grid.current.height);
-        grid.current.spawn(rootX, rootY, brushRadius, spawnGenerator, isErase);
-    }, [spawnGenerator, brushRadius, mouse, isErase]);
+  const addElements = useCallback(() => {
+    const {x: mouseX, y: mouseY} = mouse;
+    const rootX = Math.floor(mouseX / window.innerWidth * grid.current.width);
+    const rootY = Math.floor(mouseY / window.innerHeight * grid.current.height);
+    grid.current.spawn(rootX, rootY, brushRadius, spawnGenerator, isErase);
+  }, [spawnGenerator, brushRadius, mouse, isErase, grid]);
 
-    const draw = useCallback((ctx: CanvasRenderingContext2D) => {
-        grid.current.draw(ctx);
-        if (!pause) {
-            grid.current = grid.current.update();
-            grid.current.interact();
-        }
-    }, [pause]);
+  const draw = useCallback((ctx: CanvasRenderingContext2D) => {
+    grid.current.draw(ctx);
+    if (!pause) {
+      grid.current = grid.current.update();
+      grid.current.interact();
+    }
+  }, [pause, grid]);
 
-    const move = useCallback(() => {
-        if (mouseDown.current) {
-            addElements();
-        }
-    }, [addElements]);
+  const move = useCallback(() => {
+    if (mouseDown.current) {
+      addElements();
+    }
+  }, [addElements]);
 
     useEventListener("pointerdown", (ev) => {
         const tagName = (ev.target as HTMLElement)?.tagName
@@ -85,35 +85,35 @@ export function Simulation({brushRadius, isErase, material, pause, grid}: Simula
         setMouse({x, y});
     });
 
-    const [cellSize, setCellSize] = useState(0);
-    const calculateCellSize = useCallback(() => {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        const cellWidth = width / grid.current.width;
-        const cellHeight = height / grid.current.height;
-        setCellSize(Math.round(Math.min(cellHeight, cellWidth)));
-    }, [setCellSize]);
+  const [cellSize, setCellSize] = useState(0);
+  const calculateCellSize = useCallback(() => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const cellWidth = width / grid.current.width;
+    const cellHeight = height / grid.current.height;
+    setCellSize(Math.round(Math.min(cellHeight, cellWidth)));
+  }, [setCellSize, grid]);
 
-    useEffect(() => {
-        calculateCellSize();
-    }, [calculateCellSize]);
+  useEffect(() => {
+    calculateCellSize();
+  }, [calculateCellSize]);
 
-    useEventListener("resize", () => {
-        calculateCellSize();
-        grid.current.dirtyAll();
-    });
+  useEventListener("resize", () => {
+    calculateCellSize();
+    grid.current.dirtyAll();
+  });
 
-    return (
-        <div className={styles.main}>
-            <div style={{
-                width: `${brushRadius * cellSize * 2}px`,
-                height: `${brushRadius * cellSize * 2}px`,
-                top: `${mouse.y}px`,
-                left: `${mouse.x}px`,
-            }} className={styles.pointer}>
-                {isErase ? <Erase/> : pause ? <Pause/> : null}
-            </div>
-            <CanvasAnimation draw={draw} move={move}/>
-        </div>
-    );
+  return (
+    <div className={styles.main}>
+      <div style={{
+        width: `${brushRadius * cellSize * 2}px`,
+        height: `${brushRadius * cellSize * 2}px`,
+        top: `${mouse.y}px`,
+        left: `${mouse.x}px`,
+      }} className={styles.pointer}>
+        {isErase ? <Erase/> : pause ? <Pause/> : null}
+      </div>
+      <CanvasAnimation draw={draw} move={move}/>
+    </div>
+  );
 }

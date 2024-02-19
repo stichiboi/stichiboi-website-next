@@ -16,7 +16,7 @@ export function StatsPopup({stats}: StatsPopupProps) {
         <em>{"Numero di tentativi"}</em>
         {stats.successAttempts.map((attemptCount, index) => {
           return (
-            <div className={styles.frequency}>
+            <div key={index} className={styles.frequency}>
               <p>{index + 1}</p>
               <p className={styles.counter}>{attemptCount}</p>
             </div>

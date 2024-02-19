@@ -34,8 +34,8 @@ interface ReflexerProps {
 }
 
 export function Reflexer({
-                           onResult
-                         }: ReflexerProps) {
+  onResult
+}: ReflexerProps) {
 
   const [color, setColor] = useState(pickRandomElement(FILL_COLORS));
   const [_, setTimeoutId] = useState(0);

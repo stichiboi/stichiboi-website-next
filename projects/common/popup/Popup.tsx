@@ -16,7 +16,7 @@ interface PopupProps {
   labelClassName?: string,
   labelStyle?: CSSProperties,
   labelTooltip?: string,
-  children?: React.ReactNode,
+  children?: ReactNode,
   containerClassName?: string,
   onToggle?: (toggled: boolean) => unknown,
   triggerClose?: unknown,
@@ -29,21 +29,21 @@ interface PopupProps {
 }
 
 export function Popup({
-                        label,
-                        labelClassName,
-                        labelStyle,
-                        labelTooltip,
-                        children,
-                        containerClassName,
-                        onToggle,
-                        triggerClose,
-                        triggerOpen,
-                        placement,
-                        floatingPortalParent,
-                        middleware,
-                        useAutoUpdate,
-                        offsetOptions,
-                      }: PopupProps): JSX.Element {
+  label,
+  labelClassName,
+  labelStyle,
+  labelTooltip,
+  children,
+  containerClassName,
+  onToggle,
+  triggerClose,
+  triggerOpen,
+  placement,
+  floatingPortalParent,
+  middleware,
+  useAutoUpdate,
+  offsetOptions,
+}: PopupProps): JSX.Element {
 
   const [open, setOpen] = useState(false);
   const {x, y, strategy, refs, context} = useFloating({

@@ -1,7 +1,7 @@
 import {Grid} from "./Grid";
 
 export class Element {
-    fillStyle: string = "";
+  fillStyle: string = "";
 
     draw(ctx: CanvasRenderingContext2D, grid: Grid, x: number, y: number) {
         const {width, height} = ctx.canvas;
@@ -13,11 +13,11 @@ export class Element {
         ctx.fillRect(posX, posY, wx, wy);
     }
 
-    update(grid: Grid, nextGrid: Grid, x: number, y: number) {
-        return;
-    }
+  update(_: Grid, __: Grid, ___: number, ____: number) {
+    return;
+  }
 
-    postUpdate() {
-        return;
-    }
+  postUpdate() {
+    return;
+  }
 }

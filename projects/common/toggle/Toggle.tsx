@@ -12,30 +12,30 @@ interface ToggleProps {
 }
 
 export function Toggle({
-                           saveKey,
-                           onToggle,
-                           leftIcon,
-                           rightIcon,
-                           className,
-                           tooltip
-                       }: ToggleProps): JSX.Element {
-    const [value, setValue] = useStateLocalStorage<boolean>(false, saveKey);
+  saveKey,
+  onToggle,
+  leftIcon,
+  rightIcon,
+  className,
+  tooltip
+}: ToggleProps): JSX.Element {
+  const [value, setValue] = useStateLocalStorage<boolean>(false, saveKey);
 
-    useEffect(() => {
-        onToggle(value);
-    }, [value, onToggle]);
+  useEffect(() => {
+    onToggle(value);
+  }, [value, onToggle]);
 
-    return (
-        <button
-            title={tooltip}
-            className={`${styles.container} ${value ? styles.toggled : ""} ${className || ""}`}
-            onClick={() => setValue((prev) => !prev)}
-        >
-            {leftIcon}
-            <div className={styles.toggle}>
-                <span className={styles.slider}/>
-            </div>
-            {rightIcon}
-        </button>
-    );
+  return (
+    <button
+      title={tooltip}
+      className={`${styles.container} ${value ? styles.toggled : ""} ${className || ""}`}
+      onClick={() => setValue((prev) => !prev)}
+    >
+      {leftIcon}
+      <div className={styles.toggle}>
+        <span className={styles.slider}/>
+      </div>
+      {rightIcon}
+    </button>
+  );
 }

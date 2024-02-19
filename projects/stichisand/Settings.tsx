@@ -20,20 +20,20 @@ const MAX_BRUSH_SIZE = 9;
 const MIN_BRUSH_SIZE = 1;
 
 export function Settings({
-                             brushSize,
-                             onBrushSizeChange,
-                             onIsEraseChange,
-                             material,
-                             onMaterialChange,
-                             onPause
-                         }: SettingsProps) {
+  brushSize,
+  onBrushSizeChange,
+  onIsEraseChange,
+  material,
+  onMaterialChange,
+  onPause
+}: SettingsProps) {
 
 
-    // use a wrapper so it also toggles the eraser off
-    const changeMaterial = useCallback((material: string) => {
-        onMaterialChange(material);
-        onIsEraseChange(false);
-    }, []);
+  // use a wrapper so it also toggles the eraser off
+  const changeMaterial = useCallback((material: string) => {
+    onMaterialChange(material);
+    onIsEraseChange(false);
+  }, [onIsEraseChange, onMaterialChange]);
 
     useEventListener("keyup", (ev) => {
         const target = ev.target as HTMLInputElement
@@ -75,25 +75,25 @@ export function Settings({
         })
     });
 
-    const radioButtons = useMemo(() => {
-        const materials = [["sand", "s"], ["water", "w"], ["wall", "t"]];
-        return materials.map(([name, shortcut]) => {
-            const id = `element-${name}`
-            return (
-                <div key={name} className={styles.radioContainer} title={`Shortcut: ${shortcut}`}>
-                    <input
-                        type={"radio"}
-                        name={"stichisand-element"}
-                        value={name}
-                        id={id}
-                        checked={material === name}
-                        onChange={() => changeMaterial(name)}
-                    />
-                    <label htmlFor={id}>{name}</label>
-                </div>
-            )
-        })
-    }, [material]);
+  const radioButtons = useMemo(() => {
+    const materials = [["sand", "s"], ["water", "w"], ["wall", "t"]];
+    return materials.map(([name, shortcut]) => {
+      const id = `element-${name}`
+      return (
+        <div key={name} className={styles.radioContainer} title={`Shortcut: ${shortcut}`}>
+          <input
+            type={"radio"}
+            name={"stichisand-element"}
+            value={name}
+            id={id}
+            checked={material === name}
+            onChange={() => changeMaterial(name)}
+          />
+          <label htmlFor={id}>{name}</label>
+        </div>
+      )
+    })
+  }, [material, changeMaterial]);
 
     return (
         <Popup label={<SettingsIcon/>}

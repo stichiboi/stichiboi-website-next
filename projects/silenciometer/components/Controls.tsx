@@ -17,12 +17,12 @@ interface ControlsProps {
 }
 
 export function Controls({
-                           onRunningToggle,
-                           setNoiseMargin,
-                           setMemoryDuration,
-                           setChartMode,
-                           setBackgroundOnSilence
-                         }: ControlsProps): JSX.Element {
+  onRunningToggle,
+  setNoiseMargin,
+  setMemoryDuration,
+  setChartMode,
+  setBackgroundOnSilence
+}: ControlsProps): JSX.Element {
   const [isRunning, setIsRunning] = useState(true);
 
   // firstRender and secondRender are used to trigger and open-close of the popup, which loads the initial settings
@@ -81,7 +81,7 @@ export function Controls({
         />
       </>
     );
-  }, [setChartMode, setMemoryDuration, setNoiseMargin]);
+  }, [setChartMode, setMemoryDuration, setNoiseMargin, setBackgroundOnSilence]);
   return (
     <div className={styles.controls}>
       <div className={styles.navigation}>
