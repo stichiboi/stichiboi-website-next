@@ -67,22 +67,21 @@ export function Simulation({brushRadius, isErase, material, pause, grid}: Simula
         }
     }, [addElements]);
 
-    useEventListener("mousedown", (ev) => {
+    useEventListener("pointerdown", (ev) => {
         const tagName = (ev.target as HTMLElement)?.tagName
         if (tagName === "CANVAS" || tagName === "HEADER") {
             mouseDown.current = true;
         }
     });
 
-    useEventListener("mouseup", () => {
+    useEventListener(["pointerup", "pointerout", "pointercancel", "pointerleave"], () => {
         mouseDown.current = false;
     });
 
-    useEventListener("mousemove", (ev) => {
+    useEventListener("pointermove", (ev) => {
         const {x, y} = ev as MouseEvent;
         setMouse({x, y});
-        // mousePosition.current = {x, y}
-    });
+    }, );
 
     const [cellSize, setCellSize] = useState(0);
     const calculateCellSize = useCallback(() => {
