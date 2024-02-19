@@ -5,6 +5,7 @@ import {Slider} from "../common/slider/Slider";
 import {useEventListener} from "../common/hooks/useEventListener";
 import {Dispatch, SetStateAction, useCallback, useMemo} from "react";
 import styles from "./saveForm.module.css";
+import buttonStyles from "../common/button/ButtonCTA.module.css";
 
 interface SettingsProps {
     brushSize: number,
@@ -95,7 +96,10 @@ export function Settings({
     }, [material]);
 
     return (
-        <Popup label={<SettingsIcon/>} containerClassName={styles.popup}>
+        <Popup label={<SettingsIcon/>}
+               labelClassName={[buttonStyles.buttonCta, styles.buttonCta].join(" ")}
+               containerClassName={styles.popup}
+        >
             <Toggle saveKey={"stichisand-erase"}
                     onToggle={onIsEraseChange}
                     leftIcon={<EditPencil/>}

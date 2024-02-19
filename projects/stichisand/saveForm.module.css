@@ -1,5 +1,5 @@
 .title {
-    font-size: 32px;
+    font-size: 18px;
 }
 
 .input:focus, .input:focus-visible {
@@ -61,7 +61,7 @@
     transform: scale(0.95);
 }
 
-.materials{
+.materials {
     display: grid;
     gap: .2em;
 }
@@ -76,6 +76,20 @@
     text-transform: capitalize;
 }
 
-.radioContainer > input{
+.radioContainer > input {
     margin: 0;
+}
+
+.buttonCta {
+    padding: .2em;
+}
+
+@media screen and (min-width: 400px) and (min-height: 400px) {
+    .title {
+        font-size: 32px;
+    }
+
+    .buttonCta {
+        padding: .8em;
+    }
 }

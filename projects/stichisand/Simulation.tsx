@@ -71,6 +71,8 @@ export function Simulation({brushRadius, isErase, material, pause, grid}: Simula
         const tagName = (ev.target as HTMLElement)?.tagName
         if (tagName === "CANVAS" || tagName === "HEADER") {
             mouseDown.current = true;
+            const {x, y} = ev as MouseEvent;
+            setMouse({x, y});
         }
     });
 
@@ -81,7 +83,7 @@ export function Simulation({brushRadius, isErase, material, pause, grid}: Simula
     useEventListener("pointermove", (ev) => {
         const {x, y} = ev as MouseEvent;
         setMouse({x, y});
-    }, );
+    });
 
     const [cellSize, setCellSize] = useState(0);
     const calculateCellSize = useCallback(() => {

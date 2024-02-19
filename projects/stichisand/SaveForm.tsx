@@ -7,6 +7,7 @@ import {API_PATH} from "./App";
 import {Grid} from "./elements/Grid";
 import {ButtonCTA} from "../common/button/ButtonCTA";
 import styles from "./saveForm.module.css";
+import buttonStyles from "../common/button/ButtonCTA.module.css";
 
 
 const GRID_VERSION = "0.0.1";
@@ -62,7 +63,9 @@ export function SaveForm({grid, name}: SaveFormProps) {
 
     return (
         <>
-            <Popup label={<ShareIos/>} containerClassName={styles.popup}>
+            <Popup label={<ShareIos/>}
+                   labelClassName={[buttonStyles.buttonCta, styles.buttonCta].join(" ")}
+                   containerClassName={styles.popup}>
                 <div className={styles.inputGroup}>
                     <label htmlFor={"creator-name"} className={styles.label}>{"Creator Name"}</label>
                     <input id={"creator-name"} value={creatorName} className={styles.input}

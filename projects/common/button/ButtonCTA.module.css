@@ -1,5 +1,6 @@
 .buttonCta {
     padding: .8em;
+    font-size: 14px;
     margin: 0;
     border-radius: var(--default-border-radius);
     border: 2px solid transparent;
