@@ -100,6 +100,7 @@ export class Grid {
         const {width, height} = ctx.canvas;
         const rowHeight = height / GRID_HEIGHT;
         const roundedRowHeight = Math.round(rowHeight);
+        ctx.beginPath();
         this.loop((cell, x, y) => {
             cell.draw(ctx, this, x, y);
         }, (_, y, isDirty) => {
@@ -107,6 +108,7 @@ export class Grid {
                 ctx.clearRect(0, rowHeight * y, width, roundedRowHeight);
             }
         });
+        ctx.closePath();
     }
 
     loop(cellCallback: (cell: Element, x: number, y: number) => unknown, rowCallback?: (row: (Element | unknown)[], y: number, isDirty: boolean) => unknown) {
