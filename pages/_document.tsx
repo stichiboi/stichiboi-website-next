@@ -16,8 +16,8 @@ export default function Document() {
         <meta name={"og:image:alt"} content={"I make stuff because it's fun"}/>
       </Head>
       <body>
-      <Main/>
-      <NextScript/>
+        <Main/>
+        <NextScript/>
       </body>
     </Html>
   );

@@ -70,23 +70,23 @@ export function Simulation({brushRadius, isErase, material, pause, grid}: Simula
     }
   }, [addElements]);
 
-    useEventListener("pointerdown", (ev) => {
-        const tagName = (ev.target as HTMLElement)?.tagName
-        if (tagName === "CANVAS" || tagName === "HEADER") {
-            mouseDown.current = true;
-            const {x, y} = ev as MouseEvent;
-            setMouse({x, y});
-        }
-    });
+  useEventListener("pointerdown", (ev) => {
+    const tagName = (ev.target as HTMLElement)?.tagName
+    if (tagName === "CANVAS" || tagName === "HEADER") {
+      mouseDown.current = true;
+      const {x, y} = ev as MouseEvent;
+      setMouse({x, y});
+    }
+  });
 
-    useEventListener(["pointerup", "pointerout", "pointercancel", "pointerleave"], () => {
-        mouseDown.current = false;
-    });
+  useEventListener(["pointerup", "pointerout", "pointercancel", "pointerleave"], () => {
+    mouseDown.current = false;
+  });
 
-    useEventListener("pointermove", (ev) => {
-        const {x, y} = ev as MouseEvent;
-        setMouse({x, y});
-    });
+  useEventListener("pointermove", (ev) => {
+    const {x, y} = ev as MouseEvent;
+    setMouse({x, y});
+  });
 
   const [cellSize, setCellSize] = useState(0);
   const calculateCellSize = useCallback(() => {

@@ -20,13 +20,13 @@ const MAX_BRUSH_SIZE = 9;
 const MIN_BRUSH_SIZE = 1;
 
 export function Settings({
-                           brushSize,
-                           onBrushSizeChange,
-                           onIsEraseChange,
-                           material,
-                           onMaterialChange,
-                           onPause
-                         }: SettingsProps) {
+  brushSize,
+  onBrushSizeChange,
+  onIsEraseChange,
+  material,
+  onMaterialChange,
+  onPause
+}: SettingsProps) {
 
 
   // use a wrapper so it also toggles the eraser off
@@ -42,26 +42,26 @@ export function Settings({
     }
     const {key} = ev as KeyboardEvent;
     switch (key.toLowerCase()) {
-      case "s":
-        changeMaterial("sand");
-        break;
-      case "w":
-        changeMaterial("water");
-        break;
-      case "t":
-        changeMaterial("wall");
-        break;
-      case "p":
-        changeMaterial("plant");
-        break;
-      case "backspace":
-      case "delete":
-      case "enter":
-        onIsEraseChange(prev => !prev);
-        break;
-      case " ":
-        onPause(prev => !prev);
-        break;
+    case "s":
+      changeMaterial("sand");
+      break;
+    case "w":
+      changeMaterial("water");
+      break;
+    case "t":
+      changeMaterial("wall");
+      break;
+    case "p":
+      changeMaterial("plant");
+      break;
+    case "backspace":
+    case "delete":
+    case "enter":
+      onIsEraseChange(prev => !prev);
+      break;
+    case " ":
+      onPause(prev => !prev);
+      break;
     }
   });
 
@@ -100,24 +100,24 @@ export function Settings({
 
   return (
     <Popup label={<SettingsIcon/>}
-           labelClassName={[buttonStyles.buttonCta, styles.buttonCta].join(" ")}
-           containerClassName={styles.popup}
+      labelClassName={[buttonStyles.buttonCta, styles.buttonCta].join(" ")}
+      containerClassName={styles.popup}
     >
       <Toggle saveKey={"stichisand-erase"}
-              onToggle={onIsEraseChange}
-              leftIcon={<EditPencil/>}
-              rightIcon={<Erase/>}
-              tooltip={"Shortcut: Enter / Delete / Backspace"}
+        onToggle={onIsEraseChange}
+        leftIcon={<EditPencil/>}
+        rightIcon={<Erase/>}
+        tooltip={"Shortcut: Enter / Delete / Backspace"}
       />
       <Slider label={<label className={styles.label}>{"Brush Size"}</label>}
-              defaultValue={brushSize}
-              id={"stichisand-brush-size"}
-              min={MIN_BRUSH_SIZE}
-              max={MAX_BRUSH_SIZE}
-              step={1}
-              onChange={onBrushSizeChange}
-              showValue
-              tooltip={"Shortcut: Scroll Wheel"}
+        defaultValue={brushSize}
+        id={"stichisand-brush-size"}
+        min={MIN_BRUSH_SIZE}
+        max={MAX_BRUSH_SIZE}
+        step={1}
+        onChange={onBrushSizeChange}
+        showValue
+        tooltip={"Shortcut: Scroll Wheel"}
       />
       <div className={styles.materials}>
         {radioButtons}
