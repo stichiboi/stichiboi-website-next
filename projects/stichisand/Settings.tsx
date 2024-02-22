@@ -8,25 +8,25 @@ import styles from "./saveForm.module.css";
 import buttonStyles from "../common/button/ButtonCTA.module.css";
 
 interface SettingsProps {
-    brushSize: number,
-    onBrushSizeChange: Dispatch<SetStateAction<number>>,
-    onIsEraseChange: Dispatch<SetStateAction<boolean>>,
-    material: string,
-    onMaterialChange: (v: string) => unknown,
-    onPause: Dispatch<SetStateAction<boolean>>
+  brushSize: number,
+  onBrushSizeChange: Dispatch<SetStateAction<number>>,
+  onIsEraseChange: Dispatch<SetStateAction<boolean>>,
+  material: string,
+  onMaterialChange: (v: string) => unknown,
+  onPause: Dispatch<SetStateAction<boolean>>
 }
 
 const MAX_BRUSH_SIZE = 9;
 const MIN_BRUSH_SIZE = 1;
 
 export function Settings({
-  brushSize,
-  onBrushSizeChange,
-  onIsEraseChange,
-  material,
-  onMaterialChange,
-  onPause
-}: SettingsProps) {
+                           brushSize,
+                           onBrushSizeChange,
+                           onIsEraseChange,
+                           material,
+                           onMaterialChange,
+                           onPause
+                         }: SettingsProps) {
 
 
   // use a wrapper so it also toggles the eraser off
@@ -35,48 +35,51 @@ export function Settings({
     onIsEraseChange(false);
   }, [onIsEraseChange, onMaterialChange]);
 
-    useEventListener("keyup", (ev) => {
-        const target = ev.target as HTMLInputElement
-        if (target.tagName === "INPUT" && target.type === "text") {
-            return;
-        }
-        const {key} = ev as KeyboardEvent;
-        switch (key.toLowerCase()) {
-            case "s":
-                changeMaterial("sand");
-                break;
-            case "w":
-                changeMaterial("water");
-                break;
-            case "t":
-                changeMaterial("wall");
-                break;
-            case "backspace":
-            case "delete":
-            case "enter":
-                onIsEraseChange(prev => !prev);
-                break;
-            case " ":
-                onPause(prev => !prev);
-                break;
-        }
-    });
+  useEventListener("keyup", (ev) => {
+    const target = ev.target as HTMLInputElement
+    if (target.tagName === "INPUT" && target.type === "text") {
+      return;
+    }
+    const {key} = ev as KeyboardEvent;
+    switch (key.toLowerCase()) {
+      case "s":
+        changeMaterial("sand");
+        break;
+      case "w":
+        changeMaterial("water");
+        break;
+      case "t":
+        changeMaterial("wall");
+        break;
+      case "p":
+        changeMaterial("plant");
+        break;
+      case "backspace":
+      case "delete":
+      case "enter":
+        onIsEraseChange(prev => !prev);
+        break;
+      case " ":
+        onPause(prev => !prev);
+        break;
+    }
+  });
 
-    useEventListener("wheel", (ev) => {
-        const {deltaY} = ev as WheelEvent;
-        onBrushSizeChange(prev => {
-            let next = prev;
-            if (deltaY > 0) {
-                next++;
-            } else {
-                next--;
-            }
-            return Math.min(MAX_BRUSH_SIZE, Math.max(MIN_BRUSH_SIZE, next));
-        })
-    });
+  useEventListener("wheel", (ev) => {
+    const {deltaY} = ev as WheelEvent;
+    onBrushSizeChange(prev => {
+      let next = prev;
+      if (deltaY > 0) {
+        next++;
+      } else {
+        next--;
+      }
+      return Math.min(MAX_BRUSH_SIZE, Math.max(MIN_BRUSH_SIZE, next));
+    })
+  });
 
   const radioButtons = useMemo(() => {
-    const materials = [["sand", "s"], ["water", "w"], ["wall", "t"]];
+    const materials = [["sand", "s"], ["water", "w"], ["wall", "t"], ["plant", "p"]];
     return materials.map(([name, shortcut]) => {
       const id = `element-${name}`
       return (
@@ -95,30 +98,30 @@ export function Settings({
     })
   }, [material, changeMaterial]);
 
-    return (
-        <Popup label={<SettingsIcon/>}
-               labelClassName={[buttonStyles.buttonCta, styles.buttonCta].join(" ")}
-               containerClassName={styles.popup}
-        >
-            <Toggle saveKey={"stichisand-erase"}
-                    onToggle={onIsEraseChange}
-                    leftIcon={<EditPencil/>}
-                    rightIcon={<Erase/>}
-                    tooltip={"Shortcut: Enter / Delete / Backspace"}
-            />
-            <Slider label={<label className={styles.label}>{"Brush Size"}</label>}
-                    defaultValue={brushSize}
-                    id={"stichisand-brush-size"}
-                    min={MIN_BRUSH_SIZE}
-                    max={MAX_BRUSH_SIZE}
-                    step={1}
-                    onChange={onBrushSizeChange}
-                    showValue
-                    tooltip={"Shortcut: Scroll Wheel"}
-            />
-            <div className={styles.materials}>
-                {radioButtons}
-            </div>
-        </Popup>
-    );
+  return (
+    <Popup label={<SettingsIcon/>}
+           labelClassName={[buttonStyles.buttonCta, styles.buttonCta].join(" ")}
+           containerClassName={styles.popup}
+    >
+      <Toggle saveKey={"stichisand-erase"}
+              onToggle={onIsEraseChange}
+              leftIcon={<EditPencil/>}
+              rightIcon={<Erase/>}
+              tooltip={"Shortcut: Enter / Delete / Backspace"}
+      />
+      <Slider label={<label className={styles.label}>{"Brush Size"}</label>}
+              defaultValue={brushSize}
+              id={"stichisand-brush-size"}
+              min={MIN_BRUSH_SIZE}
+              max={MAX_BRUSH_SIZE}
+              step={1}
+              onChange={onBrushSizeChange}
+              showValue
+              tooltip={"Shortcut: Scroll Wheel"}
+      />
+      <div className={styles.materials}>
+        {radioButtons}
+      </div>
+    </Popup>
+  );
 }

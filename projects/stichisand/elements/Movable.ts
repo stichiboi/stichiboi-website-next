@@ -35,7 +35,4 @@ export class Movable extends Element {
     return false;
   }
 
-  interact(_: Grid, __: number, ___: number) {
-    return;
-  }
 }

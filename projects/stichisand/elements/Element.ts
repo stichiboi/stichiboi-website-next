@@ -20,4 +20,8 @@ export class Element {
   postUpdate() {
     return;
   }
+
+  interact(_: Grid, __: number, ___: number) {
+    return;
+  }
 }

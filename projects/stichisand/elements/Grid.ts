@@ -1,9 +1,9 @@
 import {isElement} from "./utils";
 import {Element} from "./Element";
-import {Movable} from "./Movable";
 import {Sand} from "./Sand";
 import {Water} from "./Water";
 import {Wall} from "./Wall";
+import {Plant} from "./Plant";
 
 const GRID_WIDTH = 300;
 const GRID_HEIGHT = 150;
@@ -13,6 +13,7 @@ const MATERIAL_MAPPING: Map<string, { new(): Element }> = new Map()
 MATERIAL_MAPPING.set("w", Water);
 MATERIAL_MAPPING.set("s", Sand);
 MATERIAL_MAPPING.set("t", Wall);
+MATERIAL_MAPPING.set("p", Plant);
 
 export class Grid {
   height = GRID_HEIGHT;
@@ -55,9 +56,9 @@ export class Grid {
   }
 
   centerAt(x: number, y: number): {
-        get: (x: number, y: number) => Element | unknown,
-        set: (cell: Element | unknown, x: number, y: number, force?: boolean) => boolean
-    } {
+    get: (x: number, y: number) => Element | unknown,
+    set: (cell: Element | unknown, x: number, y: number, force?: boolean) => boolean
+  } {
     return {
       get: (dx: number, dy: number) => {
         return this.get(x + dx, y + dy);
@@ -89,27 +90,25 @@ export class Grid {
 
   interact() {
     this.loop((cell, x, y) => {
-      if (cell instanceof Movable) {
-        cell.interact(this, x, y);
-      }
+      cell.interact(this, x, y);
     }, () => {
     });
   }
 
-    draw(ctx: CanvasRenderingContext2D) {
-        const {width, height} = ctx.canvas;
-        const rowHeight = height / GRID_HEIGHT;
-        const roundedRowHeight = Math.round(rowHeight);
-        ctx.beginPath();
-        this.loop((cell, x, y) => {
-            cell.draw(ctx, this, x, y);
-        }, (_, y, isDirty) => {
-            if (isDirty) {
-                ctx.clearRect(0, rowHeight * y, width, roundedRowHeight);
-            }
-        });
-        ctx.closePath();
-    }
+  draw(ctx: CanvasRenderingContext2D) {
+    const {width, height} = ctx.canvas;
+    const rowHeight = height / GRID_HEIGHT;
+    const roundedRowHeight = Math.round(rowHeight);
+    ctx.beginPath();
+    this.loop((cell, x, y) => {
+      cell.draw(ctx, this, x, y);
+    }, (_, y, isDirty) => {
+      if (isDirty) {
+        ctx.clearRect(0, rowHeight * y, width, roundedRowHeight);
+      }
+    });
+    ctx.closePath();
+  }
 
   loop(cellCallback: (cell: Element, x: number, y: number) => unknown, rowCallback?: (row: (Element | unknown)[], y: number, isDirty: boolean) => unknown) {
     this.cells.forEach((row, y) => {
@@ -150,6 +149,8 @@ export class Grid {
           encoded += "w";
         } else if (cell instanceof Wall) {
           encoded += "t";
+        } else if (cell instanceof Plant) {
+          encoded += "p";
         } else {
           encoded += "_";
         }

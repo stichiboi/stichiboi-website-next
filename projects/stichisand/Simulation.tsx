@@ -8,6 +8,7 @@ import styles from "./simulation.module.css";
 import {Erase, Pause} from "iconoir-react";
 import {Wall} from "./elements/Wall";
 import {Element} from "./elements/Element";
+import {Plant} from "./elements/Plant";
 
 
 interface SimulationProps {
@@ -29,8 +30,8 @@ export function Simulation({brushRadius, isErase, material, pause, grid}: Simula
       return;
     }
     const spawnRate = 0.2;
-    const withSpawnRate = (f: () => Element) => {
-      if (Math.random() < spawnRate) {
+    const withSpawnRate = (f: () => Element, rate=spawnRate) => {
+      if (Math.random() < rate) {
         return f();
       }
     }
@@ -39,6 +40,8 @@ export function Simulation({brushRadius, isErase, material, pause, grid}: Simula
       return withSpawnRate(() => new Sand());
     case "water":
       return withSpawnRate(() => new Water());
+    case "plant":
+      return withSpawnRate(() => new Plant(), 0.1);
     case "wall":
       return new Wall();
     default:
