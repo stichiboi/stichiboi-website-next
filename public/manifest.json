@@ -1,0 +1,11 @@
+{
+  "name": "Stichiboi Portfolio",
+  "description": "I make stuff because it's fun",
+  "display": "standalone",
+  "background_color": "#FFFAFA",
+  "icons": [{
+    "src": "/icons/apple-touch-icon.png",
+    "sizes": "180x180",
+    "type": "image/png"
+  }]
+}
