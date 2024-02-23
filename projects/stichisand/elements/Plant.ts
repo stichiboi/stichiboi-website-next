@@ -4,7 +4,7 @@ import {Grid} from "./Grid";
 import {Water} from "./Water";
 
 const COLORS = ["#44bb44", "#2b8f2b", "#156515"];
-const GROWTH_RATE = 0.2;
+const GROWTH_RATE = 0.05;
 const WATER_CONDUCTION = 0.6;
 
 export class Plant extends Static {
