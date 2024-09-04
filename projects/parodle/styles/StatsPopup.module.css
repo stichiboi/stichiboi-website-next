@@ -22,6 +22,7 @@
     gap: 2em;
     transition: .3s top;
     transition-timing-function: cubic-bezier(.68, .01, 1, .5);
+    overflow: auto;
 }
 
 .overlay.open {
@@ -58,7 +59,6 @@
 }
 
 .frequentWords {
-    width: 10em;
     gap: .5em;
     display: grid;
 }
