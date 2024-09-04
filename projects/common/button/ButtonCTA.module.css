@@ -6,7 +6,7 @@
     border: 2px solid transparent;
     background: var(--color-dark);
     color: var(--color-light);
-    font-family: var(--font-family);
+    font-family: var(--font-family), sans-serif;
     transition: .2s ease;
     transition-property: background-color, border-color, color;
     display: flex;

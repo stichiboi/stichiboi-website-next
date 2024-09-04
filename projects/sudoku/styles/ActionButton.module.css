@@ -5,7 +5,7 @@
     align-items: center;
     color: var(--color-dark);
     border-radius: var(--default-border-radius);
-    font-family: var(--font-family);
+    font-family: var(--font-family), sans-serif;
     /* override default padding on buttons on mobile safari */
     padding: 0;
 }

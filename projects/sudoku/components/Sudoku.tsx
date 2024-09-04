@@ -9,7 +9,7 @@ import {
   ISudoku,
   SUDOKU_VALIDITY
 } from "../types";
-import {Cancel, Check, EditPencil, QuestionMark, Undo} from "iconoir-react";
+import {Xmark, Check, EditPencil, QuestionMark, Erase} from "iconoir-react";
 import ActionButton from "./ActionButton";
 import Grid from "./Grid";
 import Cell from "./Cell";
@@ -353,7 +353,7 @@ export function Sudoku({sudoku, onExit}: SudokuProps) {
     <div className={styles.container}>
       <header className={styles.header}>
         <ActionButton tooltip={"Return to menu"} onClick={onExit}>
-          <Cancel/>
+          <Xmark/>
         </ActionButton>
         <p>{timerDisplay}</p>
         <h3 className={styles.difficulty}>{DIFFICULTY[sudoku.difficulty]}</h3>
@@ -363,7 +363,7 @@ export function Sudoku({sudoku, onExit}: SudokuProps) {
         <div className={styles.actionGroup}>
           {noteModeButton}
           <ActionButton tooltip={"Clear cell"} onClick={() => erase(selected.current)}>
-            <Undo/>
+            <Erase/>
           </ActionButton>
         </div>
         {controls}

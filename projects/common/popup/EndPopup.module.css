@@ -21,7 +21,7 @@
 }
 
 .text {
-    font-family: var(--font-family);
+    font-family: var(--font-family), sans-serif;
     color: var(--color-dark);
     text-align: center;
 }
