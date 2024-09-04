@@ -20,12 +20,13 @@ const DEFAULT_LAYOUT = [
 interface ParodleProps {
   words: string[],
   onGameEnd: (isSuccess: boolean, guessesCount: number) => unknown,
+  onGameStart: () => unknown,
   onWord: (word: string) => unknown
 }
 
 type GameState = "RUNNING" | "SUCCESS" | "FAILED";
 
-export function Parodle({words, onWord, onGameEnd}: ParodleProps) {
+export function Parodle({words, onWord, onGameEnd, onGameStart}: ParodleProps) {
   const throwConfetti = useConfetti();
 
   const keyboard = useRef<KeyboardReactInterface | null>(null);
@@ -41,7 +42,7 @@ export function Parodle({words, onWord, onGameEnd}: ParodleProps) {
     return arr[index].toUpperCase();
   }, [wordsSet]);
 
-  const [currentWord, setCurrentWord] = useState(getWord());
+  const [currentWord, setCurrentWord] = useState("");
   const [guesses, setGuesses] = useState<string[]>([]);
   const [invalidGuess, setInvalidGuess] = useState(false);
   const [gameState, setGameState] = useState<GameState>("RUNNING");
@@ -92,6 +93,9 @@ export function Parodle({words, onWord, onGameEnd}: ParodleProps) {
     })
   }, [currentWord, guesses, invalidGuess]);
 
+  useEffect(() => {
+    resetBoard();
+  }, []);
 
   useEffect(() => {
     const lastEnteredGuess = guesses.at(-2);
@@ -109,8 +113,16 @@ export function Parodle({words, onWord, onGameEnd}: ParodleProps) {
   }, [gameState, throwConfetti]);
 
   useEffect(() => {
-    onGameEnd(gameState === "SUCCESS", guesses.length - 1);
+    if (gameState !== "RUNNING") {
+      onGameEnd(gameState === "SUCCESS", guesses.length - 1);
+    }
   }, [gameState, onGameEnd, guesses.length]);
+
+  useEffect(() => {
+    if (currentWord) {
+      onGameStart();
+    }
+  }, [onGameStart, currentWord]);
 
   const resetBoard = useCallback(() => {
     setGameState("RUNNING");
@@ -156,12 +168,12 @@ export function Parodle({words, onWord, onGameEnd}: ParodleProps) {
     function keyPress(event: KeyboardEvent) {
       function normalize(key: string) {
         switch (key) {
-        case "ENTER":
-          return "{enter}";
-        case "BACKSPACE":
-          return "{backspace}"
-        default:
-          return key;
+          case "ENTER":
+            return "{enter}";
+          case "BACKSPACE":
+            return "{backspace}"
+          default:
+            return key;
         }
       }
 

@@ -15,8 +15,9 @@ export function useStats() {
   // - times of success at n-th time
   // - most frequent words used
   // so there should be:
-  // - a callback to call when the game ends
-  // - one when the word is inserted
+  // - a callback when the game starts (a word is picked)
+  // - a callback when the game ends
+  // - a callback each time a guess is submitted
   // and also an object with all the stats that can be displayed
 
   const [stats, setStats] = useState<Stats>({
@@ -58,7 +59,15 @@ export function useStats() {
       return {
         ...prev,
         successAttempts,
-        totalSuccess: prev.totalSuccess + (isSuccess ? 1 : 0),
+        totalSuccess: prev.totalSuccess + (isSuccess ? 1 : 0)
+      }
+    });
+  }, []);
+
+  const onGameStart = useCallback(() => {
+    setStats(prev => {
+      return {
+        ...prev,
         totalPlays: prev.totalPlays + 1
       }
     });
@@ -76,6 +85,6 @@ export function useStats() {
   }, []);
 
   return {
-    stats, onWord, onGameEnd
+    stats, onWord, onGameEnd, onGameStart
   }
 }
