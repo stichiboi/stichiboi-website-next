@@ -23,6 +23,7 @@ export function StatsPopup({stats}: StatsPopupProps) {
             label={index + 1}
             absoluteValue={attemptCount}
             percentage={percentage}
+            barClassName={styles.progressBar}
           />;
         })}
       </section>

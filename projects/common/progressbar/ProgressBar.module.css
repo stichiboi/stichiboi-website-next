@@ -9,7 +9,6 @@
 .bar {
     flex: var(--percentage) var(--percentage) auto;
     background: var(--color-dark);
-    /*transform: scaleX(var(--percentage));*/
     height: 2em;
     transform-origin: left;
     display: flex;
@@ -20,5 +19,4 @@
 
 .absoluteValue{
     color: var(--color-light);
-    /*font-size: var(--text-font-size-small);*/
 }

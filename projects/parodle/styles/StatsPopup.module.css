@@ -47,6 +47,16 @@
     justify-content: center;
 }
 
+.progressBar {
+    transition: flex-grow .4s ease;
+    flex-grow: 0;
+}
+
+.open .progressBar {
+    flex-grow: var(--percentage);
+    transition-delay: .1s;
+}
+
 .frequentWords {
     width: 10em;
     gap: .5em;

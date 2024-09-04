@@ -6,6 +6,7 @@ interface ProgressBarProps {
   percentage: number;
   absoluteValue?: number;
   className?: string;
+  barClassName?: string;
   tooltip?: string;
   hideOnZero?: boolean;
 }
@@ -15,6 +16,7 @@ export function ProgressBar({
                               percentage,
                               absoluteValue,
                               className,
+                              barClassName,
                               tooltip,
                               hideOnZero = true
                             }: ProgressBarProps): JSX.Element {
@@ -28,7 +30,7 @@ export function ProgressBar({
     >
       {label}
       {!hideOnZero || percentage ?
-        <div className={styles.bar}>
+        <div className={`${styles.bar} ${barClassName || ""}`}>
           <strong className={styles.absoluteValue}>{absoluteValue}</strong>
         </div> : null
       }
