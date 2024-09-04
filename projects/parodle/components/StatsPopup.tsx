@@ -4,6 +4,7 @@ import {Stats} from "../useStats";
 import styles from "../styles/StatsPopup.module.css";
 import {StatNumber} from "./StatNumber";
 import {GraphUp} from "iconoir-react";
+import {ProgressBar} from "../../common/progressbar/ProgressBar";
 
 interface StatsPopupProps {
   stats: Stats,
@@ -15,12 +16,13 @@ export function StatsPopup({stats}: StatsPopupProps) {
       <section className={styles.frequentWords}>
         <em>{"Numero di tentativi"}</em>
         {stats.successAttempts.map((attemptCount, index) => {
-          return (
-            <div key={index} className={styles.frequency}>
-              <p>{index + 1}</p>
-              <p className={styles.counter}>{attemptCount}</p>
-            </div>
-          )
+          const percentage = attemptCount / stats.totalSuccess;
+          return <ProgressBar
+            key={index}
+            label={index + 1}
+            absoluteValue={attemptCount}
+            percentage={percentage}
+          />;
         })}
       </section>
     );
