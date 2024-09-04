@@ -49,11 +49,11 @@
 
 .progressBar {
     transition: flex-grow .4s ease;
-    flex-grow: 0;
+    flex-grow: 0 !important;
 }
 
 .open .progressBar {
-    flex-grow: var(--percentage);
+    flex-grow: var(--percentage) !important;
     transition-delay: .1s;
 }
 
