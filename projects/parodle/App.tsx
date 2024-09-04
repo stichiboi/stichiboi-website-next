@@ -30,10 +30,14 @@ export function App({lockLoading}: AppProps) {
       <div className={styles.app}>
         <header className={styles.header}>
           <div className={styles.parodleLinks}>
-            <Title text={"Parodle"}/>
-            <Link href={"/"} passHref>
-              <Logo/>
-            </Link>
+            <Title
+              text={"Parodle"}
+              hoverNodes={[
+                <Link className={styles.link} href={"/"} passHref>
+                  <Logo/>
+                </Link>
+              ]}
+            />
           </div>
           <StatsPopup stats={stats}/>
         </header>

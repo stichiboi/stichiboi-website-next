@@ -4,13 +4,14 @@ import {CSSProperties, ReactNode, useCallback, useMemo} from "react";
 interface TitleProps {
   text: string,
   hoverText?: string,
+  hoverNodes?: ReactNode[],
   icon?: ReactNode,
   className?: string,
   isH1?: boolean
 }
 
-export function Title({icon, text, hoverText, className, isH1}: TitleProps) {
-  const buildLetters = useCallback((s: string) => {
+export function Title({icon, text, hoverText, hoverNodes, className, isH1}: TitleProps) {
+  const buildLetters = useCallback((s: string | ReactNode[]) => {
     const elements = Array.from(s).map((char, index) => {
       return <p
         key={`${char}-${index}`}
@@ -30,7 +31,7 @@ export function Title({icon, text, hoverText, className, isH1}: TitleProps) {
   }, [text, buildLetters]);
 
   const secondaryLetters = useMemo(() => {
-    return buildLetters(hoverText || text)
+    return buildLetters(hoverText || hoverNodes || text)
   }, [text, hoverText, buildLetters]);
 
   return (
