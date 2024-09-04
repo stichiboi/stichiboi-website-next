@@ -25,6 +25,10 @@
     transition: var(--transition-duration) translate;
 }
 
+.content > svg {
+    width: 2em;
+}
+
 .button:hover > .content {
     translate: .5em;
 }
@@ -39,6 +43,15 @@
     opacity: 1;
     transition: var(--transition-duration);
     transition-property: opacity, translate;
+    width: 1em;
+}
+
+.arrow:first-child {
+    width: 1em;
+}
+
+.button:hover .arrow:first-child {
+    opacity: 0;
 }
 
 .arrow:not(:first-child) {

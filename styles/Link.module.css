@@ -11,3 +11,7 @@
     cursor: pointer;
     height: 3em;
 }
+
+.content > svg {
+    width: 2em;
+}
