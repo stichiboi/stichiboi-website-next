@@ -9,6 +9,7 @@
 }
 
 .value {
-    font-size: 24px;
+    font-size: var(--text-font-size-huge);
+    font-family: var(--font-family-title), sans-serif;
     margin-bottom: 0;
 }

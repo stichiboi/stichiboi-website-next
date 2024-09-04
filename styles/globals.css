@@ -6,6 +6,9 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     --text-font-size: 18px;
     --text-font-size-small: 12px;
+    --text-font-size-big: 24px;
+    --text-font-size-huge: 48px;
+    --font-family-title: "Comfortaa";
     --color-dark: #05080c;
     --color-light: #FFFAFA;
     --color-quiet: #cbcbcb;
@@ -28,7 +31,7 @@ a {
     text-decoration: none;
 }
 
-h1, h3, p, hr {
+h1, h2, h3, p, hr {
     margin: 0;
 }
 

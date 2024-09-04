@@ -8,6 +8,7 @@
     font-family: var(--font-family), sans-serif;
     /* override default padding on buttons on mobile safari */
     padding: 0;
+    cursor: pointer;
 }
 
 .buttonAction.fill {

@@ -30,11 +30,11 @@ export function App({lockLoading}: AppProps) {
         <header className={styles.header}>
           <div className={styles.parodleLinks}>
             <h1 className={styles.title}>{"Parodle"}</h1>
-            <StatsPopup stats={stats}/>
+            <Link href={"/"} passHref>
+              <Logo/>
+            </Link>
           </div>
-          <Link href={"/"} passHref>
-            <Logo/>
-          </Link>
+          <StatsPopup stats={stats}/>
         </header>
         {data && !error && <Parodle
           words={data.words}

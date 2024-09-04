@@ -1,10 +1,10 @@
-import {Popup} from "../../common/popup/Popup";
-import {useMemo} from "react";
+import {useMemo, useState} from "react";
 import {Stats} from "../useStats";
 import styles from "../styles/StatsPopup.module.css";
 import {StatNumber} from "./StatNumber";
-import {GraphUp} from "iconoir-react";
+import {GraphUp, Xmark} from "iconoir-react";
 import {ProgressBar} from "../../common/progressbar/ProgressBar";
+import ActionButton from "../../sudoku/components/ActionButton";
 
 interface StatsPopupProps {
   stats: Stats,
@@ -48,28 +48,34 @@ export function StatsPopup({stats}: StatsPopupProps) {
     )
   }, [stats.wordFrequency]);
 
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <Popup
-      label={<GraphUp/>}
-      labelClassName={styles.popover}
-      labelTooltip={"Statistiche"}
-      placement={"bottom-start"}
-      offsetOptions={0}
-      containerClassName={styles.container}
-    >
-      <div className={styles.count}>
-        <div className={styles.stats}>
-          <StatNumber label={"Partite"} value={stats.totalPlays}/>
-          <StatNumber
-            label={"Vittorie"}
-            value={
-              `${parseFloat((stats.totalSuccess / stats.totalPlays * 100).toFixed())}%`
-            }
-          />
+    <section className={styles.container}>
+      <ActionButton onClick={() => setIsOpen(prev => !prev)}>
+        <GraphUp/>
+      </ActionButton>
+      <div className={`${styles.overlay} ${isOpen ? styles.open : ''}`}>
+        <header className={styles.header}>
+          <h2 className={styles.title}>{"Statistiche"}</h2>
+          <ActionButton onClick={() => setIsOpen(false)}>
+            <Xmark/>
+          </ActionButton>
+        </header>
+        <div className={styles.count}>
+          <div className={styles.stats}>
+            <StatNumber label={"Partite"} value={stats.totalPlays}/>
+            <StatNumber
+              label={"Vittorie"}
+              value={
+                `${parseFloat((stats.totalSuccess / stats.totalPlays * 100).toFixed())}%`
+              }
+            />
+          </div>
         </div>
+        {attempts}
+        {frequentWords}
       </div>
-      {attempts}
-      {frequentWords}
-    </Popup>
-  )
+    </section>
+  );
 }
