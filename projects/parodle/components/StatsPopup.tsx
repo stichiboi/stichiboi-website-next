@@ -6,12 +6,14 @@ import {GraphUp, Xmark} from "iconoir-react";
 import {ProgressBar} from "../../common/progressbar/ProgressBar";
 import ActionButton from "../../sudoku/components/ActionButton";
 import {Title} from "../../../components/generic/Title";
+import {ButtonCTA} from "../../common/button/ButtonCTA";
 
 interface StatsPopupProps {
   stats: Stats,
+  resetStats: () => unknown
 }
 
-export function StatsPopup({stats}: StatsPopupProps) {
+export function StatsPopup({stats, resetStats}: StatsPopupProps) {
   const attempts = useMemo(() => {
     return (
       <section className={styles.frequentWords}>
@@ -70,13 +72,14 @@ export function StatsPopup({stats}: StatsPopupProps) {
             <StatNumber
               label={"Vittorie"}
               value={
-                `${parseFloat((stats.totalSuccess / stats.totalPlays * 100).toFixed())}%`
+                `${parseFloat((stats.totalSuccess / Math.max(1, stats.totalPlays) * 100).toFixed())}%`
               }
             />
           </div>
         </div>
         {attempts}
         {frequentWords}
+        <ButtonCTA onClick={resetStats}>{"Reset"}</ButtonCTA>
       </div>
     </section>
   );

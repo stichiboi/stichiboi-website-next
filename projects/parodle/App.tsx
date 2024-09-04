@@ -16,7 +16,7 @@ interface AppProps {
 
 export function App({lockLoading}: AppProps) {
   const {data, error} = useSWR<{ words: string[] }>('/api/parodle/words', fetcher);
-  const {stats, onWord, onGameEnd, onGameStart} = useStats();
+  const {stats, onWord, onGameEnd, onGameStart, resetStats} = useStats();
   useEffect(() => {
     if (data) {
       lockLoading(false);
@@ -39,7 +39,7 @@ export function App({lockLoading}: AppProps) {
               ]}
             />
           </div>
-          <StatsPopup stats={stats}/>
+          <StatsPopup stats={stats} resetStats={resetStats}/>
         </header>
         {data && !error && <Parodle
           words={data.words}

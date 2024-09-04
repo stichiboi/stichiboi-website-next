@@ -84,7 +84,16 @@ export function useStats() {
     });
   }, []);
 
+  const resetStats = useCallback(() => {
+    setStats({
+      totalPlays: 0,
+      totalSuccess: 0,
+      successAttempts: Array.from({length: 6}).map((_) => 0),
+      wordFrequency: new Map()
+    });
+  }, []);
+
   return {
-    stats, onWord, onGameEnd, onGameStart
+    stats, onWord, onGameEnd, onGameStart, resetStats
   }
 }
