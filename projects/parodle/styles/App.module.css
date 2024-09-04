@@ -29,12 +29,6 @@
     height: 1em;
 }
 
-.title {
-    text-transform: lowercase;
-    font-family: var(--font-family-title), sans-serif;
-    font-size: var(--text-font-size-big);
-}
-
 @media (min-width: 600px) {
     .app {
         justify-content: center;

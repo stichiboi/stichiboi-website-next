@@ -6,6 +6,7 @@ import Link from "next/link";
 import {StatsPopup} from "./components/StatsPopup";
 import {useStats} from "./useStats";
 import {useEffect} from "react";
+import {Title} from "../../components/generic/Title";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -29,7 +30,7 @@ export function App({lockLoading}: AppProps) {
       <div className={styles.app}>
         <header className={styles.header}>
           <div className={styles.parodleLinks}>
-            <h1 className={styles.title}>{"Parodle"}</h1>
+            <Title text={"Parodle"}/>
             <Link href={"/"} passHref>
               <Logo/>
             </Link>

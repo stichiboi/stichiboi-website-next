@@ -5,6 +5,7 @@ import {StatNumber} from "./StatNumber";
 import {GraphUp, Xmark} from "iconoir-react";
 import {ProgressBar} from "../../common/progressbar/ProgressBar";
 import ActionButton from "../../sudoku/components/ActionButton";
+import {Title} from "../../../components/generic/Title";
 
 interface StatsPopupProps {
   stats: Stats,
@@ -57,7 +58,7 @@ export function StatsPopup({stats}: StatsPopupProps) {
       </ActionButton>
       <div className={`${styles.overlay} ${isOpen ? styles.open : ''}`}>
         <header className={styles.header}>
-          <h2 className={styles.title}>{"Statistiche"}</h2>
+          <Title text={"Statistiche"}/>
           <ActionButton onClick={() => setIsOpen(false)}>
             <Xmark/>
           </ActionButton>
