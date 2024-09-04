@@ -7,11 +7,21 @@
 }
 
 .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
     padding: 0 1em;
     width: 100%;
+}
+
+.header > *:first-child {
+    margin-right: auto;
+
+}
+
+.header > *:last-child {
+    margin-left: auto;
+
 }
 
 .difficulty {
