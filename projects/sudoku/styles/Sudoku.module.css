@@ -40,3 +40,8 @@
     gap: 1em;
     margin-bottom: 3em;
 }
+
+.gridInNoteMode, .gridInNoteMode * {
+    --color-highlight-soft: var(--color-highlight-soft-note) !important;
+    --color-highlight-main: var(--color-highlight-main-note) !important;
+}

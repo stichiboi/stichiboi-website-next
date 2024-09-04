@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {
   Board,
   CELL_HIGHLIGHT,
@@ -9,14 +9,14 @@ import {
   ISudoku,
   SUDOKU_VALIDITY
 } from "../types";
-import { Cancel, Check, EditPencil, QuestionMark, Undo } from "iconoir-react";
+import {Cancel, Check, EditPencil, QuestionMark, Undo} from "iconoir-react";
 import ActionButton from "./ActionButton";
 import Grid from "./Grid";
 import Cell from "./Cell";
-import { checkValidity, getFreeCells, loop, visitDeps } from "../sudokuGenerator";
+import {checkValidity, getFreeCells, loop, visitDeps} from "../sudokuGenerator";
 import styles from "../styles/Sudoku.module.css";
 import EndPopup from "../../common/popup/EndPopup";
-import { useStopwatch } from "react-timer-hook";
+import {useStopwatch} from "react-timer-hook";
 
 const HINT_PENALTY_SECONDS = 30;
 const CHECK_PENALTY_SECONDS = 30;
@@ -26,8 +26,8 @@ interface SudokuProps {
   onExit: () => unknown
 }
 
-export function Sudoku({ sudoku, onExit }: SudokuProps) {
-  const { minutes, seconds, pause } = useStopwatch({ autoStart: true });
+export function Sudoku({sudoku, onExit}: SudokuProps) {
+  const {minutes, seconds, pause} = useStopwatch({autoStart: true});
   const [timePenalties, setTimePenalties] = useState(0);
   const timerDisplay = useMemo(() => {
     const totalSeconds = minutes * 60 + seconds + timePenalties;
@@ -188,7 +188,7 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
           if (selected.current?.x === x && selected.current?.y === y) {
             selected.current = undefined
           } else {
-            selected.current = { x, y }
+            selected.current = {x, y}
           }
           triggerRender();
         }}
@@ -200,7 +200,7 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
       <Grid
         key={gridIndex}
         size={root}
-        contents={Array.from({ length: sudoku.solution.length })
+        contents={Array.from({length: sudoku.solution.length})
           .map((_, cellIndex) => buildCell(gridIndex, cellIndex))
         }
       />
@@ -213,12 +213,13 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
       <Grid
         size={root}
         contents={
-          Array.from({ length: sudoku.solution.length })
+          Array.from({length: sudoku.solution.length})
             .map((_, gridIndex) => buildSubGrid(gridIndex))
         }
+        className={noteMode.current ? styles.gridInNoteMode : ""}
       />
     )
-  }, [_triggerRender, buildSubGrid, root, sudoku.solution.length]);
+  }, [_triggerRender, buildSubGrid, root, sudoku.solution.length, noteMode.current]);
 
   const controls = useMemo(() => {
     const length = sudoku.solution.length;
@@ -226,7 +227,7 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
       <Grid
         size={root}
         isSmall
-        contents={Array.from({ length })
+        contents={Array.from({length})
           .map((_, i) => {
             const missCount = length - (numberCount.get(i + 1) || 0);
             const cell: ICell = {
@@ -255,6 +256,7 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
         tooltip={"Toggle note mode"}
         onClick={toggleNoteMode}
         isToggled={noteMode.current}
+        className={styles.gridInNoteMode}
       >
         <EditPencil/>
       </ActionButton>
@@ -285,7 +287,7 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
   useEffect(() => {
     if (!_triggerCheck) return;
     try {
-      const asBoard: Board = Array.from({ length: sudoku.puzzle.length }).map(() => []);
+      const asBoard: Board = Array.from({length: sudoku.puzzle.length}).map(() => []);
       loop(((x, y) => {
         const value = sudoku.puzzle[y][x].value;
         if (!value) throw InvalidBoardError;
@@ -316,16 +318,16 @@ export function Sudoku({ sudoku, onExit }: SudokuProps) {
     function movementEventListener(event: KeyboardEvent) {
       function getNewLocation(location: ICoords): ICoords | undefined {
         const length = sudoku.puzzle.length;
-        const { x, y } = location;
+        const {x, y} = location;
         switch (event.key) {
-        case "ArrowUp":
-          return { x, y: y - 1 < 0 ? length - 1 : y - 1 };
-        case "ArrowDown":
-          return { x, y: (y + 1) % length };
-        case "ArrowLeft":
-          return { y, x: x - 1 < 0 ? length - 1 : x - 1 };
-        case "ArrowRight":
-          return { y, x: (x + 1) % length };
+          case "ArrowUp":
+            return {x, y: y - 1 < 0 ? length - 1 : y - 1};
+          case "ArrowDown":
+            return {x, y: (y + 1) % length};
+          case "ArrowLeft":
+            return {y, x: x - 1 < 0 ? length - 1 : x - 1};
+          case "ArrowRight":
+            return {y, x: (x + 1) % length};
         }
       }
 

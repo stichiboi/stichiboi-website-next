@@ -19,7 +19,7 @@
     align-items: center;
 
     --font-family: "Lato", "Roboto", sans-serif;
-    font-family: var(--font-family);
+    font-family: var(--font-family), sans-serif;
     background-color: var(--color-light);
     color: var(--color-dark);
 }
@@ -30,15 +30,19 @@
     --color-quiet: #787D79;
     --color-highlight-soft: #BBE5ED;
     --color-highlight-main: #78C0E0;
+    --color-highlight-soft-note: #c9f6a0;
+    --color-highlight-main-note: #77da63;
     --color-error: #F86262;
 }
 
 .app.darkMode, .app.darkMode * {
     --color-dark: #FFFAFA;
-    --color-light: #121212;
+    --color-light: #191919;
     --color-quiet: #e1e1e1;
-    --color-highlight-soft: #6380BF;
-    --color-highlight-main: #3961D0;
+    --color-highlight-soft: #194680;
+    --color-highlight-main: #6380BF;
+    --color-highlight-soft-note: #388144;
+    --color-highlight-main-note: #2dba28;
 }
 
 .app > div {

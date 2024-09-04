@@ -1,19 +1,21 @@
-import React, { useCallback } from "react";
-import { CELL_HIGHLIGHT, ICell } from "../types";
+import React, {useCallback} from "react";
+import {CELL_HIGHLIGHT, ICell} from "../types";
 import ActionButton from "./ActionButton";
 import styles from "../styles/Cell.module.css";
 
-export default function Cell({
-  cell,
-  onClick,
-  highlight,
-  forceNotes
-}: {
+interface CellProps {
   cell: ICell,
   onClick: () => unknown,
   highlight: CELL_HIGHLIGHT,
   forceNotes?: boolean
-}) {
+}
+
+export default function Cell({
+                               cell,
+                               onClick,
+                               highlight,
+                               forceNotes
+                             }: CellProps) {
 
   const formatNotes = useCallback((notes: Set<number>) => {
     return Array.from(notes)
@@ -28,14 +30,14 @@ export default function Cell({
   ];
 
   switch (highlight) {
-  case CELL_HIGHLIGHT.Soft:
-    classes.push(styles.highlightSoft);
-    break;
-  case CELL_HIGHLIGHT.Error:
-    classes.push(styles.highlightError);
-    break;
-  default:
-    break;
+    case CELL_HIGHLIGHT.Soft:
+      classes.push(styles.highlightSoft);
+      break;
+    case CELL_HIGHLIGHT.Error:
+      classes.push(styles.highlightError);
+      break;
+    default:
+      break;
   }
 
   return (
