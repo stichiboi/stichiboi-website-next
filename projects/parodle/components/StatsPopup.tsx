@@ -1,4 +1,4 @@
-import {useCallback, useMemo, useState} from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 import {Stats} from "../useStats";
 import styles from "../styles/StatsPopup.module.css";
 import {StatNumber} from "./StatNumber";
@@ -59,6 +59,10 @@ export function StatsPopup({stats, resetStats}: StatsPopupProps) {
     setIsOpen(true);
     setTriggerAnimation(prev => ++prev);
   }, []);
+
+  useEffect(() => {
+    document.body.style.backgroundColor = isOpen ? "#ff8441" : "#FFFAFA";
+  }, [isOpen]);
 
   return (
     <section className={styles.container}>
