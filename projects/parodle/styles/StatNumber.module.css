@@ -1,14 +1,18 @@
 .container {
     display: grid;
     align-items: center;
+}
 
+.container p {
+    line-height: var(--text-font-size-huge);
+    font-size: var(--text-font-size-huge);
 }
 
 .label {
     font-size: var(--font-size-small);
 }
 
-.value {
+.value, .value p {
     font-size: var(--text-font-size-huge);
     font-family: var(--font-family-title), sans-serif;
     margin-bottom: 0;

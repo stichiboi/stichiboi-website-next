@@ -1,5 +1,6 @@
 import React, {ReactNode, useEffect, useMemo, useState} from "react";
 import styles from "./AnimatedNumber.module.css";
+import {DigitWheel} from "./DigitWheel";
 
 interface AnimatedNumberProps {
   appendix?: ReactNode;
@@ -10,6 +11,7 @@ interface AnimatedNumberProps {
   duration?: number,
   speed?: number,
   className?: string,
+  numberClassName?: string,
   triggerAnimation?: unknown,
   delay?: number
 }
@@ -19,37 +21,43 @@ export function AnimatedNumber({
                                  prefix = "",
                                  startNumber = 0,
                                  endNumber,
-                                 duration = 50000,
-                                 speed = 100,
+                                 duration = 3000,
                                  className = "",
+                                 numberClassName = "",
                                  triggerAnimation,
                                  delay = 0
                                }: AnimatedNumberProps): JSX.Element {
 
+
   const targetNumbers = useMemo(() => {
-    let numbersLength = Math.min(duration / speed, (endNumber - startNumber) * 2);
-    // if (numbersLength < (endNumber - startNumber)) {
-    //   numbersLength = endNumber - startNumber;
-    // }
-    const numberJump = (endNumber - startNumber) / numbersLength;
-    const numbers = []
-    for (let i = startNumber; i <= endNumber; i += numberJump) {
-      numbers.push((i)?.toFixed(0));
-    }
-    return numbers;
-  }, [speed, duration, startNumber, endNumber]);
+    return Array.from({length: endNumber - startNumber + 1}).map((_, i) => i);
+  }, [startNumber, endNumber]);
+
+  const digits = useMemo(() => {
+    return targetNumbers.at(-1)?.toFixed().length || 0;
+  }, [targetNumbers]);
 
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const wheels = useMemo(() => {
+    return Array.from({length: digits}).map((_, i) => {
+      const asString = targetNumbers.at(activeIndex)?.toFixed().padStart(digits, "0");
+      const value = asString ? parseInt(asString.slice(0, i + 1)) : 0;
+      return <DigitWheel key={i} value={value}/>;
+    });
+  }, [digits, targetNumbers, activeIndex]);
 
   useEffect(() => {
+    const speed = 20;
+    const timeout = duration / speed;
 
     function switchNumber() {
       setActiveIndex(prev => {
         if (prev >= targetNumbers.length - 1) {
           return prev;
         }
-        setTimeout(switchNumber, speed);
+
+        setTimeout(switchNumber, timeout);
         return prev + 1
       });
     }
@@ -59,12 +67,14 @@ export function AnimatedNumber({
     setTimeout(() => {
       switchNumber();
     }, delay);
-  }, [triggerAnimation, delay, speed, targetNumbers]);
+  }, [triggerAnimation, delay, duration, targetNumbers]);
 
   return (
     <div className={`${styles.container} ${className}`}>
       {prefix}
-      {targetNumbers[activeIndex]}
+      <div className={`${styles.wheels} ${numberClassName}`}>
+        {wheels}
+      </div>
       {appendix}
     </div>
   );

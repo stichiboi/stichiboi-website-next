@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo, useState} from "react";
+import {useCallback, useMemo, useState} from "react";
 import {Stats} from "../useStats";
 import styles from "../styles/StatsPopup.module.css";
 import {StatNumber} from "./StatNumber";
@@ -77,15 +77,15 @@ export function StatsPopup({stats, resetStats}: StatsPopupProps) {
             <StatNumber
               triggerAnimation={triggerAnimation}
               label={"Partite"}
-              value={stats.totalPlays}
+              value={stats.totalPlays || 0}
               delay={250}
             />
             <StatNumber
               label={"Vittorie"}
               triggerAnimation={triggerAnimation}
-              appendix={"%"}
+              appendix={<p>%</p>}
               value={
-                parseFloat((stats.totalSuccess / Math.max(1, stats.totalPlays) * 100).toFixed())
+                parseFloat((stats.totalSuccess / Math.max(1, stats.totalPlays) * 100).toFixed()) || 0
               }
               delay={250}
             />

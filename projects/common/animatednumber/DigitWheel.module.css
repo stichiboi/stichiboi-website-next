@@ -1,0 +1,31 @@
+.container {
+    font-size: var(--text-font-size-huge);
+    position: relative;
+    width: 0.7em;
+    height: 1em;
+    overflow: hidden;
+    --value: 0;
+    display: flex;
+}
+
+.numbers {
+    --radius: -98px;
+    font-size: var(--text-font-size-huge);
+    position: relative;
+    transform-origin: 0 0 var(--radius);
+    transform: rotateX(calc(var(--value) * 36deg));
+    display: grid;
+    align-items: center;
+    transition: transform .3s linear;
+    transform-style: preserve-3d;
+}
+
+
+.numbers > p {
+    backface-visibility: hidden;
+    position: absolute;
+    --degrees: calc(var(--index) * 36deg);
+    transform-origin: 0 0 var(--radius);
+    transform: rotateX(calc(-1 * var(--degrees)));
+}
+

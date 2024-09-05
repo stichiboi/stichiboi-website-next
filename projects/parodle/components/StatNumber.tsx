@@ -1,10 +1,11 @@
 import styles from "../styles/StatNumber.module.css"
 import {AnimatedNumber} from "../../common/animatednumber/AnimatedNumber";
+import {ReactNode} from "react";
 
 interface StatNumberProps {
   label: string;
   value: number;
-  appendix?: string;
+  appendix?: ReactNode;
   triggerAnimation: unknown
   delay: number
 }

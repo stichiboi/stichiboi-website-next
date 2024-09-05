@@ -1,22 +1,7 @@
 .container {
     display: flex;
-    align-items: center;
-    padding: 0;
-    gap: .8em;
-    --percentage: 1
 }
 
-.bar {
-    flex: var(--percentage) var(--percentage) auto;
-    background: var(--color-dark);
-    height: 2em;
-    transform-origin: left;
+.wheels {
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 0 .8em;
-}
-
-.absoluteValue{
-    color: var(--color-light);
 }
