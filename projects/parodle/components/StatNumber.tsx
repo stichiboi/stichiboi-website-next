@@ -1,14 +1,24 @@
 import styles from "../styles/StatNumber.module.css"
+import {AnimatedNumber} from "../../common/animatednumber/AnimatedNumber";
 
 interface StatNumberProps {
   label: string;
-  value: string | number
+  value: number;
+  appendix?: string;
+  triggerAnimation: unknown
+  delay: number
 }
 
-export function StatNumber({label, value}: StatNumberProps) {
+export function StatNumber({label, value, appendix, triggerAnimation, delay}: StatNumberProps) {
   return (
     <div className={styles.container}>
-      <h2 className={styles.value}>{value}</h2>
+      <AnimatedNumber
+        className={styles.value}
+        appendix={appendix}
+        endNumber={value}
+        triggerAnimation={triggerAnimation}
+        delay={delay}
+      />
       <em className={styles.label}>{label}</em>
     </div>
   )

@@ -1,4 +1,4 @@
-import {useMemo, useState} from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 import {Stats} from "../useStats";
 import styles from "../styles/StatsPopup.module.css";
 import {StatNumber} from "./StatNumber";
@@ -53,10 +53,16 @@ export function StatsPopup({stats, resetStats}: StatsPopupProps) {
   }, [stats.wordFrequency]);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [triggerAnimation, setTriggerAnimation] = useState(0);
+
+  const openOverlay = useCallback(() => {
+    setIsOpen(true);
+    setTriggerAnimation(prev => ++prev);
+  }, []);
 
   return (
     <section className={styles.container}>
-      <ActionButton onClick={() => setIsOpen(prev => !prev)}>
+      <ActionButton onClick={openOverlay}>
         <GraphUp/>
       </ActionButton>
       <div className={`${styles.overlay} ${isOpen ? styles.open : ''}`}>
@@ -68,12 +74,20 @@ export function StatsPopup({stats, resetStats}: StatsPopupProps) {
         </header>
         <div className={styles.count}>
           <div className={styles.stats}>
-            <StatNumber label={"Partite"} value={stats.totalPlays}/>
+            <StatNumber
+              triggerAnimation={triggerAnimation}
+              label={"Partite"}
+              value={stats.totalPlays}
+              delay={250}
+            />
             <StatNumber
               label={"Vittorie"}
+              triggerAnimation={triggerAnimation}
+              appendix={"%"}
               value={
-                `${parseFloat((stats.totalSuccess / Math.max(1, stats.totalPlays) * 100).toFixed())}%`
+                parseFloat((stats.totalSuccess / Math.max(1, stats.totalPlays) * 100).toFixed())
               }
+              delay={250}
             />
           </div>
         </div>
