@@ -21,7 +21,7 @@ interface ParodleProps {
   words: string[],
   onGameEnd: (isSuccess: boolean, guessesCount: number) => unknown,
   onGameStart: () => unknown,
-  onWord: (word: string) => unknown
+  onWord: (index: number, word: string) => unknown
 }
 
 type GameState = "RUNNING" | "SUCCESS" | "FAILED";
@@ -150,7 +150,7 @@ export function Parodle({words, onWord, onGameEnd, onGameStart}: ParodleProps) {
         throwConfetti();
       } else if (isCorrectLength && isValidWord) {
         keyboard.current?.clearInput();
-        onWord(input);
+        onWord(guesses.length, input);
         setGuesses(prev => [...prev, ""]);
       } else {
         setInvalidGuess(prev => {

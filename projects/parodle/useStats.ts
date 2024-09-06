@@ -65,20 +65,17 @@ export function useStats() {
   }, []);
 
   const onGameStart = useCallback(() => {
-    setStats(prev => {
-      return {
-        ...prev,
-        totalPlays: prev.totalPlays + 1
-      }
-    });
+    return;
   }, []);
 
-  const onWord = useCallback((word: string) => {
+  const onWord = useCallback((index: number, word: string) => {
     setStats(prev => {
       const wordFrequency = new Map(prev.wordFrequency);
       wordFrequency.set(word, (wordFrequency.get(word) || 0) + 1);
       return {
         ...prev,
+        // the game has started
+        totalPlays: index === 0 ? prev.totalPlays + 1 : prev.totalPlays,
         wordFrequency
       }
     });
