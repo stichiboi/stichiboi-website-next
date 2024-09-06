@@ -49,7 +49,7 @@ export function AnimatedNumber({
 
   useEffect(() => {
     const speed = 20;
-    const timeout = duration / speed;
+    const timeout = duration / speed / targetNumbers.length;
 
     function switchNumber() {
       setActiveIndex(prev => {
