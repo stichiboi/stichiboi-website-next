@@ -24,7 +24,12 @@ interface ParodleProps {
   onWord: (index: number, word: string) => unknown
 }
 
-type GameState = "RUNNING" | "SUCCESS" | "FAILED";
+type GameState = "PENDING" | "RUNNING" | "SUCCESS" | "FAILED";
+
+interface GuessState {
+  input: string;
+  state: "CONFIRMED" | "PENDING"
+}
 
 export function Parodle({words, onWord, onGameEnd, onGameStart}: ParodleProps) {
   const throwConfetti = useConfetti();
@@ -43,15 +48,20 @@ export function Parodle({words, onWord, onGameEnd, onGameStart}: ParodleProps) {
   }, [wordsSet]);
 
   const [currentWord, setCurrentWord] = useState("");
-  const [guesses, setGuesses] = useState<string[]>([]);
+  const [guesses, setGuesses] = useState<GuessState[]>([]);
   const [invalidGuess, setInvalidGuess] = useState(false);
-  const [gameState, setGameState] = useState<GameState>("RUNNING");
+  const [gameState, setGameState] = useState<GameState>("PENDING");
+
+  const isGameOver = useMemo(() => {
+    return gameState !== "PENDING" && gameState !== "RUNNING";
+  }, [gameState]);
 
   const rows = useMemo(() => {
     return Array.from({length: MAX_GUESSES}).map((_, i) => {
       let tempCurrWord = Array.from(currentWord);
+      const currValue = guesses.at(i)?.input;
       const cells = Array.from({length: MAX_WORD_LENGTH}).map((_, j) => {
-        let value = guesses.at(i)?.at(j) || "";
+        let value = currValue?.at(j) || "";
         let state: CellState = CellState.EMPTY;
         const valueIndex = tempCurrWord.indexOf(value)
         if (guesses.length > i + 1) {
@@ -62,7 +72,7 @@ export function Parodle({words, onWord, onGameEnd, onGameStart}: ParodleProps) {
           } else if (valueIndex !== -1) {
             state = CellState.ALMOST;
             // before unsetting, check if that character is not an EXACT match
-            if (tempCurrWord[valueIndex] === guesses.at(i)?.at(valueIndex)) {
+            if (tempCurrWord[valueIndex] === currValue?.at(valueIndex)) {
               state = CellState.WRONG;
             } else {
               tempCurrWord[valueIndex] = "_";
@@ -98,7 +108,7 @@ export function Parodle({words, onWord, onGameEnd, onGameStart}: ParodleProps) {
   }, []);
 
   useEffect(() => {
-    const lastEnteredGuess = guesses.at(-2);
+    const lastEnteredGuess = guesses.at(-2)?.input;
     if (lastEnteredGuess === currentWord) {
       setGameState("SUCCESS");
     } else if (guesses.length === MAX_GUESSES + 1) {
@@ -107,25 +117,25 @@ export function Parodle({words, onWord, onGameEnd, onGameStart}: ParodleProps) {
   }, [currentWord, guesses]);
 
   useEffect(() => {
-    if (gameState === "SUCCESS") {
-      throwConfetti();
-    }
-  }, [gameState, throwConfetti]);
-
-  useEffect(() => {
-    if (gameState !== "RUNNING") {
+    if (isGameOver) {
+      if (gameState === "SUCCESS") {
+        throwConfetti();
+      }
       onGameEnd(gameState === "SUCCESS", guesses.length - 1);
     }
-  }, [gameState, onGameEnd, guesses.length]);
+  }, [gameState, onGameEnd, guesses.length, throwConfetti]);
 
-  useEffect(() => {
-    if (currentWord) {
-      onGameStart();
-    }
-  }, [onGameStart, currentWord]);
+  const startGame = useCallback(() => {
+    setGameState(prev => {
+      if (prev === "PENDING") {
+        onGameStart();
+      }
+      return "RUNNING";
+    });
+  }, [onGameStart]);
 
   const resetBoard = useCallback(() => {
-    setGameState("RUNNING");
+    setGameState("PENDING");
     setGuesses([]);
     setCurrentWord(getWord());
     setUsedLetters(new Map());
@@ -135,23 +145,28 @@ export function Parodle({words, onWord, onGameEnd, onGameStart}: ParodleProps) {
     setGuesses(prev => {
       const next = [...prev];
       next.pop();
-      next.push(input);
+      next.push({input, state: "PENDING"});
       return next;
     });
   }, []);
-
 
   const onKeyReleased = useCallback((button: string) => {
     const input = keyboard.current?.getInput();
     if (button === "{enter}" && input) {
       const isCorrectLength = input.length === MAX_WORD_LENGTH;
       const isValidWord = wordsSet.has(input);
-      if (gameState === "SUCCESS") {
-        throwConfetti();
-      } else if (isCorrectLength && isValidWord) {
+      if (isCorrectLength && isValidWord) {
         keyboard.current?.clearInput();
-        onWord(guesses.length, input);
-        setGuesses(prev => [...prev, ""]);
+        setGuesses(prev => {
+          const next = [...prev];
+          if (next.length === 1) {
+            startGame();
+          }
+          next[next.length - 1] = {input, state: "CONFIRMED"}
+          next.push({input: "", state: "PENDING"});
+          onWord(prev.length, input);
+          return next;
+        });
       } else {
         setInvalidGuess(prev => {
           if (!prev) {
@@ -162,7 +177,7 @@ export function Parodle({words, onWord, onGameEnd, onGameStart}: ParodleProps) {
         });
       }
     }
-  }, [wordsSet, gameState, throwConfetti, onWord]);
+  }, [wordsSet, startGame, onWord]);
 
   useEffect(() => {
     function keyPress(event: KeyboardEvent) {
@@ -178,14 +193,14 @@ export function Parodle({words, onWord, onGameEnd, onGameStart}: ParodleProps) {
       }
 
       const key = normalize(event.key.toUpperCase());
-      if (keyboard.current) {
-        keyboard.current?.handleButtonClicked(key);
-      }
+      keyboard.current?.handleButtonClicked(key);
+
       if (key === "{enter}") {
         onKeyReleased(key);
       }
     }
 
+    document.removeEventListener("keyup", keyPress);
     document.addEventListener("keyup", keyPress);
     return () => document.removeEventListener("keyup", keyPress)
   }, [onKeyReleased]);
@@ -227,7 +242,7 @@ export function Parodle({words, onWord, onGameEnd, onGameStart}: ParodleProps) {
       <div className={styles.rows}>
         {rows}
       </div>
-      <div className={`${styles.playAgain} ${gameState !== "RUNNING" && styles.toggled}`}>
+      <div className={`${styles.playAgain} ${isGameOver && styles.toggled}`}>
         <div className={styles.endGameButtons}>
           <ButtonCTA onClick={resetBoard}>
             {"Gioca ancora"}

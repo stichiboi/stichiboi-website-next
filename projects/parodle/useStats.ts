@@ -65,7 +65,12 @@ export function useStats() {
   }, []);
 
   const onGameStart = useCallback(() => {
-    return;
+    setStats(prev => {
+      return {
+        ...prev,
+        totalPlays: prev.totalPlays + 1
+      }
+    });
   }, []);
 
   const onWord = useCallback((index: number, word: string) => {
@@ -74,8 +79,6 @@ export function useStats() {
       wordFrequency.set(word, (wordFrequency.get(word) || 0) + 1);
       return {
         ...prev,
-        // the game has started
-        totalPlays: index === 0 ? prev.totalPlays + 1 : prev.totalPlays,
         wordFrequency
       }
     });
