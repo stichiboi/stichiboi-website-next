@@ -11,8 +11,10 @@ interface AnimatedNumberProps {
   duration?: number,
   speed?: number,
   className?: string,
-  numberClassName?: string,
+  numbersClassName?: string,
+  wheelsClassName?: string,
   triggerAnimation?: unknown,
+  resetAnimation?: unknown,
   delay?: number
 }
 
@@ -23,8 +25,10 @@ export function AnimatedNumber({
                                  endNumber,
                                  duration = 3000,
                                  className = "",
-                                 numberClassName = "",
+                                 numbersClassName = "",
+                                 wheelsClassName = "",
                                  triggerAnimation,
+                                 resetAnimation,
                                  delay = 0
                                }: AnimatedNumberProps): JSX.Element {
 
@@ -43,9 +47,9 @@ export function AnimatedNumber({
     return Array.from({length: digits}).map((_, i) => {
       const asString = targetNumbers.at(activeIndex)?.toFixed().padStart(digits, "0");
       const value = asString ? parseInt(asString.slice(0, i + 1)) : 0;
-      return <DigitWheel key={i} value={value}/>;
+      return <DigitWheel key={i} value={value} className={wheelsClassName}/>;
     });
-  }, [digits, targetNumbers, activeIndex]);
+  }, [digits, targetNumbers, activeIndex, wheelsClassName]);
 
   useEffect(() => {
     const speed = 20;
@@ -69,10 +73,14 @@ export function AnimatedNumber({
     }, delay);
   }, [triggerAnimation, delay, duration, targetNumbers]);
 
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [resetAnimation]);
+
   return (
     <div className={`${styles.container} ${className}`}>
       {prefix}
-      <div className={`${styles.wheels} ${numberClassName}`}>
+      <div className={`${styles.wheels} ${numbersClassName}`}>
         {wheels}
       </div>
       {appendix}

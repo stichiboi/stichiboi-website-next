@@ -54,10 +54,16 @@ export function StatsPopup({stats, resetStats}: StatsPopupProps) {
 
   const [isOpen, setIsOpen] = useState(false);
   const [triggerAnimation, setTriggerAnimation] = useState(0);
+  const [resetAnimation, setResetAnimation] = useState(0);
 
   const openOverlay = useCallback(() => {
     setIsOpen(true);
     setTriggerAnimation(prev => ++prev);
+  }, []);
+
+  const closeOverlay = useCallback(() => {
+    setIsOpen(false);
+    setResetAnimation(prev => ++prev);
   }, []);
 
   useEffect(() => {
@@ -72,7 +78,7 @@ export function StatsPopup({stats, resetStats}: StatsPopupProps) {
       <div className={`${styles.overlay} ${isOpen ? styles.open : ''}`}>
         <header className={styles.header}>
           <Title text={"Statistiche"}/>
-          <ActionButton onClick={() => setIsOpen(false)}>
+          <ActionButton onClick={closeOverlay}>
             <Xmark/>
           </ActionButton>
         </header>
@@ -80,13 +86,15 @@ export function StatsPopup({stats, resetStats}: StatsPopupProps) {
           <div className={styles.stats}>
             <StatNumber
               triggerAnimation={triggerAnimation}
+              resetAnimation={resetAnimation}
               label={"Partite"}
               value={stats.totalPlays || 0}
-              delay={250}
+              delay={150}
             />
             <StatNumber
               label={"Vittorie"}
               triggerAnimation={triggerAnimation}
+              resetAnimation={resetAnimation}
               appendix={<p>%</p>}
               value={
                 parseFloat((stats.totalSuccess / Math.max(1, stats.totalPlays) * 100).toFixed()) || 0

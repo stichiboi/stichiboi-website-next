@@ -6,11 +6,12 @@ interface StatNumberProps {
   label: string;
   value: number;
   appendix?: ReactNode;
-  triggerAnimation: unknown
-  delay: number
+  triggerAnimation: unknown;
+  resetAnimation: unknown;
+  delay: number;
 }
 
-export function StatNumber({label, value, appendix, triggerAnimation, delay}: StatNumberProps) {
+export function StatNumber({label, value, appendix, triggerAnimation, resetAnimation, delay}: StatNumberProps) {
   return (
     <div className={styles.container}>
       <AnimatedNumber
@@ -18,6 +19,7 @@ export function StatNumber({label, value, appendix, triggerAnimation, delay}: St
         appendix={appendix}
         endNumber={value}
         triggerAnimation={triggerAnimation}
+        resetAnimation={resetAnimation}
         delay={delay}
       />
       <em className={styles.label}>{label}</em>
