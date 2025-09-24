@@ -11,6 +11,7 @@ export default function Projects(): JSX.Element {
 
   return (
     <section id={"projects"} className={styles.container} ref={scrollRef}>
+      {/*<Flock/>*/}
       <div className={`${styles.content} ${styles.about}`}>
         <Title text={t("projects.about.title")}/>
         <p>{t("projects.about.text")}</p>
